@@ -444,7 +444,7 @@ body:       |
               deadline.
               </p>
               <p>
-              Note, there are opportunities for <b>extensions</b> as
+              Note, there is an allowance for <b>self-service extensions</b> as
               described below.
               </p>
               <p>
@@ -488,23 +488,20 @@ body:       |
             <div class="alert alert-success">
             <h4><i class="fa fa-clock-o"></i> Self-Service Extensions</h4>
 
-            <p>Each <b>Homework</b> assignment has an associated <b>Guru
-            Point</b>, which is an <b>extra credit</b> opportunity.  To avoid a
-            <b>late penalty</b>, a student may choose to <b>forgo</b> or
-            <b>give up</b> that week's <b>Guru Point</b> in exchange for <b>two
-            more days</b> in which the student can work on the assignment for
-            full credit.</p>
+            <p>For <b>Homeworks</b>, a student may take advantage of up to
+            <b>three</b> separate <b>self-service extensions</b>, each of which
+            would allow a student to submit one assignment up to <b>48
+            hours</b> pass the original deadline for <b>no penalty</b>.</p>
 
-            <p>For instance if an assignment is due on <b>Saturday</b>, then
-            the student will have until <b>Monday</b> to submit their work.</p>
+            <p>To take advantage of this <b>self-service extension</b>, the
+            student must make a note in the <tt>README.md</tt> corresponding to
+            the assignment that they are taking the extension and include it in
+            their <b>Pull Request</b>.  They do not need to ask for permission
+            ahead of time.</p>
 
-            <p>To take advantage of this, a student simply makes a note on the
-            <b>Pull Request</b> for the assignment and refrains from getting
-            credit for the <b>Guru Point</b>.</p>
-
-            <p>Note, there are no free extensions for <b>Readings</b>.
-            Instead, students should be aware that they can drop <b>three
-            Reading grades</b>.</p>
+            <p>Note, there are no extensions for <b>Readings</b>. Instead,
+            students should be aware that they can drop <b>three Reading
+            grades</b>.</p>
 
             </div>
         </div>
