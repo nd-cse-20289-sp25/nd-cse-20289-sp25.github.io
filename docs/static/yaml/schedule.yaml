@@ -16,10 +16,10 @@
   days:
       - date:           Mon 01/20
         topics:         Martin Luther King Day
-        assignment:     Reading 01
 
       - date:           Wed 01/22
         topics:         Processes, I/O Redirection
+        assignment:     Reading 01
 
       - date:           Fri 01/24
         topics:         Networking
@@ -180,7 +180,8 @@
         assignment:     Reading 11
 
       - date:           Wed 04/09
-        topics:         Exam 03
+        items:
+          - name:       Exam 03
 
       - date:           Fri 04/11
         topics:         Processes
