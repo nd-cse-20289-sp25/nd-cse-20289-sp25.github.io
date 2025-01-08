@@ -123,7 +123,7 @@
 
 - name:     "Spring Break"
 
-- name:     "Unit 03: C (Memory, File System)"
+- name:     "Unit 03: C"
 
 - name:     "Pointers, Arrays, Strings"
   days:
@@ -157,36 +157,36 @@
         topics:         Uniqueit
         assignment:     Homework 07
 
-- name:     "File System, I/O"
+- name:     "Exam 03"
   days:
       - date:           Mon 03/31
-        topics:         Files
+        topics:         Review
         assignment:     Reading 10
 
       - date:           Wed 04/02
-        topics:         Directories
+        items:
+          - name:       Exam 03
 
       - date:           Fri 04/04
-        topics:         I/O
+        topics:         System Calls
 
-      - date:           Sat 04/05
-        topics:         Findit
-        assignment:     Homework 08
+- name:     "Unit 04: System Calls"
 
-- name:     "Exam 03"
+- name:     "File System, I/O"
   days:
       - date:           Mon 04/07
-        topics:         Review
+        topics:         File System
         assignment:     Reading 11
 
       - date:           Wed 04/09
-        items:
-          - name:       Exam 03
+        topics:         I/O
 
       - date:           Fri 04/11
         topics:         Processes
 
-- name:     "Unit 04: C (Processes, Networking)"
+      - date:           Sat 04/12
+        topics:         Findit
+        assignment:     Homework 08
 
 - name:     "Processes"
   days:
