@@ -231,9 +231,8 @@ body:       |
 
         > [https://classroom.github.com/a/-gqNzr2_](https://classroom.github.com/a/-gqNzr2_)
 
-        This will create a **private** `cse-20289-sp25-assignments-$USERNAME`
-        repository under your own account and linked to the [nd-cse-20289-sp25]
-        organization.
+        This will create a **private** `assignments-$USERNAME` repository under
+        your own account and linked to the [nd-cse-20289-sp25] organization.
 
     <div class="alert alert-danger" markdown="1">
     #### <i class="fa fa-github"></i> GitHub Repository
@@ -339,7 +338,7 @@ body:       |
 
             :::bash
             # Example of cloning GitHub assignments repository to local or student machine
-            $ git clone git@github.com:nd-cse-20289-sp25/cse-20289-sp25-assignments-$USERNAME.git
+            $ git clone git@github.com:nd-cse-20289-sp25/assignments-$USERNAME.git
             remote: Enumerating objects: 70, done.
             remote: Counting objects: 100% (70/70), done.
             remote: Compressing objects: 100% (13/13), done.
@@ -355,7 +354,7 @@ body:       |
             :::bash
             # Example on editing README in assignments repository and pushing changes to GitHub
 
-            $ cd cse-20289-sp25-assignments-$USERNAME   # Go into the assignments directory
+            $ cd assignments-$USERNAME                  # Go into the assignments directory
 
             $ nano README.md                            # Edit the README.md file
 
