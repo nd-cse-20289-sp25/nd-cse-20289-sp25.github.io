@@ -1,14 +1,25 @@
 - name:     Introduction
   days:
       - date:           Mon 01/13
-        topics:         Syllabus, Unix Shell
+        topics:         Syllabus, Unix Programming Environment
         assignment:     Reading 00
+        items:
+          - name:       Slides 00
+            link:       https://docs.google.com/presentation/d/1oZpMNwW7Q85l_4EtcVUj0va-FLtQV_qJ4wKDZ0r9Aa0/edit?usp=sharing
+          - name:       Slides 01
+            link:       https://docs.google.com/presentation/d/1qJ2xQ0x77b3YOtjAFaD8zvVEQ_YaPixCs3ZpREQIlos/edit?usp=sharing
 
       - date:           Wed 01/15
         topics:         Git
+        items:
+          - name:       Slides 02
+            link:       https://docs.google.com/presentation/d/1WpoqgNFqCvt9Zmd1NQRZf0tP_MozH2IDFVR4xPdvq_w/edit?usp=sharing
 
       - date:           Fri 01/17
         topics:         Files
+        items:
+          - name:       Slides 03
+            link:       https://docs.google.com/presentation/d/1x7m68OOn1Hd53qmyGVp7_Vlu45cLulHS1o0WnUB7iUE/edit?usp=sharing
 
 - name:     "Unit 01: Bourne Shell"
 
