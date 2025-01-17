@@ -16,12 +16,16 @@
         items:
           - name:       Slides 02
             link:       https://docs.google.com/presentation/d/1WpoqgNFqCvt9Zmd1NQRZf0tP_MozH2IDFVR4xPdvq_w/edit?usp=sharing
+          - name:       Panopto
+            link:       https://notredame.hosted.panopto.com/Panopto/Pages/Viewer.aspx?id=2085c844-d9ce-4798-bd0b-b26601395d7e
 
       - date:           Fri 01/17
         topics:         Files
         items:
           - name:       Slides 03
             link:       https://docs.google.com/presentation/d/1x7m68OOn1Hd53qmyGVp7_Vlu45cLulHS1o0WnUB7iUE/edit?usp=sharing
+          - name:       Panopto
+            link:       https://notredame.hosted.panopto.com/Panopto/Pages/Viewer.aspx?id=53967bb9-c12e-473c-8c67-b2680136dcc9
 
 - name:     "Unit 01: Bourne Shell"
 
