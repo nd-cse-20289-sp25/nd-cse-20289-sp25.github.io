@@ -24,6 +24,8 @@
         items:
           - name:       Slides 03
             link:       https://docs.google.com/presentation/d/1x7m68OOn1Hd53qmyGVp7_Vlu45cLulHS1o0WnUB7iUE/edit?usp=sharing
+          - name:       Panopto
+            link:       https://notredame.hosted.panopto.com/Panopto/Pages/Viewer.aspx?id=53967bb9-c12e-473c-8c67-b2680136dcc9
 
 - name:     "Unit 01: Bourne Shell"
 
