@@ -373,11 +373,11 @@ body:       |
       $ git add Makefile                                    # Mark changes for commit
       $ git add GUIDE                                       # Mark changes for commit
       $ git add tasks.yaml                                  # Mark changes for commit
-      $ git commit -m "Homework 01: Activity 1 completed"   # Record changes
+      $ git commit -m "Homework 01: Tasks"                  # Record changes
       ...
 
       $ git add answers.json                                # Mark changes for commit
-      $ git commit -m "Homework 01: Activity 2 completed"   # Record changes
+      $ git commit -m "Homework 01: Quiz"                   # Record changes
       ...
 
       $ git push -u origin homework01                       # Push branch to GitHub
@@ -387,7 +387,7 @@ body:       |
 
   If you collaborated with any other students, or received help from TAs or AI
   tools on this assignment, please record this support in the `README.md` in
-  the `reading01` folder and include it with your **Pull Request**.
+  the `homework01` folder and include it with your **Pull Request**.
 
   </div>
 
