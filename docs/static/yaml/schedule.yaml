@@ -107,7 +107,9 @@
   days:
       - date:           Mon 02/10
         assignment:     Reading 04
-        topics:         Review
+        items:
+          - name:       Checklist 01
+            link:       checklist01.html
 
       - date:           Wed 02/12
         items:
