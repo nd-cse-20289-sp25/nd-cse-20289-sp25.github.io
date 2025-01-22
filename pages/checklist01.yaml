@@ -15,29 +15,32 @@ body:       |
     1. **Commands**: Identify which commands perform certain tasks
       (*multiple-choice*, *fill-in-the-blank*).
 
-    2. **Shell and Files**: Identify ways to perform certain tasks in the shell
+    2. **Shell**: Identify ways to perform certain tasks in the shell
       (*multiple-choice*, *fill-in-the-blank*).
 
-    3. **Networking and Processes**: Identify ways to perform networking and
-    process management tasks (*multiple-choice*, *fill-in-the-blank*).
+    3. **Files and Processes**: Identify ways to perform operations on files
+      and processes (*multiple-choice*, *fill-in-the-blank*).
 
-    4. **Pipelines**: Describe **pipelines**, I/O redirection, and the **Unix
-    Philosophy** (*multiple-choice*, *fill-in-the-blank*).
+    4. **I/O Redirection**: Describe I/O redirection and the **Unix
+      Philosophy** (*multiple-choice*, *fill-in-the-blank*).
 
-    5. **Shell Scripting**: Debug, fix, and evaluate a shell script
+    5. **Networking**: Identify ways to perform networking and tasks
       (*multiple-choice*, *fill-in-the-blank*).
 
-    6. **Filters**: Use Unix **filters** to answer some questions (*coding on
-    the computer*).
+    6. **Shell Scripting**: Debug, fix, and evaluate a shell script
+      (*multiple-choice*, *fill-in-the-blank*).
 
-    Parts **1** through **5** are to be done first on **paper**. Once that
-    portion is completed and submitted, you will do part **6** on your own
+    7. **Pipelines and Filters**: Construct **pipelines using unix **filters**
+      to answer some questions (*coding on the computer*).
+
+    Parts **1** through **6** are to be done first on **paper**. Once that
+    portion is completed and submitted, you will do part **7** on your own
     computer and submit code to your **assignments** repository.
 
     <div class="alert alert-warning" markdown="1">
     #### <i class="fa fa-warning"></i> Representative, but not Exhaustive
 
-    This check list is meant to be representative, rather than exhaustive (ie.
+    This checklist is meant to be representative, rather than exhaustive (ie.
     there may be questions that show up on the exam that are not shown below).
 
     </div>
