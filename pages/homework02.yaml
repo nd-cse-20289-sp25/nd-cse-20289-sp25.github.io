@@ -16,7 +16,7 @@ body:       |
   Saturday, February 01**.
 
   [Unix]:               https://en.wikipedia.org/wiki/Unix
-  [GitHub]:             https://gitlab.com
+  [GitHub]:             https://github.com
   [shell scripting]:    https://en.wikipedia.org/wiki/Shell_script
   [networking]:         https://en.wikipedia.org/wiki/Computer_network
   [Slack]:              https://nd-cse.slack.com/
@@ -41,7 +41,7 @@ body:       |
   **Note**: If you get the following messages when you do a `git push`:
 
       ! [rejected]        master -> master (fetch first)
-      error: failed to push some refs to 'git@gitlab.com/nd-cse-20289-sp25/cse-20289-sp25-assignments-pbui'
+      error: failed to push some refs to 'git@github.com/nd-cse-20289-sp25/assignments-pbui'
       hint: Updates were rejected because the remote contains work that you do
       hint: not have locally. This is usually caused by another repository pushing
       hint: to the same ref. You may want to first merge the remote changes (e.g.,
