@@ -251,7 +251,7 @@ body:       |
     to select which filtering [pipeline] to use to extract the appropriate
     information.
 
-  - You will probably want to use [cut[, [grep], [sed], or [awk] to extract
+  - You will probably want to use [cut], [grep], [sed], or [awk] to extract
     information in `temperature` and `forecast`.
 
   - You will need to trim leading and trailing whitespace for the forecast
