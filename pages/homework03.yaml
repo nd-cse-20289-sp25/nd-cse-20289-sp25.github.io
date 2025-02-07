@@ -595,10 +595,10 @@ body:       |
   <div class="alert alert-warning" markdown="1">
   #### <i class="fa fa-clock-o"></i> CRON Frequency
 
-  For **testing** and **demonstration** purposes, it is acceptable to have the
-  [cronjob] run frequently (ie. **every minute**).  Once you have been given
-  credit, however, please **remove** the [cronjob] or **reduce the frequency**
-  to something reasonable (ie. **every 15 minutes**).
+  For **testing** purposes, it is acceptable to have the [cronjob] run
+  frequently (ie. **every minute**).  Once you have finished experimenting,
+  however, please **remove** the [cronjob] or **reduce the frequency** to
+  something reasonable (ie. **every 15 minutes**).
 
   </div>
 
