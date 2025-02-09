@@ -114,8 +114,8 @@ body:       |
     * What are **environment variables**?
 
         *You should know how to set and modify them.  In particular, you should
-        be familiar with the `PATH` environment variable and know what it
-        controls.*
+        be familiar with the following **environment variables**:* `HOME`,
+        `PATH`, `SHELL`.
 
     [Unix]: https://en.wikipedia.org/wiki/Unix
 
@@ -124,6 +124,18 @@ body:       |
     1. [git](http://man7.org/linux/man-pages/man1/git.1.html)
 
         Version control system for managing our files.
+
+    2. [pwd](https://man7.org/linux/man-pages/man1/pwd.1.html)
+
+        Print current working directory.
+
+    3. [whoami](https://man7.org/linux/man-pages/man1/whoami.1.html)
+
+        Print username of current user.
+
+    4. [id](https://man7.org/linux/man-pages/man1/id.1.html)
+
+        Print user and group information.
 
     <div class="alert alert-success" markdown="1">
     #### <i class="fa fa-question"></i> Sample Questions
