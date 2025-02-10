@@ -125,10 +125,12 @@
       - date:           Mon 02/10
         assignment:     Reading 04
         items:
-          - name:       Slides R01
-            link:       https://docs.google.com/presentation/d/1mUfrX-pUtYXQz4fOQkRLy6D4fqtFYeTDnYBA4_nPqco/edit?usp=sharing
           - name:       Checklist 01
             link:       checklist01.html
+          - name:       Slides R01
+            link:       https://docs.google.com/presentation/d/1mUfrX-pUtYXQz4fOQkRLy6D4fqtFYeTDnYBA4_nPqco/edit?usp=sharing
+          - name:       Panopto
+            link:       https://notredame.hosted.panopto.com/Panopto/Pages/Viewer.aspx?id=ffe2fa64-07f4-482a-924d-b2800138fb1e
 
       - date:           Wed 02/12
         items:
