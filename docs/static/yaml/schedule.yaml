@@ -172,14 +172,23 @@
 - name:     "Functional Programming"
   days:
       - date:           Mon 02/24
-        topics:         Higher Order Functions, List Comprehensions
+        topics:         Functional Programming
         assignment:     Reading 06
+        items:
+          - name:       Slides 13
+            link:       https://docs.google.com/presentation/d/1UeJHhN5VifEKuzuw5Ey8pX_1ZJZ6i6WCQVF64GJf2BQ/edit?usp=sharing
 
       - date:           Wed 02/26
         topics:         Iterators, Generators
+        items:
+          - name:       Slides 14
+            link:       https://docs.google.com/presentation/d/1ZE8GLxsK9md2XssxJDIzJa8rB8SQBXuJf-iQ3fccrmM/edit?usp=sharing
 
       - date:           Fri 02/28
-        topics:         Concurrency
+        topics:         Parallel Computing
+        items:
+          - name:       Slides 15
+            link:       https://docs.google.com/presentation/d/10p4cOK5pD71jM7d7M7-lvhaake-oeFTOkTajvQiJKKU/edit?usp=sharing
 
       - date:           Sat 03/01
         topics:         SearX, Hulk
