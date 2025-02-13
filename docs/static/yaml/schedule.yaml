@@ -138,24 +138,35 @@
 
       - date:           Fri 02/14
         topics:         Python Scripting
+        items:
+          - name:       Slides 09
+            link:       https://docs.google.com/presentation/d/135zv48Exoek9ASpktZO3QSua7OnUmVRbKhbR9zURmVw/edit?usp=sharing
 
 - name:     "Unit 02: Python"
 
 - name:     "Python Scripting"
   days:
       - date:           Mon 02/17
-        topics:         Functions, Data Structures, Tests
+        topics:         Data Structures, Arguments, I/O
         assignment:     Reading 05
+        items:
+          - name:       Slides 10
+            link:       https://docs.google.com/presentation/d/1TjPxKMoqLeJ4nU9NdUgRhIJ31Y9ip8uJLosWwEOKYZc/edit?usp=sharing
 
       - date:           Wed 02/19
-        topics:         I/O, Processes, Requests
+        topics:         Regular Expressions, Processes, Requests
+        items:
+          - name:       Slides 11
+            link:       https://docs.google.com/presentation/d/1XjvAQ-zwBiDfnbR-aEFjtr46h5nLSx8LEFjfV7qKH4E/edit?usp=sharing
 
       - date:           Fri 02/21
-        topics:         Regular Expressions, CSV, JSON
+        topics:         CSV, JSON
+        items:
+          - name:       Slides 12
+            link:       https://docs.google.com/presentation/d/111xLeTJD6-pbA9K3qPIa-az0cgu5_EDVgfy-uHA6Blc/edit?usp=sharing
 
       - date:           Sat 02/22
-        topics:         Cutit, Watchit
-        notes:          "cutit: cut [...] file, watchit: ps aux |  grep ... | [wc]"
+        topics:         Cut, WC
         assignment:     Homework 04
 
 - name:     "Functional Programming"
