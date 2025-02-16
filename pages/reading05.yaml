@@ -214,6 +214,15 @@ body:       |
 
       $ git push -u origin reading05        # Push branch to GitHub
 
+  <div class="alert alert-warning" markdown="1">
+  #### <i class="fa fa-life-ring"></i> Acknowledgments
+
+  If you collaborated with any other students, or received help from TAs or AI
+  tools on this assignment, please record this support in the `README.md` in
+  the `reading05` folder and include it with your **Pull Request**.
+
+  </div>
+
   <div class="alert alert-danger" markdown="1">
   #### <i class="fa fa-github"></i> Pull Request
   Remember to create a **Pull Request** and assign the appropriate TA from the
