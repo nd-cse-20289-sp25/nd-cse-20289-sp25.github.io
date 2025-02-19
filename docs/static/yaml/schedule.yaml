@@ -162,6 +162,8 @@
         items:
           - name:       Slides 11
             link:       https://docs.google.com/presentation/d/1XjvAQ-zwBiDfnbR-aEFjtr46h5nLSx8LEFjfV7qKH4E/edit?usp=sharing
+          - name:       Panopto
+            link:       https://notredame.hosted.panopto.com/Panopto/Pages/Viewer.aspx?id=99cfede8-b630-40e8-9ca7-b289013a69a9
 
       - date:           Fri 02/21
         topics:         CSV, JSON
