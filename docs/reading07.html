@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="description" content="">
+	<meta name="author" content="">
+
+	<title>Reading 07: Exam 02</title>
+
+	<!-- Bootstrap core CSS -->
+	<link href="static/css/blugold.css" rel="stylesheet">
+	<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+
+	<!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+	<!--[if lt IE 9]>
+	<script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+	<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+	<![endif]-->
+
+	<style>
+	body {
+	    padding: 10px;
+	}
+	</style>
+    </head>
+    <body>
+	<div class="container">
+
+	    <div class="row">
+		<div class="page-header">
+		    <ul class="nav nav-pills pull-right">
+			
+		    </ul>
+		    <h1><i class="fa fa-book"></i> Reading 07: Exam 02</h1>
+		</div>
+	    </div>
+
+            
+<p><strong>Everyone</strong>:</p>
+<p>Next week, we will have <strong>Exam 02</strong>, which will cover scripting in <a href="https://www.python.org/">Python</a>
+with a focus on: <a href="https://en.wikipedia.org/wiki/Data_structure">data structures</a>, <a href="https://en.wikipedia.org/wiki/Functional_programming">functional programming</a>, and
+<a href="https://en.wikipedia.org/wiki/Concurrency_(computer_science)">concurrency</a> and <a href="https://en.wikipedia.org/wiki/Parallel_computing">parallelism</a>.  This reading assignment is meant to prepare
+you for this exam and is based on the items in <a href="checklist02.html">Checklist 02</a>.</p>
+<p>Because of the exam on <strong>Wednesday, March 5</strong>, there will be <strong>no homework</strong>
+for the upcoming week.</p>
+<div class="alert alert-info">
+<h4 id="tldr"><i class="fa fa-search"></i> TL;DR<a class="headerlink" href="#tldr" title="Permanent link">&para;</a></h4>
+<p>The focus of this reading is to allow you to review for <strong>Exam 02</strong>.</p>
+</div>
+<p><img src="static/img/python.png" class="pull-right"></p>
+<h2 id="readings">Readings<a class="headerlink" href="#readings" title="Permanent link">&para;</a></h2>
+<p>The readings for this week are:</p>
+<ol>
+<li><a href="checklist02.html">Checklist 02</a></li>
+</ol>
+<h2 id="quiz">Quiz<a class="headerlink" href="#quiz" title="Permanent link">&para;</a></h2>
+<p>This week, the reading is split into two sections: the first part is a short
+<a href="https://dredd.h4x0r.space">dredd</a> quiz, while the second part involves <strong>four</strong> short <a href="https://www.python.org/">Python</a> scripts:
+  <code>translate1.py</code>, <code>translate2.py</code>, <code>translate3.py</code>, and <code>translate4.py</code>.</p>
+<p>To test these scripts, you will need to download the <a href="https://www3.nd.edu/~pbui/teaching/cse.20289.sp25/static/txt/reading07/Makefile">Makefile</a> and test
+scripts:</p>
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%;"><span></span><code>$<span style="color: #bbbbbb"> </span>git<span style="color: #bbbbbb"> </span>switch<span style="color: #bbbbbb"> </span>master<span style="color: #bbbbbb">                   </span><span style="color: #3D7B7B; font-style: italic"># Make sure we are in master branch</span>
+$<span style="color: #bbbbbb"> </span>git<span style="color: #bbbbbb"> </span>pull<span style="color: #bbbbbb"> </span>--rebase<span style="color: #bbbbbb">                   </span><span style="color: #3D7B7B; font-style: italic"># Make sure we are up-to-date with GitHub</span>
+
+$<span style="color: #bbbbbb"> </span>git<span style="color: #bbbbbb"> </span>checkout<span style="color: #bbbbbb"> </span>-b<span style="color: #bbbbbb"> </span>reading07<span style="color: #bbbbbb">           </span><span style="color: #3D7B7B; font-style: italic"># Create reading07 branch and check it out</span>
+
+$<span style="color: #bbbbbb"> </span><span style="color: #008000">cd</span><span style="color: #bbbbbb"> </span>reading07<span style="color: #bbbbbb">                        </span><span style="color: #3D7B7B; font-style: italic"># Go into reading07 folder</span>
+
+<span style="color: #3D7B7B; font-style: italic"># Download Reading 07 Makefile</span>
+$<span style="color: #bbbbbb"> </span>curl<span style="color: #bbbbbb"> </span>-LO<span style="color: #bbbbbb"> </span>https://www3.nd.edu/~pbui/teaching/cse.20289.sp25/static/txt/reading07/Makefile
+
+<span style="color: #3D7B7B; font-style: italic"># Download and execute scripts</span>
+$<span style="color: #bbbbbb"> </span>make
+</code></pre></div>
+
+<h3 id="code-snippets">Code Snippets<a class="headerlink" href="#code-snippets" title="Permanent link">&para;</a></h3>
+<p>Record the answers to the following <a href="static/json/reading07.json">Reading 07 Quiz</a> questions in your
+<code>reading07</code> branch:</p>
+<div id="quiz-questions"></div>
+
+<div id="quiz-responses"></div>
+
+<script src="static/js/dredd-quiz.js"></script>
+
+<script>
+loadQuiz('static/json/reading07.json');
+</script>
+
+<pre style="display: none;" id="dr-container" class="codehilite"><code id="dredd-response"></code></pre>
+
+<h3 id="translations">Translations<a class="headerlink" href="#translations" title="Permanent link">&para;</a></h3>
+<p>Given the following Unix pipelines, write Python scripts (ie.
+<code>translateX.py</code>) that accomplishes the same task.</p>
+<ol>
+<li>
+<p><code>translate1.py</code>: <code>grep -Po ':1\d*0:' /etc/passwd | wc -l</code></p>
+</li>
+<li>
+<p><code>translate2.py</code>: <code>/bin/ls -ld /etc/* | awk '{print $4}' | sort | uniq</code></p>
+</li>
+<li>
+<p><code>translate3.py</code>: <code>curl -sL http://yld.me/raw/fDIO | cut -d , -f 4 | grep -Eo '^M.*' | sort</code></p>
+</li>
+<li>
+<p><code>translate4.py</code>: <code>cat /etc/passwd | cut -d : -f 7 | sort | uniq -c | sort -srn</code></p>
+</li>
+</ol>
+<div class="alert alert-warning">
+<h4 id="notes">Notes<a class="headerlink" href="#notes" title="Permanent link">&para;</a></h4>
+<ul>
+<li>
+<p><strong>No credit</strong> will be given for simply calling <code>os.system</code> or <code>os.popen</code> on
+  the given pipeline.</p>
+</li>
+<li>
+<p>You may use <code>os.popen</code> to read the output of a single command, but not for
+  a <strong>pipeline</strong>.</p>
+</li>
+<li>
+<p>Use <a href="https://en.wikipedia.org/wiki/Functional_programming">functional programming</a>, <a href="https://docs.python.org/3/tutorial/datastructures.html#list-comprehensions">list comprehensions</a>, or <a href="https://www.python.org/dev/peps/pep-0289/">generator
+  expressions</a> whenever possible.</p>
+</li>
+<li>
+<p>You do not need to do a literal translation (that is you don't have to
+  replicate each portion of the pipeline); you just need to accomplish the
+  same overall task and emit the same output.</p>
+</li>
+<li>
+<p>Most of the scripts should only be <code>5</code> - <code>10</code> lines long.</p>
+</li>
+</ul>
+</div>
+<h2 id="submission">Submission<a class="headerlink" href="#submission" title="Permanent link">&para;</a></h2>
+<p>To submit you work, follow the same process outlined in <a href="reading01.html">Reading 01</a>:</p>
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%;"><span></span><code><span style="color: #3D7B7B; font-style: italic">#--------------------------------------------------</span>
+<span style="color: #3D7B7B; font-style: italic"># BE SURE TO DO THE PREPARATION STEPS ABOVE</span>
+<span style="color: #3D7B7B; font-style: italic">#--------------------------------------------------</span>
+
+$<span style="color: #bbbbbb"> </span><span style="color: #008000">cd</span><span style="color: #bbbbbb"> </span>reading07<span style="color: #bbbbbb">                        </span><span style="color: #3D7B7B; font-style: italic"># Go into reading07 folder</span>
+$<span style="color: #bbbbbb"> </span><span style="color: #19177C">$EDITOR</span><span style="color: #bbbbbb"> </span>answers.json<span style="color: #bbbbbb">                </span><span style="color: #3D7B7B; font-style: italic"># Edit your answers.json file</span>
+
+$<span style="color: #bbbbbb"> </span>../.scripts/check.py<span style="color: #bbbbbb">                </span><span style="color: #3D7B7B; font-style: italic"># Check reading07 quiz</span>
+Checking<span style="color: #bbbbbb"> </span>reading07<span style="color: #bbbbbb"> </span>quiz<span style="color: #bbbbbb"> </span>...
+<span style="color: #bbbbbb">     </span>Q01<span style="color: #bbbbbb"> </span><span style="color: #666666">0</span>.20
+<span style="color: #bbbbbb">     </span>Q02<span style="color: #bbbbbb"> </span><span style="color: #666666">0</span>.20
+<span style="color: #bbbbbb">     </span>Q03<span style="color: #bbbbbb"> </span><span style="color: #666666">0</span>.20
+<span style="color: #bbbbbb">     </span>Q04<span style="color: #bbbbbb"> </span><span style="color: #666666">0</span>.20
+<span style="color: #bbbbbb">     </span>Q05<span style="color: #bbbbbb"> </span><span style="color: #666666">0</span>.20
+<span style="color: #bbbbbb">     </span>Q06<span style="color: #bbbbbb"> </span><span style="color: #666666">0</span>.20
+<span style="color: #bbbbbb">     </span>Q07<span style="color: #bbbbbb"> </span><span style="color: #666666">0</span>.20
+<span style="color: #bbbbbb">     </span>Q08<span style="color: #bbbbbb"> </span><span style="color: #666666">0</span>.20
+<span style="color: #bbbbbb">     </span>Q09<span style="color: #bbbbbb"> </span><span style="color: #666666">0</span>.20
+<span style="color: #bbbbbb">     </span>Q10<span style="color: #bbbbbb"> </span><span style="color: #666666">0</span>.20
+<span style="color: #bbbbbb">   </span>Score<span style="color: #bbbbbb"> </span><span style="color: #666666">1</span>.00<span style="color: #bbbbbb"> </span>/<span style="color: #bbbbbb"> </span><span style="color: #666666">1</span>.00
+<span style="color: #bbbbbb">  </span>Status<span style="color: #bbbbbb"> </span>Success
+
+$<span style="color: #bbbbbb"> </span>git<span style="color: #bbbbbb"> </span>add<span style="color: #bbbbbb"> </span>answers.json<span style="color: #bbbbbb">                </span><span style="color: #3D7B7B; font-style: italic"># Add answers.json to staging area</span>
+$<span style="color: #bbbbbb"> </span>git<span style="color: #bbbbbb"> </span>commit<span style="color: #bbbbbb"> </span>-m<span style="color: #bbbbbb"> </span><span style="color: #BA2121">&quot;Reading 07: Quiz&quot;</span><span style="color: #bbbbbb">    </span><span style="color: #3D7B7B; font-style: italic"># Commit work</span>
+
+$<span style="color: #bbbbbb"> </span><span style="color: #19177C">$EDITOR</span><span style="color: #bbbbbb"> </span>translate1.py<span style="color: #bbbbbb">               </span><span style="color: #3D7B7B; font-style: italic"># Edit your translate1.py file</span>
+$<span style="color: #bbbbbb"> </span><span style="color: #19177C">$EDITOR</span><span style="color: #bbbbbb"> </span>translate2.py<span style="color: #bbbbbb">               </span><span style="color: #3D7B7B; font-style: italic"># Edit your translate2.py file</span>
+$<span style="color: #bbbbbb"> </span><span style="color: #19177C">$EDITOR</span><span style="color: #bbbbbb"> </span>translate3.py<span style="color: #bbbbbb">               </span><span style="color: #3D7B7B; font-style: italic"># Edit your translate3.py file</span>
+$<span style="color: #bbbbbb"> </span><span style="color: #19177C">$EDITOR</span><span style="color: #bbbbbb"> </span>translate4.py<span style="color: #bbbbbb">               </span><span style="color: #3D7B7B; font-style: italic"># Edit your translate4.py file</span>
+
+$<span style="color: #bbbbbb"> </span>make<span style="color: #bbbbbb">                                </span><span style="color: #3D7B7B; font-style: italic"># Test all scripts</span>
+Testing<span style="color: #bbbbbb"> </span>translations<span style="color: #bbbbbb"> </span>...
+<span style="color: #bbbbbb"> </span>translate1.py<span style="color: #bbbbbb">                            </span>...<span style="color: #bbbbbb"> </span>Success
+<span style="color: #bbbbbb"> </span>translate2.py<span style="color: #bbbbbb">                            </span>...<span style="color: #bbbbbb"> </span>Success
+<span style="color: #bbbbbb"> </span>translate3.py<span style="color: #bbbbbb">                            </span>...<span style="color: #bbbbbb"> </span>Success
+<span style="color: #bbbbbb"> </span>translate4.py<span style="color: #bbbbbb">                            </span>...<span style="color: #bbbbbb"> </span>Success
+
+<span style="color: #bbbbbb">   </span>Score<span style="color: #bbbbbb"> </span><span style="color: #666666">2</span>.00<span style="color: #bbbbbb"> </span>/<span style="color: #bbbbbb"> </span><span style="color: #666666">2</span>.00
+<span style="color: #bbbbbb">  </span>Status<span style="color: #bbbbbb"> </span>Success
+
+$<span style="color: #bbbbbb"> </span>git<span style="color: #bbbbbb"> </span>add<span style="color: #bbbbbb"> </span>Makefile<span style="color: #bbbbbb">                    </span><span style="color: #3D7B7B; font-style: italic"># Add Makefile to staging area</span>
+$<span style="color: #bbbbbb"> </span>git<span style="color: #bbbbbb"> </span>add<span style="color: #bbbbbb"> </span>translate1.py<span style="color: #bbbbbb">               </span><span style="color: #3D7B7B; font-style: italic"># Add translate1.py to staging area</span>
+$<span style="color: #bbbbbb"> </span>git<span style="color: #bbbbbb"> </span>add<span style="color: #bbbbbb"> </span>translate2.py<span style="color: #bbbbbb">               </span><span style="color: #3D7B7B; font-style: italic"># Add translate2.py to staging area</span>
+$<span style="color: #bbbbbb"> </span>git<span style="color: #bbbbbb"> </span>add<span style="color: #bbbbbb"> </span>translate3.py<span style="color: #bbbbbb">               </span><span style="color: #3D7B7B; font-style: italic"># Add translate3.py to staging area</span>
+$<span style="color: #bbbbbb"> </span>git<span style="color: #bbbbbb"> </span>add<span style="color: #bbbbbb"> </span>translate4.py<span style="color: #bbbbbb">               </span><span style="color: #3D7B7B; font-style: italic"># Add translate4.py to staging area</span>
+$<span style="color: #bbbbbb"> </span>git<span style="color: #bbbbbb"> </span>commit<span style="color: #bbbbbb"> </span>-m<span style="color: #bbbbbb"> </span><span style="color: #BA2121">&quot;Reading 07: Scripts&quot;</span><span style="color: #bbbbbb"> </span><span style="color: #3D7B7B; font-style: italic"># Commit work</span>
+
+$<span style="color: #bbbbbb"> </span>git<span style="color: #bbbbbb"> </span>push<span style="color: #bbbbbb"> </span>-u<span style="color: #bbbbbb"> </span>origin<span style="color: #bbbbbb"> </span>reading07<span style="color: #bbbbbb">        </span><span style="color: #3D7B7B; font-style: italic"># Push branch to GitHub</span>
+</code></pre></div>
+
+<div class="alert alert-warning">
+<h4 id="acknowledgments"><i class="fa fa-life-ring"></i> Acknowledgments<a class="headerlink" href="#acknowledgments" title="Permanent link">&para;</a></h4>
+<p>If you collaborated with any other students, or received help from TAs or AI
+tools on this assignment, please record this support in the <code>README.md</code> in
+the <code>reading07</code> folder and include it with your <strong>Pull Request</strong>.</p>
+</div>
+<div class="alert alert-danger">
+<h4 id="pull-request"><i class="fa fa-github"></i> Pull Request<a class="headerlink" href="#pull-request" title="Permanent link">&para;</a></h4>
+<p>Remember to create a <strong>Pull Request</strong> and assign the appropriate TA from the
+<a href="reading07_tas.html">Reading 07 TA List</a>.</p>
+<p><strong>DO NOT MERGE</strong> your own <strong>Pull Request</strong>.  The TAs use open <strong>Pull Requests</strong>
+to keep track of which assignments to grade.  Closing them yourself will
+cause a delay in grading and confuse the TAs.</p>
+</div>
+
+
+	    <div class="row">
+		<hr/>
+
+		<footer class="text-center">
+		    <p class="text-muted">
+		    <small>
+		    Built using
+		    <a href="https://getbootstrap.com/">Bootstrap</a>,
+		    <a href="https://fontawesome.com/">Font Awesome</a>, and
+		    <a href="http://www.python.org/">Python</a>.
+		    <br/>
+		    &copy; 2025 <a href="http://www.nd.edu">University of Notre Dame</a>
+		    </small>
+		    </p>
+		</footer>
+	    </div>
+
+	</div> <!-- /container -->
+
+	<!-- Bootstrap core JavaScript
+	================================================== -->
+	<!-- Placed at the end of the document so the pages load faster -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	
+	
+    </body>
+</html>
+
