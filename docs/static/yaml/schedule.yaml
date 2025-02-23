@@ -207,6 +207,9 @@
       - date:           Mon 03/03
         topics:         Review
         assignment:     Reading 07
+        items:
+          - name:       Checklist 02
+            link:       checklist02.html
 
       - date:           Wed 03/05
         items:
