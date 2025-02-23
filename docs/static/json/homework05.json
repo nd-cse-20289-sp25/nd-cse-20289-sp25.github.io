@@ -1,0 +1,31 @@
+{
+    "q01": {
+        "type": "blank",
+        "question": "\n<p>Use your <tt>searx.py</tt> to answer the following questions:</p>\n\n<ol>\n<li>What is the <b>URL</b> for the <tt>Notre Dame Linux Users Group</tt>? ____</li>\n<li>What is the <b>URL</b> for the <tt>bobbit irc bot</tt>? ____</li>\n<li>What <b>Mastodon</b> account (ie. <tt>@...@...</tt>) appears in the search results for <tt>pnutzh4x0r</tt>? ____</li>\n<li>What is the <b>title</b> of the first search result for <tt>nd cse bacs</tt>? ____</li>\n<li>According to the first search result for <tt>best pho near notre dame</tt>, which <b>restaurant</b> in near Notre Dame has the best pho? ____</li>\n</ol>\n"
+    },
+    "q02": {
+        "type": "blank",
+        "question": "\n<p>Use your <tt>hulk.py</tt> to answer the following questions:</p>\n\n<ol>\n  <li>How many passwords have a length of <b><tt>4</tt></b> and start with <b><tt>s</tt></b>? ____</li>\n  <li>How many passwords have a length of <b><tt>5</tt></b> and only contain <b>vowels</b>? ____</li>\n  <li>How many passwords have a length of <b><tt>6</tt></b>, start with <b><tt>b</tt></b>, and only contain the letters <b><tt>abcdefghijklmnop</tt></b>? ____</li>\n  <li>How many passwords have a length of <b><tt>5</tt></b>? ____</li>\n  <li>How many passwords have a length of <b><tt>6</tt></b>? ____</li>\n</ol>\n\n<p>Note, with <tt>8</tt> cores, length <tt>5</tt> should take less than\n<tt>20</tt> seconds on the <b>student</b> machines.  Likewise, with\n<tt>8</tt> cores, length <tt>6</tt> should take less than <tt>10</tt>\nminutes on the <b>student</b> machines.</p>\n"
+    },
+    "q03": {
+        "type": "multiple",
+        "question": "\n<p>Which of the following statements regarding <tt>hulk.py</tt>,\n<b>concurrency</b>, and <b>parallelism</b> are true (<i>select all that\napply</i>)?</p>\n",
+        "responses": {
+            "serial": "<tt>hulk.py</tt> is inherently <b>serial</b>.",
+            "embarrassing": "<tt>hulk.py</tt> is an <b>embarrassingly parallel</b> problem.",
+            "task": "<tt>hulk.py</tt> exhibits <b>task parallelism</b>.",
+            "data": "<tt>hulk.py</tt> exhibits <b>data parallelism</b>.",
+            "scaling": "<tt>hulk.py</tt> <b>always</b> performs faster given more CPU <b>cores</b>."
+        }
+    },
+    "q04": {
+        "type": "multiple",
+        "question": "\n<p>Which of the following statements regarding passwords are true\n(<i>select all that apply</i>)?</p>\n",
+        "responses": {
+            "alphabet": "To increase password strength, it is best to increase the complexity of the <b>alphabet</b>.",
+            "length": "To increase password strength, it is best to increase the <b>length</b> of the password.",
+            "complexity_al": "Brute-forcing passwords is <b><tt>O(alphabet^length)</tt></b>.",
+            "complexity_la": "Brute-forcing passwords is <b><tt>O(length^alphabet)</tt></b>."
+        }
+    }
+}
