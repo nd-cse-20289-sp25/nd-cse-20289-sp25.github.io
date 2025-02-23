@@ -420,6 +420,26 @@ body:       |
           -l LENGTH   Length of permutations
           -p PREFIX   Prefix for all permutations
           -s HASHES   Path of hashes file
+  
+  The `hulk.py` script takes the following possible arguments:
+
+    - `-a`: This allows the user to set the `ALPHABET` to use when generating
+      all possible permutations. By default, this is
+      `abcdefghijklmnopqrstuvwxyz0123456789`.
+
+    - `-c`: This allows the user to set the number of CPU `CORES` (ie.
+      [processes]) to use concurrently.  By default, this is `1`.
+    
+    - `-l`: This allows the user to set the `LENGTH` of the permutations to
+      consider.  By default, this is `1`.
+    
+    - `-p`: This allows the user to set the `PREFIX` to be added in front of
+      each permutation to consider.  By default, this is an empty string.
+    
+    - `-s`: This allows the user to set the path to the file containing [SHA1]
+      `HASHES` to checked against.  By default, this is `hulk.hashes`.
+
+    - `-h`: This prints the usage message and exits with success.
 
   Given an `ALPHABET` (default is `abcdefghijklmnopqrstuvwxyz0123456789`),
   `hulk.py` will compute the [SHA1] hash of every [permutation] of the
