@@ -376,6 +376,33 @@ Usage: hulk.py [-a alphabet -c CORES -l LENGTH -p PREFIX -s HASHES]
     -s HASHES   Path of hashes file
 </code></pre></div>
 
+<p>The <code>hulk.py</code> script takes the following possible arguments:</p>
+<ul>
+<li>
+<p><code>-a</code>: This allows the user to set the <code>ALPHABET</code> to use when generating
+    all possible permutations. By default, this is
+    <code>abcdefghijklmnopqrstuvwxyz0123456789</code>.</p>
+</li>
+<li>
+<p><code>-c</code>: This allows the user to set the number of CPU <code>CORES</code> (ie.
+    [processes]) to use concurrently.  By default, this is <code>1</code>.</p>
+</li>
+<li>
+<p><code>-l</code>: This allows the user to set the <code>LENGTH</code> of the permutations to
+    consider.  By default, this is <code>1</code>.</p>
+</li>
+<li>
+<p><code>-p</code>: This allows the user to set the <code>PREFIX</code> to be added in front of
+    each permutation to consider.  By default, this is an empty string.</p>
+</li>
+<li>
+<p><code>-s</code>: This allows the user to set the path to the file containing <a href="https://en.wikipedia.org/wiki/SHA1">SHA1</a>
+    <code>HASHES</code> to checked against.  By default, this is <code>hulk.hashes</code>.</p>
+</li>
+<li>
+<p><code>-h</code>: This prints the usage message and exits with success.</p>
+</li>
+</ul>
 <p>Given an <code>ALPHABET</code> (default is <code>abcdefghijklmnopqrstuvwxyz0123456789</code>),
 <code>hulk.py</code> will compute the <a href="https://en.wikipedia.org/wiki/SHA1">SHA1</a> hash of every <a href="https://en.wikipedia.org/wiki/Permutation">permutation</a> of the
 <code>ALPHABET</code> for the specified <code>LENGTH</code> and check if it is in the <a href="https://docs.python.org/3/library/stdtypes.html#set">set</a> of
