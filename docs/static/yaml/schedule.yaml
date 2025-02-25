@@ -185,6 +185,8 @@
         items:
           - name:       Slides 13
             link:       https://docs.google.com/presentation/d/1UeJHhN5VifEKuzuw5Ey8pX_1ZJZ6i6WCQVF64GJf2BQ/edit?usp=sharing
+          - name:       Panopto
+            link:       https://notredame.hosted.panopto.com/Panopto/Pages/Viewer.aspx?id=e4a1ba95-57a4-41a1-801a-b28e013befed
 
       - date:           Wed 02/26
         topics:         Iterators, Generators
