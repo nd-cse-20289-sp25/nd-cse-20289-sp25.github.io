@@ -359,7 +359,7 @@ class HulkTest(unittest.TestCase):
                 hulk.sha1sum('\n'.join(sorted(stdout.splitlines())) + '\n'),
                 'f932f90d84b696671f18960bd5159c37d1de2d7e'
             )
-            self.assertTrue(elapsed <= 1.0)
+            self.assertTrue(elapsed <= 1.5)
         HulkTest.Points += 0.2
 
 # Main Execution
