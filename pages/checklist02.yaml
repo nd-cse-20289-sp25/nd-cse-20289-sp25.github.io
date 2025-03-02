@@ -126,6 +126,12 @@ body:       |
 
           - Sort lists and dictionaries
 
+    5. How do we test [Python]?
+
+          - Using [doctest]
+          - Using [mypy]
+          - Using [unittest]
+
     [Python]:               https://www.python.org/
     [Bourne shell]:         https://en.wikipedia.org/wiki/Bourne_shell
     [data structures]:      https://en.wikipedia.org/wiki/Data_structure
@@ -133,6 +139,9 @@ body:       |
     [regular expressions]:  https://en.wikipedia.org/wiki/Regular_expression
     [JSON]:                 http://www.json.org/
     [web scraping]:         https://en.wikipedia.org/wiki/Web_scraping
+    [doctest]:              https://docs.python.org/3/library/doctest.html
+    [mypy]:                 https://mypy.readthedocs.io/en/stable/
+    [unittest]:             https://docs.python.org/3/library/unittest.html
 
     <div class="alert alert-success" markdown="1">
     #### <i class="fa fa-question"></i> Sample Questions
