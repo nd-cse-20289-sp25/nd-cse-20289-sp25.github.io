@@ -227,6 +227,9 @@
 
       - date:           Fri 03/07
         topics:         Compiling and Building
+        items:
+          - name:       Slides 16
+            link:       https://docs.google.com/presentation/d/1HFhfkQNxFRe8nJc9KUtkDPJsUW1WId6wQvQOsLekqpA/edit?usp=sharing
 
 - name:     "Spring Break"
 
