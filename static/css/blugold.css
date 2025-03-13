@@ -4919,15 +4919,16 @@ fieldset[disabled] .navbar-inverse .btn-link:focus {
   cursor: not-allowed;
 }
 .label {
-  display: inline;
-  padding: .2em .6em .3em;
-  font-size: 75%;
+  display: inline-block;
+  min-width: 10px;
+  padding: 3px 7px;
+  font-size: 9px;
   font-weight: bold;
-  line-height: 1;
   color: #ffffff;
-  text-align: center;
+  line-height: 1;
+  vertical-align: middle;
   white-space: nowrap;
-  vertical-align: baseline;
+  text-align: center;
   border-radius: .25em;
 }
 a.label:hover,
