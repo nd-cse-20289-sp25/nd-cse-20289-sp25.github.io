@@ -147,12 +147,6 @@ body:       |
               <dl>
                 <dt><i class="fa fa-user"></i> Teaching Assistant</dt>
                 <dd>{{ ta['name'] }} (<a href="mailto:{{ ta['netid'] }}@nd.edu">{{ ta['netid'] }}@nd.edu</a>)</dd>
-                <!--
-                <dt><i class="fa fa-life-ring"></i> Office Hours</dt>
-                <dd>{{ ta.get('hours', 'TBD') }}</dd>
-                <dt><i class="fa fa-briefcase"></i> Office Location</dt>
-                <dd>{{ ta.get('location', 'TBD') }}</dd>
-                //-->
               </dl>
           </div>
 
