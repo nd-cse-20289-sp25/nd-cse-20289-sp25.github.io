@@ -1,6 +1,9 @@
 title:      "Reading 07: Exam 02"
 icon:       fa-book
-navigation: []
+navigation:
+  - name: "Home"
+    link: "index.html"
+    icon: "fa-linux"
 internal:
 external:
 body:       |
