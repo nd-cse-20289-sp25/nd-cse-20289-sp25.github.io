@@ -249,13 +249,15 @@
             link:       https://notredame.hosted.panopto.com/Panopto/Pages/Viewer.aspx?id=11388753-17fd-4d5b-ba50-b2a30127d8de
 
       - date:           Wed 03/19
-        topics:         Arrays, Strings, Debugging (GDB, Valgrind)
+        topics:         Arrays, Strings, Debugging (GDB)
         items:
           - name:       Slides 18
             link:       https://docs.google.com/presentation/d/1K7q0AS0p0wzYj3jzpAyC8a6h5nbvzdHZ_B-ZuCR-Pyg/edit?usp=sharing
+          - name:       Panopto
+            link:       https://notredame.hosted.panopto.com/Panopto/Pages/Viewer.aspx?id=d680f65d-164b-41eb-a880-b2a50128901f
 
       - date:           Fri 03/21
-        topics:         Bitsets, Memory Allocation
+        topics:         Valgrind, Bitsets, Memory Allocation
 
       - date:           Sat 03/22
         topics:         Translateit
@@ -268,13 +270,13 @@
         topics:         Structs, Unions
 
       - date:           Wed 03/26
-        topics:         Linked Data Structures
+        topics:         Linked Lists
 
       - date:           Fri 03/28
         topics:         Data Representation
 
       - date:           Sat 03/29
-        topics:         Uniqueit
+        topics:         Seqit, Tailit
         assignment:     Homework 07
 
 - name:     "Exam 03"
