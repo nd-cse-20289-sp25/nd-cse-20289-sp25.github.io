@@ -493,7 +493,7 @@ body:       |
   [iterative development]:  https://en.wikipedia.org/wiki/Iterative_and_incremental_development
   [unit tests]:             https://en.wikipedia.org/wiki/Unit_testing
 
-  ## Activity 2: Trit (*3 Points*)
+  ## Activity 2: Trit (*2 Points*)
 
   Once you have a working string library, you are to complete the `trit`
   translation utility:
