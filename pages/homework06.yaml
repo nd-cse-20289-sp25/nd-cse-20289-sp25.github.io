@@ -1,6 +1,9 @@
 title:      "Homework 06: Trit"
 icon:       fa-code
-navigation: []
+navigation:
+  - name:   "Home"
+    link:   "index.html"
+    icon:   "fa-linux"
 internal:
 external:
 body:       |
@@ -81,7 +84,7 @@ body:       |
 
       :::bash
       $ git add Makefile                            # Mark changes for commit
-      $ git add *.c *.h
+      $ git add *.c *.h                             # Mark changes for commit
       $ git commit -m "Homework 06: Initial Import" # Record changes
 
   ### Task 3: Unit Tests
