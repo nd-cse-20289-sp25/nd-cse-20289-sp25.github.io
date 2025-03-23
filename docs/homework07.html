@@ -1,0 +1,945 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="description" content="">
+	<meta name="author" content="">
+
+	<title>Homework 07: Seqit, Tailit</title>
+
+	<!-- Bootstrap core CSS -->
+	<link href="static/css/blugold.css" rel="stylesheet">
+	<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+
+	<!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+	<!--[if lt IE 9]>
+	<script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+	<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+	<![endif]-->
+
+	<style>
+	body {
+	    padding: 10px;
+	}
+	</style>
+    </head>
+    <body>
+	<div class="container">
+
+	    <div class="row">
+		<div class="page-header">
+		    <ul class="nav nav-pills pull-right">
+			
+			<li><a href="index.html"><i class="fa fa-sitemap"></i> <span class="visible-md-inline visible-lg-inline">Home</span></a></li>
+			
+		    </ul>
+		    <h1><i class="fa fa-code"></i> Homework 07: Seqit, Tailit</h1>
+		</div>
+	    </div>
+
+            
+<p>The goal of this homework assignment is to allow you to practice <a href="https://en.wikipedia.org/wiki/Memory_management">memory
+management</a> in <a href="https://en.wikipedia.org/wiki/C_(programming_language)">C</a> by building a <a href="https://en.wikipedia.org/wiki/Linked_list">linked list</a>.  The first activities involve
+implementing a <a href="https://en.wikipedia.org/wiki/Doubly_linked_list">doubly linked list</a> with a <a href="https://en.wikipedia.org/wiki/Sentinel_node">sentinel node</a>, while the last
+two activities requires you to use this <a href="https://en.wikipedia.org/wiki/Data_structure">data structure</a> to implement your
+own versions of <a href="https://www.mankier.com/1/seq">seq</a> and <a href="https://www.mankier.com/1/tail">tail</a>.</p>
+<p>For this assignment, you are to do your work in the <code>homework07</code> folder of
+your <strong>assignments</strong> <a href="https://github.com">GitHub</a> repository and push your work by <strong>noon
+Saturday, March 29</strong>.</p>
+<div class="alert alert-info">
+<h4 id="frequently-asked-questions"><i class="fa fa-question"></i> Frequently Asked Questions<a class="headerlink" href="#frequently-asked-questions" title="Permanent link">&para;</a></h4>
+<div class="text-center">
+<iframe allowfullscreen="true" frameborder="0" height="389" mozallowfullscreen="true" src="https://docs.google.com/presentation/d/e/2PACX-1vTiOKoGP1KSCC1yRAgTFm5QeMvzCw-1EVabxeZ2WpmqRAPdrMV2xNvYgyXkxdM53-IemlTJSK8NZfoK/embed?start=false&amp;loop=false&amp;delayms=3000" webkitallowfullscreen="true" width="480"></iframe>
+</div>
+</div>
+<h2 id="activity-0-preparation">Activity 0: Preparation<a class="headerlink" href="#activity-0-preparation" title="Permanent link">&para;</a></h2>
+<p>Before starting this homework assignment, you should first perform a <code>git
+pull</code> to retrieve any changes in your remote <a href="https://github.com">GitHub</a> repository:</p>
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%;"><span></span><code>$<span style="color: #bbbbbb"> </span><span style="color: #008000">cd</span><span style="color: #bbbbbb"> </span>path/to/repository<span style="color: #bbbbbb">                   </span><span style="color: #3D7B7B; font-style: italic"># Go to assignments repository</span>
+
+$<span style="color: #bbbbbb"> </span>git<span style="color: #bbbbbb"> </span>switch<span style="color: #bbbbbb"> </span>master<span style="color: #bbbbbb">                       </span><span style="color: #3D7B7B; font-style: italic"># Make sure we are in master branch</span>
+
+$<span style="color: #bbbbbb"> </span>git<span style="color: #bbbbbb"> </span>pull<span style="color: #bbbbbb"> </span>--rebase<span style="color: #bbbbbb">                       </span><span style="color: #3D7B7B; font-style: italic"># Get any remote changes not present locally</span>
+</code></pre></div>
+
+<p>Next, create a new branch for this assignment:</p>
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%;"><span></span><code>$<span style="color: #bbbbbb"> </span>git<span style="color: #bbbbbb"> </span>checkout<span style="color: #bbbbbb"> </span>-b<span style="color: #bbbbbb"> </span>homework07<span style="color: #bbbbbb">              </span><span style="color: #3D7B7B; font-style: italic"># Create homework07 branch and check it out</span>
+</code></pre></div>
+
+<h3 id="task-1-skeleton-code">Task 1: Skeleton Code<a class="headerlink" href="#task-1-skeleton-code" title="Permanent link">&para;</a></h3>
+<p>To help you get started, the instructor has provided you with the following
+<strong>skeleton code</strong>:</p>
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%;"><span></span><code><span style="color: #3D7B7B; font-style: italic"># Go to homework07 folder</span>
+$<span style="color: #bbbbbb"> </span><span style="color: #008000">cd</span><span style="color: #bbbbbb"> </span>homework07
+
+<span style="color: #3D7B7B; font-style: italic"># Download Makefile</span>
+$<span style="color: #bbbbbb"> </span>curl<span style="color: #bbbbbb"> </span>-LO<span style="color: #bbbbbb"> </span>https://www3.nd.edu/~pbui/teaching/cse.20289.sp25/static/txt/homework07/Makefile
+
+<span style="color: #3D7B7B; font-style: italic"># Download C skeleton code</span>
+$<span style="color: #bbbbbb"> </span>curl<span style="color: #bbbbbb"> </span>-LO<span style="color: #bbbbbb"> </span>https://www3.nd.edu/~pbui/teaching/cse.20289.sp25/static/txt/homework07/list.c
+$<span style="color: #bbbbbb"> </span>curl<span style="color: #bbbbbb"> </span>-LO<span style="color: #bbbbbb"> </span>https://www3.nd.edu/~pbui/teaching/cse.20289.sp25/static/txt/homework07/list.h
+$<span style="color: #bbbbbb"> </span>curl<span style="color: #bbbbbb"> </span>-LO<span style="color: #bbbbbb"> </span>https://www3.nd.edu/~pbui/teaching/cse.20289.sp25/static/txt/homework07/list.unit.c
+$<span style="color: #bbbbbb"> </span>curl<span style="color: #bbbbbb"> </span>-LO<span style="color: #bbbbbb"> </span>https://www3.nd.edu/~pbui/teaching/cse.20289.sp25/static/txt/homework07/node.c
+$<span style="color: #bbbbbb"> </span>curl<span style="color: #bbbbbb"> </span>-LO<span style="color: #bbbbbb"> </span>https://www3.nd.edu/~pbui/teaching/cse.20289.sp25/static/txt/homework07/node.unit.c
+$<span style="color: #bbbbbb"> </span>curl<span style="color: #bbbbbb"> </span>-LO<span style="color: #bbbbbb"> </span>https://www3.nd.edu/~pbui/teaching/cse.20289.sp25/static/txt/homework07/seqit.c
+$<span style="color: #bbbbbb"> </span>curl<span style="color: #bbbbbb"> </span>-LO<span style="color: #bbbbbb"> </span>https://www3.nd.edu/~pbui/teaching/cse.20289.sp25/static/txt/homework07/tailit.c
+</code></pre></div>
+
+<p>Once downloaded and extracted, you should see the following files in your
+<code>homework07</code> directory:</p>
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%;"><span></span><code>homework07
+<span style="color: #bbbbbb">    </span><span style="color: #AA5D1F; font-weight: bold">\_</span><span style="color: #bbbbbb"> </span>Makefile<span style="color: #bbbbbb">     </span><span style="color: #3D7B7B; font-style: italic"># This is the Makefile for building all the assignment artifacts</span>
+<span style="color: #bbbbbb">    </span><span style="color: #AA5D1F; font-weight: bold">\_</span><span style="color: #bbbbbb"> </span>list.c<span style="color: #bbbbbb">       </span><span style="color: #3D7B7B; font-style: italic"># This is the List structure C source file</span>
+<span style="color: #bbbbbb">    </span><span style="color: #AA5D1F; font-weight: bold">\_</span><span style="color: #bbbbbb"> </span>list.h<span style="color: #bbbbbb">       </span><span style="color: #3D7B7B; font-style: italic"># This is the List library C header file</span>
+<span style="color: #bbbbbb">    </span><span style="color: #AA5D1F; font-weight: bold">\_</span><span style="color: #bbbbbb"> </span>list.unit.c<span style="color: #bbbbbb">  </span><span style="color: #3D7B7B; font-style: italic"># This is the List structure C unit test source file</span>
+<span style="color: #bbbbbb">    </span><span style="color: #AA5D1F; font-weight: bold">\_</span><span style="color: #bbbbbb"> </span>node.c<span style="color: #bbbbbb">       </span><span style="color: #3D7B7B; font-style: italic"># This is the Node structure C source file</span>
+<span style="color: #bbbbbb">    </span><span style="color: #AA5D1F; font-weight: bold">\_</span><span style="color: #bbbbbb"> </span>node.unit.c<span style="color: #bbbbbb">  </span><span style="color: #3D7B7B; font-style: italic"># This is the Node structure C unit test source file</span>
+<span style="color: #bbbbbb">    </span><span style="color: #AA5D1F; font-weight: bold">\_</span><span style="color: #bbbbbb"> </span>seqit.c<span style="color: #bbbbbb">      </span><span style="color: #3D7B7B; font-style: italic"># This is the seqit utility C source file</span>
+<span style="color: #bbbbbb">    </span><span style="color: #AA5D1F; font-weight: bold">\_</span><span style="color: #bbbbbb"> </span>list.c<span style="color: #bbbbbb">       </span><span style="color: #3D7B7B; font-style: italic"># This is the tailit utility C source file</span>
+</code></pre></div>
+
+<h3 id="task-2-initial-import">Task 2: Initial Import<a class="headerlink" href="#task-2-initial-import" title="Permanent link">&para;</a></h3>
+<p>Now that the files are downloaded into the <code>homework06</code> folder, you can
+<strong>commit</strong> them to your <a href="https://git-scm.com/">git</a> repository:</p>
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%;"><span></span><code>$<span style="color: #bbbbbb"> </span>git<span style="color: #bbbbbb"> </span>add<span style="color: #bbbbbb"> </span>Makefile<span style="color: #bbbbbb">                            </span><span style="color: #3D7B7B; font-style: italic"># Mark changes for commit</span>
+$<span style="color: #bbbbbb"> </span>git<span style="color: #bbbbbb"> </span>add<span style="color: #bbbbbb"> </span>*.c<span style="color: #bbbbbb"> </span>*.h<span style="color: #bbbbbb">                             </span><span style="color: #3D7B7B; font-style: italic"># Mark changes for commit</span>
+$<span style="color: #bbbbbb"> </span>git<span style="color: #bbbbbb"> </span>commit<span style="color: #bbbbbb"> </span>-m<span style="color: #bbbbbb"> </span><span style="color: #BA2121">&quot;Homework 07: Initial Import&quot;</span><span style="color: #bbbbbb"> </span><span style="color: #3D7B7B; font-style: italic"># Record changes</span>
+</code></pre></div>
+
+<h3 id="task-3-unit-tests">Task 3: Unit Tests<a class="headerlink" href="#task-3-unit-tests" title="Permanent link">&para;</a></h3>
+<p>After downloading these files, you can run <code>make test</code> to run the tests.</p>
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%;"><span></span><code><span style="color: #3D7B7B; font-style: italic"># Run all tests (will trigger automatic download)</span>
+$<span style="color: #bbbbbb"> </span>make<span style="color: #bbbbbb"> </span><span style="color: #008000">test</span>
+</code></pre></div>
+
+<p>You will notice that the <code>Makefile</code> downloads these additional test files and scripts:</p>
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%;"><span></span><code>homework07
+<span style="color: #bbbbbb">    </span><span style="color: #AA5D1F; font-weight: bold">\_</span><span style="color: #bbbbbb"> </span>list.unit.sh<span style="color: #bbbbbb">   </span><span style="color: #3D7B7B; font-style: italic"># This is the List structure unit test shell script</span>
+<span style="color: #bbbbbb">    </span><span style="color: #AA5D1F; font-weight: bold">\_</span><span style="color: #bbbbbb"> </span>node.unit.sh<span style="color: #bbbbbb">   </span><span style="color: #3D7B7B; font-style: italic"># This is the Node structure unit test shell script</span>
+<span style="color: #bbbbbb">    </span><span style="color: #AA5D1F; font-weight: bold">\_</span><span style="color: #bbbbbb"> </span>seqit.test.sh<span style="color: #bbbbbb">  </span><span style="color: #3D7B7B; font-style: italic"># This is the seqit utility test shell script</span>
+<span style="color: #bbbbbb">    </span><span style="color: #AA5D1F; font-weight: bold">\_</span><span style="color: #bbbbbb"> </span>tailit.test.sh<span style="color: #bbbbbb"> </span><span style="color: #3D7B7B; font-style: italic"># This is the tailit utility test shell script</span>
+</code></pre></div>
+
+<p>You will be using these <a href="https://en.wikipedia.org/wiki/Unit_testing">unit tests</a> to verify the correctness and behavior
+of your code.</p>
+<div class="alert alert-info">
+<h4 id="automatic-downloads"><i class="fa fa-download"></i> Automatic Downloads<a class="headerlink" href="#automatic-downloads" title="Permanent link">&para;</a></h4>
+<p>The <code>test</code> scripts are automatically downloaded by the <code>Makefile</code>, so any
+modifications you do to them will be lost when you run <code>make</code> again. Likewise,
+because they are automatically downloaded, you do not need to <code>add</code> or <code>commit</code>
+them to your <a href="https://git-scm.com/">git</a> repository.</p>
+</div>
+<p>The details on what you need to implement for this assignment are described
+in the following sections.</p>
+<h3 id="task-4-makefile">Task 4: <code>Makefile</code><a class="headerlink" href="#task-4-makefile" title="Permanent link">&para;</a></h3>
+<p>The Makefile contains all the rules or recipes for building the project
+artifacts (e.g. <code>node.unit</code>, <code>list.unit</code>, <code>seqit</code>, <code>tailit</code>, etc.):</p>
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%;"><span></span><code><span style="color: #19177C">CC</span><span style="color: #666666">=</span><span style="color: #bbbbbb">       </span>gcc
+<span style="color: #19177C">CFLAGS</span><span style="color: #666666">=</span><span style="color: #bbbbbb">   </span>-Wall<span style="color: #bbbbbb"> </span>-g<span style="color: #bbbbbb"> </span>-std<span style="color: #666666">=</span>gnu99
+<span style="color: #19177C">LD</span><span style="color: #666666">=</span><span style="color: #bbbbbb">       </span>gcc
+<span style="color: #19177C">LDFLAGS</span><span style="color: #666666">=</span><span style="color: #bbbbbb">  </span>-L.
+<span style="color: #19177C">TARGETS</span><span style="color: #666666">=</span><span style="color: #bbbbbb">  </span>seqit<span style="color: #bbbbbb"> </span>tailit
+
+<span style="color: #0000FF">all</span><span style="color: #666666">:</span><span style="color: #bbbbbb">      </span><span style="color: #008000; font-weight: bold">$(</span><span style="color: #19177C">TARGETS</span><span style="color: #008000; font-weight: bold">)</span>
+
+<span style="color: #3D7B7B; font-style: italic">#-------------------------------------------------------------------------------</span>
+<span style="color: #3D7B7B; font-style: italic"># TODO: Add rules for node.o, list.o, seqit.o, tailit.o, seqit, tailit</span>
+<span style="color: #3D7B7B; font-style: italic">#-------------------------------------------------------------------------------</span>
+
+<span style="color: #0000FF">node.o</span><span style="color: #666666">:</span>
+
+<span style="color: #0000FF">list.o</span><span style="color: #666666">:</span>
+
+<span style="color: #0000FF">seqit.o</span><span style="color: #666666">:</span>
+
+<span style="color: #0000FF">tailit.o</span><span style="color: #666666">:</span>
+
+<span style="color: #0000FF">seqit</span><span style="color: #666666">:</span>
+
+<span style="color: #0000FF">tailit</span><span style="color: #666666">:</span>
+
+<span style="color: #3D7B7B; font-style: italic">#-------------------------------------------------------------------------------</span>
+<span style="color: #3D7B7B; font-style: italic"># DO NOT MODIFY BELOW</span>
+<span style="color: #3D7B7B; font-style: italic">#-------------------------------------------------------------------------------</span>
+
+<span style="border: 1px solid #FF0000">...</span>
+</code></pre></div>
+
+<p>For this task, you will need to add <a href="https://www.gnu.org/software/make/manual/html_node/Rule-Example.html#Rule-Example">rules</a> for building the programs <code>seqit</code>
+and <code>tailit</code>. Be sure to have a <strong>recipe</strong> for any <em>intermediate</em> <a href="https://en.wikipedia.org/wiki/Object_file">object</a>
+files that programs require as shown in the <a href="https://en.wikipedia.org/wiki/Directed_acyclic_graph">DAG</a> below:</p>
+<div class="thumbnail">
+  <img src="static/img/homework07-makefile.png" class="img-responsive">
+</div>
+
+<div class="alert alert-info">
+<h4 id="makefile-variables"><i class="fa fa-cogs"></i> Makefile Variables<a class="headerlink" href="#makefile-variables" title="Permanent link">&para;</a></h4>
+<p>You <strong>must</strong> use the <code>CC</code>, <code>CFLAGS</code>, <code>LD</code>, and <code>LDFLAGS</code> variables when
+appropriate in your rules. You <strong>should</strong> also consider using <a href="https://www.gnu.org/software/make/manual/html_node/Automatic-Variables.html">automatic
+variables</a> such as <code>$@</code> and <code>$&lt;</code> as well.</p>
+</div>
+<p>Once you have a working <code>Makefile</code>, you should be able to run the following
+commands:</p>
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%;"><span></span><code><span style="color: #3D7B7B; font-style: italic"># Build all TARGETS</span>
+$<span style="color: #bbbbbb"> </span>make
+gcc<span style="color: #bbbbbb"> </span>-Wall<span style="color: #bbbbbb"> </span>-g<span style="color: #bbbbbb"> </span>-std<span style="color: #666666">=</span>gnu99<span style="color: #bbbbbb"> </span>-c<span style="color: #bbbbbb"> </span>-o<span style="color: #bbbbbb"> </span>seqit.o<span style="color: #bbbbbb"> </span>seqit.c
+gcc<span style="color: #bbbbbb"> </span>-Wall<span style="color: #bbbbbb"> </span>-g<span style="color: #bbbbbb"> </span>-std<span style="color: #666666">=</span>gnu99<span style="color: #bbbbbb"> </span>-c<span style="color: #bbbbbb"> </span>-o<span style="color: #bbbbbb"> </span>node.o<span style="color: #bbbbbb"> </span>node.c
+gcc<span style="color: #bbbbbb"> </span>-Wall<span style="color: #bbbbbb"> </span>-g<span style="color: #bbbbbb"> </span>-std<span style="color: #666666">=</span>gnu99<span style="color: #bbbbbb"> </span>-c<span style="color: #bbbbbb"> </span>-o<span style="color: #bbbbbb"> </span>list.o<span style="color: #bbbbbb"> </span>list.c
+gcc<span style="color: #bbbbbb"> </span>-L.<span style="color: #bbbbbb"> </span>-o<span style="color: #bbbbbb"> </span>seqit<span style="color: #bbbbbb"> </span>seqit.o<span style="color: #bbbbbb"> </span>node.o<span style="color: #bbbbbb"> </span>list.o
+gcc<span style="color: #bbbbbb"> </span>-Wall<span style="color: #bbbbbb"> </span>-g<span style="color: #bbbbbb"> </span>-std<span style="color: #666666">=</span>gnu99<span style="color: #bbbbbb"> </span>-c<span style="color: #bbbbbb"> </span>-o<span style="color: #bbbbbb"> </span>tailit.o<span style="color: #bbbbbb"> </span>tailit.c
+gcc<span style="color: #bbbbbb"> </span>-L.<span style="color: #bbbbbb"> </span>-o<span style="color: #bbbbbb"> </span>tailit<span style="color: #bbbbbb"> </span>tailit.o<span style="color: #bbbbbb"> </span>node.o<span style="color: #bbbbbb"> </span>list.o
+
+<span style="color: #3D7B7B; font-style: italic"># Run all tests</span>
+$<span style="color: #bbbbbb"> </span>make<span style="color: #bbbbbb"> </span><span style="color: #008000">test</span>
+Testing<span style="color: #bbbbbb"> </span>node<span style="color: #bbbbbb"> </span>...
+...
+
+<span style="color: #3D7B7B; font-style: italic"># Remove generated artifacts</span>
+$<span style="color: #bbbbbb"> </span>make<span style="color: #bbbbbb"> </span>clean
+</code></pre></div>
+
+<div class="alert alert-danger">
+<p><strong>Note</strong>: The tests will <strong>fail</strong> if you haven't implemented <code>Node</code> or <code>List</code>
+structures, or the <code>seqit</code> or <code>tailit</code> programs.</p>
+</div>
+<div class="alert alert-warning">
+<h4 id="warnings"><i class="fa fa-warning"></i> Warnings<a class="headerlink" href="#warnings" title="Permanent link">&para;</a></h4>
+<p>You must include the <code>-Wall</code> flag in your <code>CFLAGS</code> when you compile. This
+also means that your code must <strong>compile without any warnings</strong>, otherwise
+points will be deducted.</p>
+</div>
+<h3 id="task-5-listh">Task 5: <code>list.h</code><a class="headerlink" href="#task-5-listh" title="Permanent link">&para;</a></h3>
+<p>The <code>list.h</code> file is the <a href="https://en.wikipedia.org/wiki/Include_directive#C.2FC.2B.2B">header</a> file for the <a href="https://en.wikipedia.org/wiki/Doubly_linked_list">doubly linked list</a> library, which
+contains the following <a href="https://en.wikipedia.org/wiki/Struct_(C_programming_language)">structs</a> and function <a href="https://en.wikipedia.org/wiki/Function_prototype">prototypes</a>:</p>
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%;"><span></span><code><span style="color: #3D7B7B; font-style: italic">/* list.h: Doubly Linked List Library */</span>
+
+<span style="color: #9C6500">#pragma once</span>
+
+<span style="color: #9C6500">#include</span><span style="color: #bbbbbb"> </span><span style="color: #3D7B7B; font-style: italic">&lt;stdbool.h&gt;</span>
+<span style="color: #9C6500">#include</span><span style="color: #bbbbbb"> </span><span style="color: #3D7B7B; font-style: italic">&lt;stdint.h&gt;</span>
+<span style="color: #9C6500">#include</span><span style="color: #bbbbbb"> </span><span style="color: #3D7B7B; font-style: italic">&lt;stdlib.h&gt;</span>
+
+<span style="color: #3D7B7B; font-style: italic">/* Value Union */</span>
+
+<span style="color: #008000; font-weight: bold">typedef</span><span style="color: #bbbbbb"> </span><span style="color: #008000; font-weight: bold">union</span><span style="color: #bbbbbb"> </span>{
+<span style="color: #bbbbbb">    </span><span style="color: #B00040">int64_t</span><span style="color: #bbbbbb"> </span>number;<span style="color: #bbbbbb">     </span><span style="color: #3D7B7B; font-style: italic">// Value as number</span>
+<span style="color: #bbbbbb">    </span><span style="color: #B00040">char</span><span style="color: #bbbbbb">   </span><span style="color: #666666">*</span>string;<span style="color: #bbbbbb">     </span><span style="color: #3D7B7B; font-style: italic">// Value as string</span>
+}<span style="color: #bbbbbb"> </span>Value;
+
+<span style="color: #3D7B7B; font-style: italic">/* Node Structure */</span>
+
+<span style="color: #008000; font-weight: bold">typedef</span><span style="color: #bbbbbb"> </span><span style="color: #008000; font-weight: bold">struct</span><span style="color: #bbbbbb"> </span><span style="color: #0000FF; font-weight: bold">Node</span><span style="color: #bbbbbb"> </span>Node;
+<span style="color: #008000; font-weight: bold">struct</span><span style="color: #bbbbbb"> </span><span style="color: #0000FF; font-weight: bold">Node</span><span style="color: #bbbbbb"> </span>{
+<span style="color: #bbbbbb">    </span>Value<span style="color: #bbbbbb">   </span>value;<span style="color: #bbbbbb">      </span><span style="color: #3D7B7B; font-style: italic">// Value</span>
+<span style="color: #bbbbbb">    </span>Node<span style="color: #bbbbbb">   </span><span style="color: #666666">*</span>next;<span style="color: #bbbbbb">       </span><span style="color: #3D7B7B; font-style: italic">// Pointer to next Node</span>
+<span style="color: #bbbbbb">    </span>Node<span style="color: #bbbbbb">   </span><span style="color: #666666">*</span>prev;<span style="color: #bbbbbb">       </span><span style="color: #3D7B7B; font-style: italic">// Pointer to previous Node</span>
+};
+
+Node<span style="color: #bbbbbb"> </span><span style="color: #666666">*</span><span style="color: #bbbbbb">  </span><span style="color: #0000FF">node_create</span>(Value<span style="color: #bbbbbb"> </span>v,<span style="color: #bbbbbb"> </span>Node<span style="color: #bbbbbb"> </span><span style="color: #666666">*</span>next,<span style="color: #bbbbbb"> </span>Node<span style="color: #bbbbbb"> </span><span style="color: #666666">*</span>prev);
+<span style="color: #B00040">void</span><span style="color: #bbbbbb">    </span><span style="color: #0000FF">node_delete</span>(Node<span style="color: #bbbbbb"> </span><span style="color: #666666">*</span>n,<span style="color: #bbbbbb"> </span><span style="color: #B00040">bool</span><span style="color: #bbbbbb"> </span>release);
+
+<span style="color: #3D7B7B; font-style: italic">/* List Structure */</span>
+
+<span style="color: #008000; font-weight: bold">typedef</span><span style="color: #bbbbbb"> </span><span style="color: #008000; font-weight: bold">struct</span><span style="color: #bbbbbb"> </span>{
+<span style="color: #bbbbbb">    </span>Node<span style="color: #bbbbbb">    </span>sentinel;<span style="color: #bbbbbb">   </span><span style="color: #3D7B7B; font-style: italic">// Sentinel Node at head and tail of List</span>
+<span style="color: #bbbbbb">    </span><span style="color: #B00040">size_t</span><span style="color: #bbbbbb">  </span>size;<span style="color: #bbbbbb">       </span><span style="color: #3D7B7B; font-style: italic">// Number of Nodes in List</span>
+}<span style="color: #bbbbbb"> </span>List;
+
+List<span style="color: #bbbbbb"> </span><span style="color: #666666">*</span><span style="color: #bbbbbb">  </span><span style="color: #0000FF">list_create</span>();
+<span style="color: #B00040">void</span><span style="color: #bbbbbb">    </span><span style="color: #0000FF">list_delete</span>(List<span style="color: #bbbbbb"> </span><span style="color: #666666">*</span>l,<span style="color: #bbbbbb"> </span><span style="color: #B00040">bool</span><span style="color: #bbbbbb"> </span>release);
+
+<span style="color: #B00040">void</span><span style="color: #bbbbbb">    </span><span style="color: #0000FF">list_append</span>(List<span style="color: #bbbbbb"> </span><span style="color: #666666">*</span>l,<span style="color: #bbbbbb"> </span>Value<span style="color: #bbbbbb"> </span>v);
+Value<span style="color: #bbbbbb">   </span><span style="color: #0000FF">list_pop</span>(List<span style="color: #bbbbbb"> </span><span style="color: #666666">*</span>l,<span style="color: #bbbbbb"> </span><span style="color: #B00040">size_t</span><span style="color: #bbbbbb"> </span>index);
+</code></pre></div>
+
+<p>Other programs will <code>#include</code> this file in order to use the functions we
+will be implementing in this library.</p>
+<h3 id="value-union">Value Union<a class="headerlink" href="#value-union" title="Permanent link">&para;</a></h3>
+<p>The <code>Value</code> <a href="https://en.wikipedia.org/wiki/Union_type">union</a> is used by the <code>Node</code> structure to store either an
+<a href="https://en.wikipedia.org/wiki/Integer_(computer_science)">integer</a> or a <a href="https://en.wikipedia.org/wiki/C_string_handling">string</a>:</p>
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%;"><span></span><code><span style="color: #3D7B7B; font-style: italic">// Declare a Value union with an integer</span>
+Value<span style="color: #bbbbbb"> </span>v<span style="color: #bbbbbb"> </span><span style="color: #666666">=</span><span style="color: #bbbbbb"> </span>(Value)<span style="color: #666666">10L</span>;
+
+<span style="color: #3D7B7B; font-style: italic">// Alternatively</span>
+Value<span style="color: #bbbbbb"> </span>v<span style="color: #bbbbbb"> </span><span style="color: #666666">=</span><span style="color: #bbbbbb"> </span>{.number<span style="color: #bbbbbb"> </span><span style="color: #666666">=</span><span style="color: #bbbbbb"> </span><span style="color: #666666">10</span>};
+
+<span style="color: #3D7B7B; font-style: italic">// Access number</span>
+printf(<span style="color: #BA2121">&quot;%ld</span><span style="color: #AA5D1F; font-weight: bold">\n</span><span style="color: #BA2121">&quot;</span>,<span style="color: #bbbbbb"> </span>v.number);
+
+<span style="color: #3D7B7B; font-style: italic">// Declare a Value union with a string</span>
+Value<span style="color: #bbbbbb"> </span>v<span style="color: #bbbbbb"> </span><span style="color: #666666">=</span><span style="color: #bbbbbb"> </span>(Value)<span style="color: #BA2121">&quot;reasonable&quot;</span>;
+
+<span style="color: #3D7B7B; font-style: italic">// Alternatively</span>
+Value<span style="color: #bbbbbb"> </span>v<span style="color: #bbbbbb"> </span><span style="color: #666666">=</span><span style="color: #bbbbbb"> </span>{.string<span style="color: #bbbbbb"> </span><span style="color: #666666">=</span><span style="color: #bbbbbb"> </span><span style="color: #BA2121">&quot;reasonable&quot;</span>};
+
+<span style="color: #3D7B7B; font-style: italic">// Access string</span>
+puts(v.string);
+</code></pre></div>
+
+<p>The details of the <code>Node</code> structure and <code>List</code> structure, and what you need
+to implement are provided in the following sections.</p>
+<div class="alert alert-info">
+<p><strong>Note</strong>: For this task, you <strong>do not</strong> need to modify this file. Instead,
+you should review it and ensure you understand the provided code.</p>
+</div>
+<h2 id="activity-1-node-structure-1-point">Activity 1: Node Structure (<em>1 Point</em>)<a class="headerlink" href="#activity-1-node-structure-1-point" title="Permanent link">&para;</a></h2>
+<p>For the first activity, you are to implement a <code>Node</code> <strong>structure</strong> to be
+used in a <a href="https://en.wikipedia.org/wiki/Doubly_linked_list">doubly linked list</a>.  Each <code>Node</code> <strong>structure</strong> will have the
+following <strong>attributes</strong>:</p>
+<ol>
+<li>
+<p><code>value</code>: This is a <a href="https://en.wikipedia.org/wiki/Union_type">union</a> that can either be a number (ie. <code>int64_t</code>) or
+  a <a href="https://en.wikipedia.org/wiki/C_string_handling">string</a> (ie. <code>char *</code>).</p>
+</li>
+<li>
+<p><code>next</code>: This is a pointer to the next <code>Node</code> <a href="https://en.wikipedia.org/wiki/Struct_(C_programming_language)">struct</a> in the sequence.</p>
+</li>
+<li>
+<p><code>prev</code>: This is a pointer to the previous <code>Node</code> <a href="https://en.wikipedia.org/wiki/Struct_(C_programming_language)">struct</a> in the sequence.</p>
+</li>
+</ol>
+<div class="thumbnail">
+  <img src="static/img/homework07-node.png" class="img-responsive">
+</div>
+
+<h3 id="task-1-nodec">Task 1: <code>node.c</code><a class="headerlink" href="#task-1-nodec" title="Permanent link">&para;</a></h3>
+<p>The <code>node.c</code> file contains the <a href="https://en.wikipedia.org/wiki/C_(programming_language)">C</a> implementation for the <code>Node</code>
+<strong>structure</strong> described above.  For this task, you will need to implement the
+following functions:</p>
+<ol>
+<li>
+<p><code>Node * node_create(Value v, Node *next, Node *prev)</code></p>
+<blockquote>
+<p>This function allocates a new <code>Node</code> <a href="https://en.wikipedia.org/wiki/Struct_(C_programming_language)">struct</a> and initializes its
+attributes: <code>value</code>, <code>next</code>, <code>prev</code> as described above.</p>
+</blockquote>
+<p><div class="alert alert-success" markdown="1">
+<strong>Hint</strong>: Use <a href="https://www.mankier.com/3/malloc">malloc</a> or <a href="https://www.mankier.com/3/malloc">calloc</a> to allocate data on the <a href="https://en.wikipedia.org/wiki/Memory_management#HEAP">heap</a>.
+</div></p>
+</li>
+<li>
+<p><code>void node_delete(Node *n, bool release)</code></p>
+<blockquote>
+<p>This function deallocates the given <code>Node</code> <a href="https://en.wikipedia.org/wiki/Struct_(C_programming_language)">struct</a> along with its
+internal <code>value</code> as a <a href="https://en.wikipedia.org/wiki/C_string_handling">string</a> if <code>release</code> is <code>true</code>.</p>
+</blockquote>
+<p><div class="alert alert-success" markdown="1">
+<strong>Hint</strong>: Use <a href="https://www.mankier.com/3/malloc">free</a> to release data allocated on the <a href="https://en.wikipedia.org/wiki/Memory_management#HEAP">heap</a>.
+</div></p>
+</li>
+</ol>
+<h3 id="task-2-testing">Task 2: Testing<a class="headerlink" href="#task-2-testing" title="Permanent link">&para;</a></h3>
+<p>As you implement the functions in <code>node.c</code>, you should use the <code>node.unit</code>
+executable with the <code>node.unit.sh</code> script to test each of your functions:</p>
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%;"><span></span><code><span style="color: #3D7B7B; font-style: italic"># Build test artifacts and run test scripts</span>
+$<span style="color: #bbbbbb"> </span>make<span style="color: #bbbbbb"> </span>test-node
+Testing<span style="color: #bbbbbb"> </span>node<span style="color: #bbbbbb"> </span>...
+<span style="color: #bbbbbb"> </span>node_create<span style="color: #bbbbbb">                              </span>...<span style="color: #bbbbbb"> </span>Success
+<span style="color: #bbbbbb"> </span>node_delete<span style="color: #bbbbbb">                              </span>...<span style="color: #bbbbbb"> </span>Success
+
+<span style="color: #bbbbbb">   </span>Score<span style="color: #bbbbbb"> </span><span style="color: #666666">1</span>.00<span style="color: #bbbbbb"> </span>/<span style="color: #bbbbbb"> </span><span style="color: #666666">1</span>.00
+<span style="color: #bbbbbb">  </span>Status<span style="color: #bbbbbb"> </span>Success
+</code></pre></div>
+
+<p>You can also run the testing script manually:</p>
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%;"><span></span><code><span style="color: #3D7B7B; font-style: italic"># Run Shell unit test script manually</span>
+$<span style="color: #bbbbbb"> </span>./node.unit.sh
+...
+</code></pre></div>
+
+<p>To debug your <code>Node</code> functions, you can use <a href="https://www.gnu.org/software/gdb/">gdb</a> on the <code>node.unit</code> executable:</p>
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%;"><span></span><code><span style="color: #3D7B7B; font-style: italic"># Start gdb on node.unit</span>
+$<span style="color: #bbbbbb"> </span>gdb<span style="color: #bbbbbb"> </span>./node.unit
+<span style="color: #666666">(</span>gdb<span style="color: #666666">)</span><span style="color: #bbbbbb"> </span>run<span style="color: #bbbbbb"> </span><span style="color: #666666">0</span><span style="color: #bbbbbb">     </span><span style="color: #3D7B7B; font-style: italic"># Run node.unit with the &quot;0&quot; command line argument (ie. node_create)</span>
+...
+</code></pre></div>
+
+<p>You can also use <a href="http://valgrind.org/">valgrind</a> to check for memory errors:</p>
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%;"><span></span><code><span style="color: #3D7B7B; font-style: italic"># Check for memory errors on node_create test case</span>
+$<span style="color: #bbbbbb"> </span>valgrind<span style="color: #bbbbbb"> </span>--leak-check<span style="color: #666666">=</span>full<span style="color: #bbbbbb"> </span>./node.unit<span style="color: #bbbbbb"> </span><span style="color: #666666">0</span>
+</code></pre></div>
+
+<div class="alert alert-success">
+<h4 id="iterative-development"><i class="fa fa-repeat"></i> Iterative Development<a class="headerlink" href="#iterative-development" title="Permanent link">&para;</a></h4>
+<p>You should practice <a href="https://en.wikipedia.org/wiki/Iterative_and_incremental_development">iterative development</a>. That is, rather than writing a
+bunch of code and then debugging it all at once, you should concentrate on
+one function at a time and then test that <strong>one thing at a time</strong>. The provided
+<a href="https://en.wikipedia.org/wiki/Unit_testing">unit tests</a> allow you to check on the correctness of the individual functions
+without implementing everything at once. Take advantage of this and build one
+thing at a time.</p>
+</div>
+<h2 id="activity-2-list-structure-2-points">Activity 2: List Structure (<em>2 Points</em>)<a class="headerlink" href="#activity-2-list-structure-2-points" title="Permanent link">&para;</a></h2>
+<p>In high-level languages such as <a href="https://www.python.org/">Python</a>, we have built-in implementations of
+<a href="https://en.wikipedia.org/wiki/List_(abstract_data_type)">lists</a> which support a variety of methods:</p>
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%;"><span></span><code><span style="color: #3D7B7B; font-style: italic"># Declare a list</span>
+<span style="color: #666666">&gt;&gt;&gt;</span> data <span style="color: #666666">=</span> [<span style="color: #666666">5</span>, <span style="color: #666666">7</span>, <span style="color: #666666">4</span>]
+
+<span style="color: #3D7B7B; font-style: italic"># Add a new value to the back of list</span>
+<span style="color: #666666">&gt;&gt;&gt;</span> data<span style="color: #666666">.</span>append(<span style="color: #666666">0</span>)
+<span style="color: #666666">&gt;&gt;&gt;</span> data
+[<span style="color: #666666">5</span>, <span style="color: #666666">7</span>, <span style="color: #666666">4</span>, <span style="color: #666666">0</span>]
+
+<span style="color: #3D7B7B; font-style: italic"># Remove value from front of list</span>
+<span style="color: #666666">&gt;&gt;&gt;</span> data<span style="color: #666666">.</span>pop(<span style="color: #666666">0</span>)
+<span style="color: #666666">5</span>
+<span style="color: #666666">&gt;&gt;&gt;</span> data
+[<span style="color: #666666">7</span>, <span style="color: #666666">4</span>, <span style="color: #666666">0</span>]
+
+<span style="color: #3D7B7B; font-style: italic"># Remove value from middle of list</span>
+<span style="color: #666666">&gt;&gt;&gt;</span> data<span style="color: #666666">.</span>pop(<span style="color: #666666">1</span>)
+<span style="color: #666666">4</span>
+<span style="color: #666666">&gt;&gt;&gt;</span> data
+[<span style="color: #666666">7</span>, <span style="color: #666666">0</span>]
+</code></pre></div>
+
+<p>As you already know, <a href="https://en.wikipedia.org/wiki/List_(abstract_data_type)">lists</a> in <a href="https://www.python.org/">Python</a> provide an <code>append</code> method to add
+values to the back of the <a href="https://en.wikipedia.org/wiki/List_(abstract_data_type)">list</a> and a <code>pop</code> method to remove a value at a
+specified index from the <a href="https://en.wikipedia.org/wiki/List_(abstract_data_type)">list</a>.</p>
+<p>For the second activity, you are to use the <code>Node</code> <strong>structure</strong> from the
+previous activity to construct a <code>List</code> <strong>structure</strong> that implements a
+<a href="https://en.wikipedia.org/wiki/Doubly_linked_list">doubly linked list</a> with a <a href="https://en.wikipedia.org/wiki/Sentinel_node">sentinel node</a> to mimic the functionality of
+<a href="https://en.wikipedia.org/wiki/List_(abstract_data_type)">lists</a> in <a href="https://www.python.org/">Python</a>.</p>
+<div class="thumbnail">
+  <img src="static/img/homework07-list.png" class="img-responsive">
+</div>
+
+<p>The <code>List</code> <a href="https://en.wikipedia.org/wiki/Struct_(C_programming_language)">struct</a> you are to implement has the following attributes:</p>
+<ol>
+<li>
+<p><code>sentinel</code>: This is a <strong>sentinel</strong> <code>Node</code> <a href="https://en.wikipedia.org/wiki/Struct_(C_programming_language)">struct</a> embedded inside the
+  <code>List</code> <a href="https://en.wikipedia.org/wiki/Struct_(C_programming_language)">struct</a>.  It is used to simplify our internal <code>List</code> methods by
+  ensuring that there will always be an allocated  <code>Node</code> in the <a href="https://en.wikipedia.org/wiki/Doubly_linked_list">doubly
+  linked list</a>.</p>
+</li>
+<li>
+<p><code>size</code>: This is the number of values in the <code>List</code> <strong>structure</strong>.</p>
+</li>
+</ol>
+<div class="alert alert-success">
+<p><strong>Note</strong>: The <a href="https://en.wikipedia.org/wiki/Sentinel_node">sentinel node</a> is not considered part of the actual <a href="https://en.wikipedia.org/wiki/List_(abstract_data_type)">list</a>.
+  It does not store any <code>value</code> nor does it contribute to the <code>size</code> of the
+  <code>List</code>.</p>
+<p>Instead, it is there so that its <code>next</code> pointer is the <strong>head</strong> of the
+<a href="https://en.wikipedia.org/wiki/Doubly_linked_list">doubly linked list</a> and its <code>prev</code> pointer is the <strong>tail</strong> of the <a href="https://en.wikipedia.org/wiki/Doubly_linked_list">doubly
+linked list</a>.</p>
+</div>
+<p>With this <code>List</code> <a href="https://en.wikipedia.org/wiki/Struct_(C_programming_language)">struct</a> in mind, you are to complete the <a href="https://en.wikipedia.org/wiki/Doubly_linked_list">doubly linked
+list</a> library, which contains functions such as <code>list_append</code> and <code>list_pop</code>
+that implement some of the functionality present in <a href="https://www.python.org/">Python</a> but missing in
+<a href="https://en.wikipedia.org/wiki/C_(programming_language)">C</a>.</p>
+<h3 id="task-1-listc">Task 1: <code>list.c</code><a class="headerlink" href="#task-1-listc" title="Permanent link">&para;</a></h3>
+<p>The <code>list.c</code> file contains the <a href="https://en.wikipedia.org/wiki/C_(programming_language)">C</a> implementation for the <code>List</code>
+<strong>structure</strong> described above.  For this task, you will need to implement the
+following functions:</p>
+<div class="thumbnail">
+  <img src="static/img/homework07-list-push.png" class="img-responsive">
+</div>
+
+<p>For this task, you will need to implement the following functions:</p>
+<ol>
+<li>
+<p><code>List* list_create()</code></p>
+<blockquote>
+<p>This function allocates a new <code>List</code> <a href="https://en.wikipedia.org/wiki/Struct_(C_programming_language)">struct</a> and initializes its
+attributes: <code>sentinel</code> and <code>size</code> as described above.</p>
+</blockquote>
+<div class="alert alert-success" markdown="1">
+<p><strong>Hint</strong>: Use <a href="https://www.mankier.com/3/malloc">malloc</a> or <a href="https://www.mankier.com/3/malloc">calloc</a> to allocate data on the <a href="https://en.wikipedia.org/wiki/Memory_management#HEAP">heap</a>.  Be
+  sure to initialize the <code>next</code> and <code>prev</code> pointers of <code>sentinel</code>.</p>
+</div>
+</li>
+<li>
+<p><code>void list_delete(List *l, bool release)</code></p>
+<blockquote>
+<p>This function deallocates the given <code>List</code> <a href="https://en.wikipedia.org/wiki/Struct_(C_programming_language)">struct</a> along with its
+internal <code>Node</code> <a href="https://en.wikipedia.org/wiki/Struct_(C_programming_language)">struct</a>s.</p>
+</blockquote>
+<div class="alert alert-success" markdown="1">
+<p><strong>Hint</strong>: Use <code>node_delete</code> to delete the internal <code>Node</code> <a href="https://en.wikipedia.org/wiki/Struct_(C_programming_language)">struct</a>`s.</p>
+<p>To loop through the internal <code>Node</code> <strong>structures</strong>, you will want to
+  start with the first <code>Node</code> the <code>sentinel</code> points to and then stop once
+  you return to the <code>sentinel</code>.</p>
+</div>
+</li>
+<li>
+<p><code>void list_append(List *l, Value v)</code></p>
+<blockquote>
+<p>This function creates a new <code>Node</code> <a href="https://en.wikipedia.org/wiki/Struct_(C_programming_language)">struct</a> with the given <code>Value</code> <code>v</code>
+and adds it to the back of the internal <a href="https://en.wikipedia.org/wiki/Doubly_linked_list">doubly linked list</a> (e.g.
+<code>l.append(s)</code> in <a href="https://www.python.org/">Python</a>).</p>
+</blockquote>
+<div class="alert alert-success" markdown="1">
+<p><strong>Hint</strong>: Use <code>node_create</code> and take advantage of the <code>sentinel</code> in the
+  <code>List</code> <a href="https://en.wikipedia.org/wiki/Struct_(C_programming_language)">struct</a>.</p>
+</div>
+</li>
+<li>
+<p><code>Value list_pop(List *l, size_t index)</code></p>
+<blockquote>
+<p>This function removes the <code>Node</code> <a href="https://en.wikipedia.org/wiki/Struct_(C_programming_language)">struct</a> at the specified <code>index</code> from the internal
+<a href="https://en.wikipedia.org/wiki/Doubly_linked_list">doubly linked list</a> and returns the associated <code>Value</code> from the
+<code>Node</code> <a href="https://en.wikipedia.org/wiki/Struct_(C_programming_language)">struct</a> (e.g. <code>l.pop(index)</code> in <a href="https://www.python.org/">Python</a>).</p>
+</blockquote>
+<div class="alert alert-success" markdown="1">
+<p><strong>Hint</strong>: Use <code>node_delete</code> and take advantage of the <code>sentinel</code> in the
+  <code>List</code> <a href="https://en.wikipedia.org/wiki/Struct_(C_programming_language)">struct</a>.</p>
+<p>If the <code>index</code> is beyond the bounds of the <code>List</code>, then return <code>-1L</code> as
+the `Value.</p>
+</div>
+</li>
+</ol>
+<h3 id="task-2-testing_1">Task 2: Testing<a class="headerlink" href="#task-2-testing_1" title="Permanent link">&para;</a></h3>
+<p>As you implement the functions in <code>list.c</code>, you should use the <code>list.unit</code>
+executable with the <code>list.unit.sh</code> script to test each of your functions:</p>
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%;"><span></span><code><span style="color: #3D7B7B; font-style: italic"># Build test artifacts and run test scripts</span>
+$<span style="color: #bbbbbb"> </span>make<span style="color: #bbbbbb"> </span>test-list
+Testing<span style="color: #bbbbbb"> </span>list<span style="color: #bbbbbb"> </span>...
+<span style="color: #bbbbbb"> </span>list_create<span style="color: #bbbbbb">                              </span>...<span style="color: #bbbbbb"> </span>Success
+<span style="color: #bbbbbb"> </span>list_delete<span style="color: #bbbbbb">                              </span>...<span style="color: #bbbbbb"> </span>Success
+<span style="color: #bbbbbb"> </span>list_append<span style="color: #bbbbbb">                              </span>...<span style="color: #bbbbbb"> </span>Success
+<span style="color: #bbbbbb"> </span>list_pop<span style="color: #bbbbbb">                                 </span>...<span style="color: #bbbbbb"> </span>Success
+
+<span style="color: #bbbbbb">   </span>Score<span style="color: #bbbbbb"> </span><span style="color: #666666">2</span>.00<span style="color: #bbbbbb"> </span>/<span style="color: #bbbbbb"> </span><span style="color: #666666">2</span>.00
+<span style="color: #bbbbbb">  </span>Status<span style="color: #bbbbbb"> </span>Success
+</code></pre></div>
+
+<p>You can also run the testing script manually:</p>
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%;"><span></span><code><span style="color: #3D7B7B; font-style: italic"># Run Shell unit test script manually</span>
+$<span style="color: #bbbbbb"> </span>./list.unit.sh
+...
+</code></pre></div>
+
+<p>To debug your <code>list</code> functions, you can use <a href="https://www.gnu.org/software/gdb/">gdb</a> on the <code>list.unit</code> executable:</p>
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%;"><span></span><code><span style="color: #3D7B7B; font-style: italic"># Start gdb on list.unit</span>
+$<span style="color: #bbbbbb"> </span>gdb<span style="color: #bbbbbb"> </span>./list.unit
+<span style="color: #666666">(</span>gdb<span style="color: #666666">)</span><span style="color: #bbbbbb"> </span>run<span style="color: #bbbbbb"> </span><span style="color: #666666">0</span><span style="color: #bbbbbb">     </span><span style="color: #3D7B7B; font-style: italic"># Run list.unit with the &quot;0&quot; command line argument (ie. list_create)</span>
+...
+</code></pre></div>
+
+<p>You can also use <a href="http://valgrind.org/">valgrind</a> to check for memory errors:</p>
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%;"><span></span><code><span style="color: #3D7B7B; font-style: italic"># Check for memory errors on list_create test case</span>
+$<span style="color: #bbbbbb"> </span>valgrind<span style="color: #bbbbbb"> </span>--leak-check<span style="color: #666666">=</span>full<span style="color: #bbbbbb"> </span>./list.unit<span style="color: #bbbbbb"> </span><span style="color: #666666">0</span>
+</code></pre></div>
+
+<h2 id="activity-3-seqit-2-points">Activity 3: Seqit (<em>2 Points</em>)<a class="headerlink" href="#activity-3-seqit-2-points" title="Permanent link">&para;</a></h2>
+<p>Once you have implemented both <a href="https://en.wikipedia.org/wiki/Doubly_linked_list">doubly linked list</a> library, you are to
+complete the <code>seqit.c</code> program, which is a simplified version of the <a href="https://www.mankier.com/1/seq">seq</a>
+utility:</p>
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%;"><span></span><code><span style="color: #3D7B7B; font-style: italic"># Show usage</span>
+$<span style="color: #bbbbbb"> </span>./seqit
+Usage:<span style="color: #bbbbbb"> </span>seqit<span style="color: #bbbbbb"> </span>LAST
+<span style="color: #bbbbbb">       </span>seqit<span style="color: #bbbbbb"> </span>FIRST<span style="color: #bbbbbb"> </span>LAST
+<span style="color: #bbbbbb">       </span>seqit<span style="color: #bbbbbb"> </span>FIRST<span style="color: #bbbbbb"> </span>INCREMENT<span style="color: #bbbbbb"> </span>LAST
+
+<span style="color: #3D7B7B; font-style: italic"># Show sequence of numbers start from 1 through 10</span>
+$<span style="color: #bbbbbb"> </span>./seqit<span style="color: #bbbbbb"> </span><span style="color: #666666">10</span>
+<span style="color: #666666">1</span>
+<span style="color: #666666">2</span>
+<span style="color: #666666">3</span>
+<span style="color: #666666">4</span>
+<span style="color: #666666">5</span>
+<span style="color: #666666">6</span>
+<span style="color: #666666">7</span>
+<span style="color: #666666">8</span>
+<span style="color: #666666">9</span>
+<span style="color: #666666">10</span>
+
+<span style="color: #3D7B7B; font-style: italic"># Show sequence of numbers start from 5 through 10</span>
+$<span style="color: #bbbbbb"> </span>./seqit<span style="color: #bbbbbb"> </span><span style="color: #666666">5</span><span style="color: #bbbbbb"> </span><span style="color: #666666">10</span>
+<span style="color: #666666">5</span>
+<span style="color: #666666">6</span>
+<span style="color: #666666">7</span>
+<span style="color: #666666">8</span>
+<span style="color: #666666">9</span>
+<span style="color: #666666">10</span>
+
+<span style="color: #3D7B7B; font-style: italic"># Show sequence of odd numbers start from 5 through 10</span>
+$<span style="color: #bbbbbb"> </span>./seqit<span style="color: #bbbbbb"> </span><span style="color: #666666">5</span><span style="color: #bbbbbb"> </span><span style="color: #666666">2</span><span style="color: #bbbbbb"> </span><span style="color: #666666">10</span>
+<span style="color: #666666">5</span>
+<span style="color: #666666">7</span>
+<span style="color: #666666">9</span>
+</code></pre></div>
+
+<p>As can be seen, the <code>seqit</code> program emits a sequence of numbers (one number
+per line) based on the specified <code>FIRST</code>, <code>INCREMENT</code>, and <code>LAST</code> arguments.
+By default, <code>FIRST</code> is <code>1</code> and <code>INCREMENT</code> is <code>1</code>.</p>
+<h3 id="task-1-seqitc">Task 1: <code>seqit.c</code><a class="headerlink" href="#task-1-seqitc" title="Permanent link">&para;</a></h3>
+<p>The <code>seqit.c</code> file contains the <a href="https://en.wikipedia.org/wiki/C_(programming_language)">C</a> implementation of the <code>seqit</code> program
+described above.  You will need to implement the following functions:</p>
+<ol>
+<li>
+<p><code>List *generate_sequence(ssize_t first, ssize_t increment, ssize_t last)</code></p>
+<blockquote>
+<p>This function generates a sequence of numbers going from <code>first</code> to
+<code>last</code> using the specified <code>increment</code> by building a <code>List</code> with these
+numbers and returning it.</p>
+</blockquote>
+<div class="alert alert-success" markdown="1">
+<p><strong>Hint</strong>: Take advantage of the <code>list_create</code> and <code>list_append</code> functions
+  you wrote above.</p>
+<p>Think carefully how you should handle negative <code>increment</code> parameters.</p>
+</div>
+</li>
+<li>
+<p><code>int main(int argc, char *argv[])</code></p>
+<blockquote>
+<p>This function parses command line arguments for <code>FIRST</code>, <code>INCREMENT</code>, or
+<code>LAST</code>, generates a sequence of numbers, and then prints out that sequence
+(one number per line).</p>
+</blockquote>
+<div class="alert alert-success" markdown="1">
+<p><strong>Hint</strong>: Take advantage of the <code>list_create</code>, <code>list_pop</code>, <code>list_delete</code>
+  functions you wrote above.</p>
+</div>
+</li>
+</ol>
+<h3 id="task-2-testing_2">Task 2: Testing<a class="headerlink" href="#task-2-testing_2" title="Permanent link">&para;</a></h3>
+<p>As you implement <code>seqit.c</code>, you can test it by running the <code>test-seqit</code>
+target:</p>
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%;"><span></span><code><span style="color: #3D7B7B; font-style: italic"># Build artifact and run test</span>
+$<span style="color: #bbbbbb"> </span>make<span style="color: #bbbbbb"> </span>test-seqit
+Testing<span style="color: #bbbbbb"> </span>seqit<span style="color: #bbbbbb"> </span>...
+<span style="color: #bbbbbb"> </span>seqit<span style="color: #bbbbbb"> </span><span style="color: #666666">1</span><span style="color: #bbbbbb">                                  </span>...<span style="color: #bbbbbb"> </span>Success
+<span style="color: #bbbbbb"> </span>seqit<span style="color: #bbbbbb"> </span><span style="color: #666666">10</span><span style="color: #bbbbbb">                                 </span>...<span style="color: #bbbbbb"> </span>Success
+<span style="color: #bbbbbb"> </span>seqit<span style="color: #bbbbbb"> </span><span style="color: #666666">100</span><span style="color: #bbbbbb">                                </span>...<span style="color: #bbbbbb"> </span>Success
+<span style="color: #bbbbbb"> </span>seqit<span style="color: #bbbbbb"> </span><span style="color: #666666">1</span><span style="color: #bbbbbb"> </span><span style="color: #666666">100</span><span style="color: #bbbbbb">                              </span>...<span style="color: #bbbbbb"> </span>Success
+<span style="color: #bbbbbb"> </span>seqit<span style="color: #bbbbbb"> </span><span style="color: #666666">1</span><span style="color: #bbbbbb"> </span><span style="color: #666666">2</span><span style="color: #bbbbbb"> </span><span style="color: #666666">100</span><span style="color: #bbbbbb">                            </span>...<span style="color: #bbbbbb"> </span>Success
+<span style="color: #bbbbbb"> </span>seqit<span style="color: #bbbbbb"> </span><span style="color: #666666">100</span><span style="color: #bbbbbb"> </span>-3<span style="color: #bbbbbb"> </span><span style="color: #666666">1</span><span style="color: #bbbbbb">                           </span>...<span style="color: #bbbbbb"> </span>Success
+<span style="color: #bbbbbb"> </span>seqit<span style="color: #bbbbbb"> </span><span style="color: #666666">1</span><span style="color: #bbbbbb"> </span><span style="color: #666666">2</span><span style="color: #bbbbbb"> </span><span style="color: #666666">3</span><span style="color: #bbbbbb"> </span><span style="color: #666666">4</span><span style="color: #bbbbbb">                            </span>...<span style="color: #bbbbbb"> </span>Success
+
+<span style="color: #bbbbbb">   </span>Score<span style="color: #bbbbbb"> </span><span style="color: #666666">2</span>.00<span style="color: #bbbbbb"> </span>/<span style="color: #bbbbbb"> </span><span style="color: #666666">2</span>.00
+<span style="color: #bbbbbb">  </span>Status<span style="color: #bbbbbb"> </span>Success
+</code></pre></div>
+
+<h2 id="activity-4-tailit-2-points">Activity 4: Tailit (<em>2 Points</em>)<a class="headerlink" href="#activity-4-tailit-2-points" title="Permanent link">&para;</a></h2>
+<p>Once you have implemented both <a href="https://en.wikipedia.org/wiki/Doubly_linked_list">doubly linked list</a> library, you are to
+complete the <code>tailit.c</code> program, which is a simplified version of the <a href="https://www.mankier.com/1/tail">tail</a>
+utility:</p>
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%;"><span></span><code><span style="color: #3D7B7B; font-style: italic"># Show usage</span>
+$<span style="color: #bbbbbb"> </span>./tailit<span style="color: #bbbbbb"> </span>-h
+Usage:<span style="color: #bbbbbb"> </span>tailit<span style="color: #bbbbbb"> </span><span style="color: #666666">[</span>-n<span style="color: #bbbbbb"> </span>NUMBER<span style="color: #666666">]</span>
+
+<span style="color: #bbbbbb">    </span>-n<span style="color: #bbbbbb"> </span>NUMBER<span style="color: #bbbbbb">  </span>Output<span style="color: #bbbbbb"> </span>the<span style="color: #bbbbbb"> </span>last<span style="color: #bbbbbb"> </span>NUMBER<span style="color: #bbbbbb"> </span>of<span style="color: #bbbbbb"> </span>lines<span style="color: #bbbbbb"> </span><span style="color: #666666">(</span>default<span style="color: #bbbbbb"> </span>is<span style="color: #bbbbbb"> </span><span style="color: #666666">10)</span>
+
+<span style="color: #3D7B7B; font-style: italic"># Show last 10 lines</span>
+$<span style="color: #bbbbbb"> </span>./seqit<span style="color: #bbbbbb"> </span><span style="color: #666666">100</span><span style="color: #bbbbbb"> </span>|<span style="color: #bbbbbb"> </span>./tailit
+<span style="color: #666666">91</span>
+<span style="color: #666666">92</span>
+<span style="color: #666666">93</span>
+<span style="color: #666666">94</span>
+<span style="color: #666666">95</span>
+<span style="color: #666666">96</span>
+<span style="color: #666666">97</span>
+<span style="color: #666666">98</span>
+<span style="color: #666666">99</span>
+<span style="color: #666666">100</span>
+
+<span style="color: #3D7B7B; font-style: italic"># Show last 5 lines</span>
+$<span style="color: #bbbbbb"> </span>./seqit<span style="color: #bbbbbb"> </span><span style="color: #666666">100</span><span style="color: #bbbbbb"> </span>|<span style="color: #bbbbbb"> </span>./tailit<span style="color: #bbbbbb"> </span>-n<span style="color: #bbbbbb"> </span><span style="color: #666666">5</span>
+<span style="color: #666666">96</span>
+<span style="color: #666666">97</span>
+<span style="color: #666666">98</span>
+<span style="color: #666666">99</span>
+<span style="color: #666666">100</span>
+</code></pre></div>
+
+<p>As can be seen, the <code>tailit</code> program reads [standard input] line by line and
+only emits the last <code>10</code> lines by default.  If the user specifies another
+limit via the <code>-n</code> flag, then only that number of lines is shown.</p>
+<h3 id="task-1-tailitc">Task 1: <code>tailit.c</code><a class="headerlink" href="#task-1-tailitc" title="Permanent link">&para;</a></h3>
+<p>The <code>tailit.c</code> file contains the <a href="https://en.wikipedia.org/wiki/C_(programming_language)">C</a> implementation of the <code>tailit</code> program
+described above.  You will need to implement the following functions:</p>
+<ol>
+<li>
+<p><code>List *tail_stream(FILE *stream, size_t limit)</code></p>
+<blockquote>
+<p>This function reads the <code>stream</code> line by line and returns a <code>List</code>
+containing the last <code>limit</code> number of lines from the <code>stream</code>.</p>
+</blockquote>
+<div class="alert alert-success" markdown="1">
+<p><strong>Hint</strong>: Take advantage of the <code>list_create</code>, <code>list_append</code>, and
+  <code>list_pop</code> functions you wrote above.</p>
+<p>Think carefully how you should handle storing only the <code>limit</code> number of
+lines in your <code>List</code>.</p>
+<p>Consider using <a href="https://www.mankier.com/3/strdup">strdup</a> to ensure the [strings] you read with [fgets]
+persist between function calls.</p>
+</div>
+</li>
+<li>
+<p><code>int main(int argc, char *argv[])</code></p>
+<blockquote>
+<p>This function parses the command line arguments, creates a list of the
+last <code>NUMBER</code> of lines, and then prints out the items in the list.</p>
+</blockquote>
+<div class="alert alert-success" markdown="1">
+<p><strong>Hint</strong>: Take advantage of the <code>list_create</code>, <code>list_pop</code>, <code>list_delete</code>
+  functions you wrote above.</p>
+</div>
+</li>
+</ol>
+<h3 id="task-2-testing_3">Task 2: Testing<a class="headerlink" href="#task-2-testing_3" title="Permanent link">&para;</a></h3>
+<p>As you implement <code>tailit.c</code>, you can test it by running the <code>test-tailit</code>
+target:</p>
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%;"><span></span><code><span style="color: #3D7B7B; font-style: italic"># Build artifact and run test</span>
+$<span style="color: #bbbbbb"> </span>make<span style="color: #bbbbbb"> </span>test-tailit
+Testing<span style="color: #bbbbbb"> </span>tailit<span style="color: #bbbbbb"> </span>...
+<span style="color: #bbbbbb"> </span>tailit<span style="color: #bbbbbb"> </span>-h<span style="color: #bbbbbb">                                </span>...<span style="color: #bbbbbb"> </span>Success
+<span style="color: #bbbbbb"> </span>tailit<span style="color: #bbbbbb"> </span>-p<span style="color: #bbbbbb">                                </span>...<span style="color: #bbbbbb"> </span>Success
+<span style="color: #bbbbbb"> </span>tailit<span style="color: #bbbbbb">                                   </span>...<span style="color: #bbbbbb"> </span>Success
+<span style="color: #bbbbbb"> </span>tailit<span style="color: #bbbbbb"> </span>-n<span style="color: #bbbbbb"> </span><span style="color: #666666">1</span><span style="color: #bbbbbb">                              </span>...<span style="color: #bbbbbb"> </span>Success
+<span style="color: #bbbbbb"> </span>tailit<span style="color: #bbbbbb"> </span>-n<span style="color: #bbbbbb"> </span><span style="color: #666666">5</span><span style="color: #bbbbbb">                              </span>...<span style="color: #bbbbbb"> </span>Success
+<span style="color: #bbbbbb"> </span>tailit<span style="color: #bbbbbb"> </span>-n<span style="color: #bbbbbb"> </span><span style="color: #666666">10</span><span style="color: #bbbbbb">                             </span>...<span style="color: #bbbbbb"> </span>Success
+<span style="color: #bbbbbb"> </span>tailit<span style="color: #bbbbbb"> </span>-n<span style="color: #bbbbbb"> </span><span style="color: #666666">25</span><span style="color: #bbbbbb">                             </span>...<span style="color: #bbbbbb"> </span>Success
+<span style="color: #bbbbbb"> </span>tailit<span style="color: #bbbbbb"> </span>-n<span style="color: #bbbbbb"> </span><span style="color: #666666">100</span><span style="color: #bbbbbb">                            </span>...<span style="color: #bbbbbb"> </span>Success
+
+<span style="color: #bbbbbb">   </span>Score<span style="color: #bbbbbb"> </span><span style="color: #666666">2</span>.00<span style="color: #bbbbbb"> </span>/<span style="color: #bbbbbb"> </span><span style="color: #666666">2</span>.00
+<span style="color: #bbbbbb">  </span>Status<span style="color: #bbbbbb"> </span>Success
+</code></pre></div>
+
+<h2 id="activity-5-quiz-3-points">Activity 5: Quiz (<em>3 Points</em>)<a class="headerlink" href="#activity-5-quiz-3-points" title="Permanent link">&para;</a></h2>
+<p>Once you have completed all the activities above, you are to complete the
+following <strong>reflection quiz</strong>:</p>
+<div id="quiz-questions"></div>
+
+<div id="quiz-responses"></div>
+
+<script src="static/js/dredd-quiz.js"></script>
+<script>
+loadQuiz('static/json/homework07.json');
+</script>
+
+<pre style="display: none;" id="dr-container" class="codehilite"><code id="dredd-response"></code></pre>
+
+<p>As with <a href="reading01.html">Reading 01</a>, you will need to store your answers in a
+<code>homework07/answers.json</code> file.  You can use the form above to generate the
+contents of this file, or you can write the <a href="https://json.org">JSON</a> by hand.</p>
+<p>To check your quiz directly, you can use the <code>check.py</code> script:</p>
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%;"><span></span><code>$<span style="color: #bbbbbb"> </span>../.scripts/check.py
+Checking<span style="color: #bbbbbb"> </span>homework07<span style="color: #bbbbbb"> </span>quiz<span style="color: #bbbbbb"> </span>...
+<span style="color: #bbbbbb">     </span>Q01<span style="color: #bbbbbb"> </span><span style="color: #666666">0</span>.20
+<span style="color: #bbbbbb">     </span>Q02<span style="color: #bbbbbb"> </span><span style="color: #666666">0</span>.20
+<span style="color: #bbbbbb">     </span>Q03<span style="color: #bbbbbb"> </span><span style="color: #666666">1</span>.50
+<span style="color: #bbbbbb">     </span>Q04<span style="color: #bbbbbb"> </span><span style="color: #666666">0</span>.60
+<span style="color: #bbbbbb">     </span>Q05<span style="color: #bbbbbb"> </span><span style="color: #666666">0</span>.25
+<span style="color: #bbbbbb">     </span>Q06<span style="color: #bbbbbb"> </span><span style="color: #666666">0</span>.25
+
+<span style="color: #bbbbbb">   </span>Score<span style="color: #bbbbbb"> </span><span style="color: #666666">3</span>.00<span style="color: #bbbbbb"> </span>/<span style="color: #bbbbbb"> </span><span style="color: #666666">3</span>.00
+<span style="color: #bbbbbb">  </span>Status<span style="color: #bbbbbb"> </span>Success
+</code></pre></div>
+
+<h2 id="code-review-optional-1-point">Code Review (<em>Optional, 1 Point</em>)<a class="headerlink" href="#code-review-optional-1-point" title="Permanent link">&para;</a></h2>
+<p>For <strong>one point</strong> of extra credit, you may perform a <a href="https://en.wikipedia.org/wiki/Code_review">code review</a> with
+either an <strong>AI</strong> agent (of your choice) or with a <strong>TA</strong> by <strong>Wednesday,
+April 2</strong>:</p>
+<ol>
+<li>
+<p><strong>AI Code Review</strong>: Once the <strong>whole assignment is completed</strong>, pick one
+  or two of the most challenging functions and ask the <strong>AI</strong> agent to review
+  your original code by suggesting improvements, optimizations, or
+  alternative implementations.</p>
+<p>Test and verify these suggestions and then decide whether or not you wish
+to keep them.  Discuss in the <code>README.md</code> what you think of the <strong>AI</strong>
+code review and explain your decision.</p>
+<div class="alert alert-info" markdown="1">
+<h4 id="ai-code-review-verification"><i class="fa fa-check"></i> AI Code Review: Verification<a class="headerlink" href="#ai-code-review-verification" title="Permanent link">&para;</a></h4>
+<p>To receive credit for the <strong>AI Code Review</strong>, you must:</p>
+<ol>
+<li>
+<p>Link a <strong>transcript</strong> or include sufficient <strong>screenshots</strong> of the
+  <a href="https://en.wikipedia.org/wiki/Code_review">code review</a> in the <strong>Pull Request</strong> of your conversation with the <strong>AI</strong>
+  agent.</p>
+</li>
+<li>
+<p>This conversation must show your <strong>original code</strong> and the <strong>suggested
+  improvements</strong> by the <strong>AI</strong> agent.</p>
+</li>
+<li>
+<p>Discuss the <a href="https://en.wikipedia.org/wiki/Code_review">code review</a> and explain your decision in the
+  <code>README.md</code>.</p>
+</li>
+<li>
+<p>Update your <strong>Pull Request</strong> based on the feedback.</p>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p><strong>TA Code Review</strong>: Once the <strong>whole assignment is completed</strong>, meet with
+  one of the <strong>teaching assistants</strong> from the course <strong>in-person</strong> and have
+  them review your whole assignment.</p>
+<p>To document this process, make the <strong>teaching assistant</strong> who is
+reviewing your code a <strong>reviewer</strong> on your <strong>Pull Request</strong> and have them
+record their suggestions as they discuss them with you <strong>in-person</strong>.</p>
+<p>After the <a href="https://en.wikipedia.org/wiki/Code_review">code review</a>, you can decide whether or not you wish to
+incorporate this feedback into your implementation and update your <strong>Pull
+Request</strong>.</p>
+<div class="alert alert-success" markdown="1">
+<p><strong>Note</strong>: The <strong>TA</strong> performing the <a href="https://en.wikipedia.org/wiki/Code_review">code review</a> does not need to be the
+  same <strong>TA</strong> responsible for grading your assignment.</p>
+</div>
+<div class="alert alert-info" markdown="1">
+<h4 id="ta-code-review-verification"><i class="fa fa-check"></i> TA Code Review: Verification<a class="headerlink" href="#ta-code-review-verification" title="Permanent link">&para;</a></h4>
+<p>To receive credit for the <strong>TA Code Review</strong>, you must:</p>
+<ol>
+<li>
+<p>Meet with a <strong>teaching assistant</strong> <strong>in-person</strong>.</p>
+</li>
+<li>
+<p>Make this <strong>teaching assistant</strong> a <strong>reviewer</strong> in your <strong>Pull
+  Request</strong>.</p>
+</li>
+<li>
+<p>Have the <strong>teaching assistant</strong> record their suggestions on the
+  <strong>Pull Request</strong>.</p>
+</li>
+<li>
+<p>Update your <strong>Pull Request</strong> based on the feedback.</p>
+</li>
+</ol>
+</div>
+</li>
+</ol>
+<h2 id="guru-point-zines-optional-1-point">Guru Point: Zines (<em>Optional, 1 Point</em>)<a class="headerlink" href="#guru-point-zines-optional-1-point" title="Permanent link">&para;</a></h2>
+<p>For <strong>one point</strong> of extra credit, you may create an original <a href="https://wizardzines.com/">zine</a> (ala
+<a href="https://jvns.ca/">Julia Evans</a>) related to the topics for <strong>Exam 03</strong>:</p>
+<ul>
+<li><strong>Compiling and Building</strong>: Compiler pipeline, dynamic vs static executables, Makefiles</li>
+<li><strong>Pointers</strong>, <strong>Arrays</strong>, <strong>Strings</strong></li>
+<li><strong>Memory Allocation</strong>: Address space, stack vs heap, structs, unions</li>
+<li><strong>Bitsets</strong></li>
+<li><strong>Linked Lists</strong></li>
+<li><strong>Data Representation</strong>: Signed vs Unsigned, Little vs Big Endian</li>
+</ul>
+<p>Some examples from <a href="https://jvns.ca/">Julia Evans</a>:</p>
+<div class="row">
+
+<div class="col-sm-4">
+<a href="https://wizardzines.com/comics/integers" class="thumbnail">
+<img src="https://wizardzines.com/images/uploads/integers.png" class="img-responsive">
+</a>
+</div>
+
+<div class="col-sm-4">
+<a href="https://wizardzines.com/comics/signed-integers" class="thumbnail">
+<img src="https://wizardzines.com/images/uploads/signed-integers.png" class="img-responsive">
+</a>
+</div>
+
+<div class="col-sm-4">
+<a href="https://wizardzines.com/comics/little-big-endian" class="thumbnail">
+<img src="https://wizardzines.com/images/uploads/little-big-endian.png" class="img-responsive">
+</a>
+</div>
+
+</div>
+
+<div class="alert alert-warning">
+<p><strong>Note</strong>: It is OK if multiple people pick the same topic, but try to put
+  your own spin on the material.</p>
+</div>
+<div class="alert alert-info">
+<h4 id="zine-verification"><i class="fa fa-check"></i> Zine: Verification<a class="headerlink" href="#zine-verification" title="Permanent link">&para;</a></h4>
+<p>To receive credit for the <strong>Zine</strong>, you must:</p>
+<ol>
+<li>
+<p>Create an original <a href="https://wizardzines.com/">zine</a> (<em>reposting is not allowed</em>).</p>
+</li>
+<li>
+<p>Post the original <a href="https://wizardzines.com/">zine</a> to <a href="https://docs.google.com/document/d/1JMIHH9N8qDiYFjELOdhLDsUJUhgaDYse9FJLKL0snKg/edit?usp=sharing">Exam 03 - Zines</a> document.</p>
+</li>
+<li>
+<p>Include a <strong>link</strong> or <strong>screenshot</strong> of the <a href="https://wizardzines.com/">zine</a> in your <strong>Pull Request</strong>.</p>
+</li>
+</ol>
+</div>
+<h2 id="submission">Submission<a class="headerlink" href="#submission" title="Permanent link">&para;</a></h2>
+<p>To submit your assignment, please commit your work to the <code>homework07</code> folder
+of your <code>homework07</code> branch in your <strong>assignments</strong> <a href="https://github.com">GitHub</a> repository.
+Your <code>homework07</code> folder should only contain the following files:</p>
+<ul>
+<li><code>Makefile</code></li>
+<li><code>answers.json</code></li>
+<li><code>list.c</code></li>
+<li><code>list.h</code></li>
+<li><code>list.unit.c</code></li>
+<li><code>node.c</code></li>
+<li><code>node.unit.c</code></li>
+<li><code>seqit.c</code></li>
+<li><code>tailit.c</code></li>
+</ul>
+<div class="alert alert-warning">
+<p><strong>Note</strong>: You do not need to commit the test scripts because the <code>Makefile</code>
+automatically downloads them.</p>
+</div>
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%;"><span></span><code><span style="color: #3D7B7B; font-style: italic">#-----------------------------------------------------------------------</span>
+<span style="color: #3D7B7B; font-style: italic"># Make sure you have already completed Activity 0: Preparation</span>
+<span style="color: #3D7B7B; font-style: italic">#-----------------------------------------------------------------------</span>
+...
+$<span style="color: #bbbbbb"> </span>git<span style="color: #bbbbbb"> </span>add<span style="color: #bbbbbb"> </span>Makefile<span style="color: #bbbbbb">                            </span><span style="color: #3D7B7B; font-style: italic"># Mark changes for commit</span>
+$<span style="color: #bbbbbb"> </span>git<span style="color: #bbbbbb"> </span>commit<span style="color: #bbbbbb"> </span>-m<span style="color: #bbbbbb"> </span><span style="color: #BA2121">&quot;Homework 07: Makefile&quot;</span><span style="color: #bbbbbb">       </span><span style="color: #3D7B7B; font-style: italic"># Record changes</span>
+...
+$<span style="color: #bbbbbb"> </span>git<span style="color: #bbbbbb"> </span>add<span style="color: #bbbbbb"> </span>node.c<span style="color: #bbbbbb">                              </span><span style="color: #3D7B7B; font-style: italic"># Mark changes for commit</span>
+$<span style="color: #bbbbbb"> </span>git<span style="color: #bbbbbb"> </span>commit<span style="color: #bbbbbb"> </span>-m<span style="color: #bbbbbb"> </span><span style="color: #BA2121">&quot;Homework 07: node.c&quot;</span><span style="color: #bbbbbb">         </span><span style="color: #3D7B7B; font-style: italic"># Record changes</span>
+...
+$<span style="color: #bbbbbb"> </span>git<span style="color: #bbbbbb"> </span>add<span style="color: #bbbbbb"> </span>list.c<span style="color: #bbbbbb">                              </span><span style="color: #3D7B7B; font-style: italic"># Mark changes for commit</span>
+$<span style="color: #bbbbbb"> </span>git<span style="color: #bbbbbb"> </span>commit<span style="color: #bbbbbb"> </span>-m<span style="color: #bbbbbb"> </span><span style="color: #BA2121">&quot;Homework 07: list.c&quot;</span><span style="color: #bbbbbb">         </span><span style="color: #3D7B7B; font-style: italic"># Record changes</span>
+...
+$<span style="color: #bbbbbb"> </span>git<span style="color: #bbbbbb"> </span>add<span style="color: #bbbbbb"> </span>seqit.c<span style="color: #bbbbbb">                             </span><span style="color: #3D7B7B; font-style: italic"># Mark changes for commit</span>
+$<span style="color: #bbbbbb"> </span>git<span style="color: #bbbbbb"> </span>commit<span style="color: #bbbbbb"> </span>-m<span style="color: #bbbbbb"> </span><span style="color: #BA2121">&quot;Homework 07: seqit.c&quot;</span><span style="color: #bbbbbb">        </span><span style="color: #3D7B7B; font-style: italic"># Record changes</span>
+...
+$<span style="color: #bbbbbb"> </span>git<span style="color: #bbbbbb"> </span>add<span style="color: #bbbbbb"> </span>tailit.c<span style="color: #bbbbbb">                            </span><span style="color: #3D7B7B; font-style: italic"># Mark changes for commit</span>
+$<span style="color: #bbbbbb"> </span>git<span style="color: #bbbbbb"> </span>commit<span style="color: #bbbbbb"> </span>-m<span style="color: #bbbbbb"> </span><span style="color: #BA2121">&quot;Homework 07: tailit&quot;</span><span style="color: #bbbbbb">         </span><span style="color: #3D7B7B; font-style: italic"># Record changes</span>
+...
+$<span style="color: #bbbbbb"> </span>git<span style="color: #bbbbbb"> </span>add<span style="color: #bbbbbb"> </span>answers.json<span style="color: #bbbbbb">                        </span><span style="color: #3D7B7B; font-style: italic"># Mark changes for commit</span>
+$<span style="color: #bbbbbb"> </span>git<span style="color: #bbbbbb"> </span>commit<span style="color: #bbbbbb"> </span>-m<span style="color: #bbbbbb"> </span><span style="color: #BA2121">&quot;Homework 07: Quiz&quot;</span><span style="color: #bbbbbb">           </span><span style="color: #3D7B7B; font-style: italic"># Record changes</span>
+...
+$<span style="color: #bbbbbb"> </span>git<span style="color: #bbbbbb"> </span>push<span style="color: #bbbbbb"> </span>-u<span style="color: #bbbbbb"> </span>origin<span style="color: #bbbbbb"> </span>homework07<span style="color: #bbbbbb">               </span><span style="color: #3D7B7B; font-style: italic"># Push branch to GitHub</span>
+</code></pre></div>
+
+<div class="alert alert-warning">
+<h4 id="acknowledgments"><i class="fa fa-life-ring"></i> Acknowledgments<a class="headerlink" href="#acknowledgments" title="Permanent link">&para;</a></h4>
+<p>If you collaborated with any other students, or received help from TAs or AI
+tools on this assignment, please record this support in the <code>README.md</code> in
+the <code>homework07</code> folder and include it with your <strong>Pull Request</strong>.</p>
+</div>
+<div class="alert alert-danger">
+<h4 id="pull-request"><i class="fa fa-github"></i> Pull Request<a class="headerlink" href="#pull-request" title="Permanent link">&para;</a></h4>
+<p>Remember to create a <strong>Pull Request</strong> and assign the appropriate TA from the
+<a href="reading09_tas.html">Reading 09 TA List</a>.</p>
+<p><strong>DO NOT MERGE</strong> your own <strong>Pull Request</strong>.  The TAs use open <strong>Pull Requests</strong>
+to keep track of which assignments to grade.  Closing them yourself will
+cause a delay in grading and confuse the TAs.</p>
+</div>
+
+
+	    <div class="row">
+		<hr/>
+
+		<footer class="text-center">
+		    <p class="text-muted">
+		    <small>
+		    Built using
+		    <a href="https://getbootstrap.com/">Bootstrap</a>,
+		    <a href="https://fontawesome.com/">Font Awesome</a>, and
+		    <a href="http://www.python.org/">Python</a>.
+		    <br/>
+		    &copy; 2025 <a href="http://www.nd.edu">University of Notre Dame</a>
+		    </small>
+		    </p>
+		</footer>
+	    </div>
+
+	</div> <!-- /container -->
+
+	<!-- Bootstrap core JavaScript
+	================================================== -->
+	<!-- Placed at the end of the document so the pages load faster -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	
+	
+    </body>
+</html>
+
