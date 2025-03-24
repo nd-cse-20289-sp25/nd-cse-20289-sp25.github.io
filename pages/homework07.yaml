@@ -911,10 +911,10 @@ body:       |
   [Julia Evans]) related to the topics for **Exam 03**:
 
   - **Compiling and Building**: Compiler pipeline, dynamic vs static executables, Makefiles
-  - **Pointers**, **Arrays**, **Strings**
+  - **Pointers**, **Arrays**, **Strings**: Declaration, initialization, dereferencing, accessing, iterating
   - **Memory Allocation**: Address space, stack vs heap, structs, unions
-  - **Bitsets**
-  - **Linked Lists**
+  - **Bitsets**: Integer sizes, boolean operations
+  - **Linked Lists**: Construction, destruction, iteration, inserting, deletion, access
   - **Data Representation**: Signed vs Unsigned, Little vs Big Endian
 
   Some examples from [Julia Evans]:
