@@ -7,11 +7,17 @@ POINTS=2
 
 error() {
     echo "$@"
-    if [ -r $WORKSPACE/test.diff ]; then
-    	echo
-    	printf "%-40s%-40s\n" "PROGRAM OUTPUT" "EXPECTED OUTPUT"
-    	cat $WORKSPACE/test.diff
-    fi
+    echo
+    case "$@" in
+        *Output*)
+        printf "%-40s%-40s\n" "PROGRAM OUTPUT" "EXPECTED OUTPUT"
+        cat $WORKSPACE/test.diff
+        ;;
+        *Valgrind*)
+        echo
+        cat $WORKSPACE/test.stderr
+        ;;
+    esac
     FAILURES=$((FAILURES + 1))
 }
 
