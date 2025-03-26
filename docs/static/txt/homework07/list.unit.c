@@ -95,16 +95,16 @@ int test_03_list_pop() {
     assert(l1->sentinel.prev->value.number              == NUMBERS[2]);
     assert(l1->sentinel.prev->prev->value.number        == NUMBERS[0]);
     assert(l1->size == 2);
-    
+
     Value v2 = list_pop(l1, 1);
     assert(v2.number == NUMBERS[2]);
     assert(l1->sentinel.next->value.number              == NUMBERS[0]);
     assert(l1->sentinel.prev->value.number              == NUMBERS[0]);
     assert(l1->size == 1);
-    
+
     Value vX= list_pop(l1, 1);
     assert(vX.number == -1L);
-    
+
     Value v0 = list_pop(l1, 0);
     assert(v0.number == NUMBERS[0]);
     assert(l1->size == 0);
