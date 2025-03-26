@@ -24,13 +24,13 @@ int test_00_node_create() {
     assert(n1->value.string == v1.string);
     assert(n1->next == n0);
     assert(n1->prev == NULL);
-    
+
     Node *n2 = node_create((Value)strdup(v1.string), n0, n1);
     assert(n2);
     assert(strcmp(n2->value.string, v1.string) == 0);
     assert(n2->next == n0);
     assert(n2->prev == n1);
-    
+
     free(n0);
     free(n1);
     free(n2->value.string);
@@ -46,10 +46,10 @@ int test_01_node_delete() {
     Value v1 = {.string = "better now"};
     Node *n1 = node_create(v1, n0, NULL);
     assert(n1);
-    
+
     Node *n2 = node_create((Value)strdup(v1.string), n0, n1);
     assert(n2);
-    
+
     node_delete(n0, false);
     node_delete(n1, false);
     node_delete(n2, true);
