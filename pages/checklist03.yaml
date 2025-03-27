@@ -144,7 +144,7 @@ body:       |
 
         :::c
         int main(int argc, char *argv[]) {  // | Label | Address | Value |
-            int  n   = 16;                  // |       | 0xF     |       |
+            int  n   = 16;                  // |       | 0xF     | 0x00  |
             int  a[] = {n};                 // | n     | 0xE     | 0x10  |
             int *p   = a;                   // |       | 0xD     |       |
             return 0;                       // |       | 0xC     |       |
@@ -297,8 +297,8 @@ body:       |
     element in the array to the [bitset]:
 
         :::c
-        int     numbers = {1, 12, 7, 10, -1};
-        int32_t bitset  = 0;
+        int     numbers[] = {1, 12, 7, 10, -1};
+        int32_t bitset    = 0;
 
         for (int *n = numbers; *n >= 0; n++) {
             bitset = ____; // 1. ????
