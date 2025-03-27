@@ -231,7 +231,15 @@ body:       |
              * Returns whether or not list contains the value.
              **/
             bool list_contains(List *l, Value v) {
-                return ...;
+                Node *curr = ____;    // 1. ????
+
+                while (____) {        // 2. ????
+                    if (____) {       // 3. ????
+                        return _____; // 4. ????
+                    }
+                }
+
+                return ____;          // 5. ????
             }
 
     2. Given the following [C] code that uses the `list_contains` function above:
