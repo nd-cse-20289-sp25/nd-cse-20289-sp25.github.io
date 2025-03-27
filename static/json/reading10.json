@@ -1,0 +1,32 @@
+{
+    "q1": {
+        "type": "blank",
+        "question": "\n<p>Suppose you had the following source files:</p>\n\n<ul>\n  <li><tt>list.c</tt>: This contains the implementation of a linked list.</li>\n  <li><tt>list.h</tt>: This contains the prototypes and definitions of a linked list.</li>\n  <li><tt>main.c</tt>: This is a program that uses the linked list.</li>\n</ul>\n\n<p>Complete the following <tt>Makefile</tt> that builds a <b>shared\nlibrary</b> (ie. <tt>liblist.so</tt>) and then builds a <b>dynamic\nexecutable</b> (ie. <tt>program</tt>) that links against the <b>shared\nlibrary</b>:</p>\n\n<pre>\nCC=       gcc\nCFLAGS=   -Wall -g -std=gnu99 -fPIC\nLD=       gcc\nLDFLAGS=  -L.\n\nprogram:  ____            // 1.\n    ____                  // 2.\n\nliblist.so: ____          // 3.\n    ____                  // 4.\n\nlist.o: ____              // 5.\n    ____                  // 6.\n\nmain.o: ____              // 7.\n    ____                  // 8.\n\n</pre>\n\n<p>Be sure to use the appropriate variables.</p>\n"
+    },
+    "q2": {
+        "type": "multiple",
+        "question": "\n<p>Given the following [C] code:</p>\n\n<pre>\nint main(int argc, char *argv[]) {  // | Label | Address | Value |\n    int  n   = 16;                  // |       | 0xF     | 0x00  |\n    int  a[] = {n};                 // | n     | 0xE     | 0x10  |\n    int *p   = a;                   // |       | 0xD     |       |\n    return 0;                       // |       | 0xC     |       |\n}                                   // |       | 0xB     |       |\n                                    // |       | 0xA     |       |\n</pre>\n\n<p>Assuming a <b>16-bit little endian</b> machine where each integer is\n<tt>2</tt> bytes, each character is <tt>1</tt> byte, and each pointer is\n<tt>2</tt> bytes, fill in the <b>stack frame</b> to the right by recording\nthe location of the variables above and their values at the appropriate\naddresses.  Afterwards, which of the following <b>expressions</b> are true\n(<i>select all that apply</i>)?</p>\n",
+        "responses": {
+            "a": "<tt>a == 0xB</tt>",
+            "b": "<tt>a == 0xC</tt>",
+            "c": "<tt>p == 0xB</tt>",
+            "d": "<tt>p == 0xA</tt>",
+            "e": "<tt>*p == n</tt>",
+            "f": "<tt>*p == a</tt>",
+            "g": "<tt>*p == a[1]</tt>",
+            "h": "<tt>&n == &a[0]</tt>"
+        }
+    },
+    "q3": {
+        "type": "blank",
+        "question": "\n<p>Given the following [C] code:</p>\n\n<pre>\ntypedef struct {\n    char key;\n    int  value;\n} Pair;\n\nint main(int argc, char* argv[]) {\n    char    c = 'k';\n    int     v = 2;\n\n    Pair   p0 = {c, v};\n    Pair  *p1 = malloc(sizeof(Pair));\n    Pair  *p2 = calloc(v, sizeof(Pair));\n    Pair **p3 = calloc(v, sizeof(Pair *));\n    return 0;\n}\n</pre>\n\n<p>Fill in the table below to identify how\nmuch memory (in bytes) is allocated in each memory segment (ie.\n<b>data</b>, <b>heap</b>, <b>stack</b>) for the corresponding variable\ndeclaration:</p>\n\n<table class=\"table table-striped\">\n  <thead>\n    <th>Code</th>\n    <th>Data</th>\n    <th>Heap</th>\n    <th>Stack</th>\n  </thead>\n  <tbody>\n\n    <tr>\n      <td><tt>char c = 'k';</tt></td>\n      <td><tt>____ (01)</tt></td>\n      <td><tt>____ (02)</tt></td>\n      <td><tt>____ (03)</tt></td>\n    </tr>\n\n    <tr>\n      <td><tt>int v = 2;</tt></td>\n      <td><tt>____ (04)</tt></td>\n      <td><tt>____ (05)</tt></td>\n      <td><tt>____ (06)</tt></td>\n    </tr>\n\n    <tr>\n      <td><tt>Pair p0 = {c, v};</tt></td>\n      <td><tt>____ (07)</tt></td>\n      <td><tt>____ (08)</tt></td>\n      <td><tt>____ (09)</tt></td>\n    </tr>\n\n    <tr>\n      <td><tt>Pair *p1 = malloc(sizeof(Pair));</tt></td>\n      <td><tt>____ (10)</tt></td>\n      <td><tt>____ (11)</tt></td>\n      <td><tt>____ (12)</tt></td>\n    </tr>\n\n    <tr>\n      <td><tt>Pair *p2 = calloc(v, sizeof(Pair));</tt></td>\n      <td><tt>____ (13)</tt></td>\n      <td><tt>____ (14)</tt></td>\n      <td><tt>____ (15)</tt></td>\n    </tr>\n\n    <tr>\n      <td><tt>Pair *p3 = calloc(v, sizeof(Pair *));</tt></td>\n      <td><tt>____ (16)</tt></td>\n      <td><tt>____ (17)</tt></td>\n      <td><tt>____ (18)</tt></td>\n    </tr>\n\n  </tbody>\n</table>\n\n<p>Assume this program is compiled on a <tt>64</tt>-bit Linux machine (ie.\nthe <b>student</b> machines).</p>\n"
+    },
+    "q4": {
+        "type": "blank",
+        "question": "\n<p>Given the <b>doubly linked list</b> in <a href=\"homework07.html\">Homework\n07</a>, implement a <tt>list_contains</tt> function that returns whether or\nnot a given <tt>Value</tt> is found in the <tt>List</tt>:</p>\n\n<pre>\n/**\n * Returns whether or not list contains the value.\n **/\nbool list_contains(List *l, Value v) {\n    Node *curr = ____;    // 1. ????\n\n    while (____) {        // 2. ????\n        if (____) {       // 3. ????\n            return _____; // 4. ????\n        }\n    }\n\n    return ____;          // 5. ????\n}\n</pre>\n"
+    },
+    "q5": {
+        "type": "blank",
+        "question": "\n<p>Given the following <b>array</b> and </b>bitset</b>, complete the code\nto add each element in the <b>array</b> to the <b>bitset</b>:</p>\n\n<pre>\nint     numbers[] = {1, 12, 7, 10, -1};\nint32_t bitset    = 0;\n\nfor (int *n = numbers; *n >= 0; n++) {\n    bitset = ____; // 1. ????\n}\n</pre>\n\n<ul>\n\n  <li>What is the <b>decimal</b> value of the <b>bitset</b> after adding\n  all the elements in the <b>array</b>? ____</li>\n\n  <li>What is the <b>hexadecimal</b> representation of the <b>bitset</b>\n  after adding all the elements in the <b>array</b> on a <b>little\n  endian</b> machine? <tt>0x</tt>____</li>\n\n  <li>What is the <b>hexadecimal</b> representation of the <b>bitset</b>\n  after adding all the elements in the <b>array</b> on a <b>big\n  endian</b> machine? <tt>0x</tt>____</li>\n\n</ul>\n"
+    }
+}
