@@ -1,6 +1,9 @@
 title:      "Reading 09: Memory Management"
 icon:       fa-book
-navigation: []
+navigation:
+  - name: "Home"
+    link: "index.html"
+    icon: "fa-linux"
 internal:
 external:
 body:       |
