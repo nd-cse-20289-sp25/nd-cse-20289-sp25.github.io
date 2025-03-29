@@ -237,9 +237,10 @@ body:       |
                     if (____) {       // 3. ????
                         return _____; // 4. ????
                     }
+                    curr = ____;      // 5. ????
                 }
 
-                return ____;          // 5. ????
+                return ____;          // 6. ????
             }
 
     2. Given the following [C] code that uses the `list_contains` function above:
