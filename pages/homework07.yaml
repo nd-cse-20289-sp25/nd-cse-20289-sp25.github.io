@@ -908,7 +908,8 @@ body:       |
   ## Guru Point: Zines (*Optional, 1 Point*)
 
   For **one point** of extra credit, you may create an original [zine] (ala
-  [Julia Evans]) related to the topics for **Exam 03**:
+  [Julia Evans]) related to the topics for **Exam 03** by **Wednesday, April
+  2**:
 
   - **Compiling and Building**: Compiler pipeline, dynamic vs static executables, Makefiles
   - **Pointers**, **Arrays**, **Strings**: Declaration, initialization, dereferencing, accessing, iterating
