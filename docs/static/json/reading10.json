@@ -23,7 +23,7 @@
     },
     "q4": {
         "type": "blank",
-        "question": "\n<p>Given the <b>doubly linked list</b> in <a href=\"homework07.html\">Homework\n07</a>, implement a <tt>list_contains</tt> function that returns whether or\nnot a given <tt>Value</tt> is found in the <tt>List</tt>:</p>\n\n<pre>\n/**\n * Returns whether or not list contains the value.\n **/\nbool list_contains(List *l, Value v) {\n    Node *curr = ____;    // 1. ????\n\n    while (____) {        // 2. ????\n        if (____) {       // 3. ????\n            return _____; // 4. ????\n        }\n    }\n\n    return ____;          // 5. ????\n}\n</pre>\n"
+        "question": "\n<p>Given the <b>doubly linked list</b> in <a href=\"homework07.html\">Homework\n07</a>, implement a <tt>list_contains</tt> function that returns whether or\nnot a given <tt>Value</tt> is found in the <tt>List</tt>:</p>\n\n<pre>\n/**\n * Returns whether or not list contains the value.\n **/\nbool list_contains(List *l, Value v) {\n    Node *curr = ____;    // 1. ????\n\n    while (____) {        // 2. ????\n        if (____) {       // 3. ????\n            return _____; // 4. ????\n        }\n        curr = ____;      // 5. ????\n    }\n\n    return ____;          // 6. ????\n}\n</pre>\n"
     },
     "q5": {
         "type": "blank",
