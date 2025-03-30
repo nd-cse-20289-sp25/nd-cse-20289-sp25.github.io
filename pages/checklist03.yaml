@@ -17,12 +17,11 @@ body:       |
 
     2. **Pointers, Arrays, Strings** (*multiple-choice*, *true/false*)
 
-    3. **Memory Allocation** (*multiple-choice*, *fill-in-the-blank*)
+    3. **Memory Allocation** (*fill-in-the-blank*)
 
     4. **Memory Management and Linked Lists** (*multiple-choice*, *fill-in-the-blank*)
 
-    5. **Bitsets** and **Data Representation** (*multiple-choice*,
-    *fill-in-the-blank*)
+    5. **Bitsets** and **Data Representation** (*fill-in-the-blank*)
 
     6. **Debugging** (*coding on the computer*)
 
