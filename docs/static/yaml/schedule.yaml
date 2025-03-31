@@ -307,6 +307,10 @@
         items:
           - name:       Checklist 03
             link:       checklist03.html
+          - name:       Slides R03
+            link:       https://docs.google.com/presentation/d/14KXt7UYnhnf1Qyt6xIb-0MGqMODdbNvxOkaKc-30ERI/edit?usp=sharing
+          - name:       Panopto
+            link:       https://notredame.hosted.panopto.com/Panopto/Pages/Viewer.aspx?id=2802a5dd-79a2-4566-a182-b2b10128aa73
 
       - date:           Wed 04/02
         items:
