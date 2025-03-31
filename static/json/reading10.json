@@ -9,8 +9,8 @@
         "responses": {
             "a": "<tt>a == 0xB</tt>",
             "b": "<tt>a == 0xC</tt>",
-            "c": "<tt>p == 0xB</tt>",
-            "d": "<tt>p == 0xA</tt>",
+            "c": "<tt>&p == 0xB</tt>",
+            "d": "<tt>&p == 0xA</tt>",
             "e": "<tt>*p == n</tt>",
             "f": "<tt>*p == a</tt>",
             "g": "<tt>*p == a[1]</tt>",
