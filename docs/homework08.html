@@ -1,0 +1,897 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="description" content="">
+	<meta name="author" content="">
+
+	<title>Homework 08: Findit</title>
+
+	<!-- Bootstrap core CSS -->
+	<link href="static/css/blugold.css" rel="stylesheet">
+	<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+
+	<!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+	<!--[if lt IE 9]>
+	<script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+	<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+	<![endif]-->
+
+	<style>
+	body {
+	    padding: 10px;
+	}
+	</style>
+    </head>
+    <body>
+	<div class="container">
+
+	    <div class="row">
+		<div class="page-header">
+		    <ul class="nav nav-pills pull-right">
+			
+			<li><a href="index.html"><i class="fa fa-linux"></i> <span class="visible-md-inline visible-lg-inline">Home</span></a></li>
+			
+		    </ul>
+		    <h1><i class="fa fa-code"></i> Homework 08: Findit</h1>
+		</div>
+	    </div>
+
+            
+<p>The goal of this homework assignment is to allow you to continue practicing
+<a href="https://en.wikipedia.org/wiki/C_dynamic_memory_allocation">dynamic memory</a> management in <a href="https://en.wikipedia.org/wiki/C_(programming_language)">C</a> by building another <a href="https://en.wikipedia.org/wiki/Linked_list">linked list</a> library
+and navigating the <a href="https://en.wikipedia.org/wiki/File_system">file system</a> using low-level functions and <a href="https://en.wikipedia.org/wiki/System_call">system
+calls</a>.  The first two activities involve implementing a <a href="https://en.wikipedia.org/wiki/Linked_list#Singly_linked_list">singly linked list</a>
+with a <strong>tail</strong> pointer and then a few <strong>filter</strong> functions that check
+various attributes about files, while the last activity requires you to use
+these structures and functions to build a file system search utility similar
+to <a href="https://man7.org/linux/man-pages/man1/find.1.html">find</a> named <code>findit</code>.</p>
+<p>For this assignment, record your source code and any responses to the
+following activities in the <code>homework08</code> folder of your <strong>assignments</strong>
+<a href="https://github.com">GitHub</a> repository and push your work by <strong>noon Saturday, April 12</strong>.</p>
+<div class="alert alert-info">
+<h4 id="frequently-asked-questions"><i class="fa fa-question"></i> Frequently Asked Questions<a class="headerlink" href="#frequently-asked-questions" title="Permanent link">&para;</a></h4>
+<div class="text-center">
+<iframe allowfullscreen="true" frameborder="0" height="389" mozallowfullscreen="true" src="https://docs.google.com/presentation/d/e/2PACX-1vSA7JJ3riFIyiscLlfUzqkL5R1I2y9V9CoCwQaKm9xFbak6tUhFRvzhdd3uRunLism8FCtkGhV0HHAe/pubembed?start=false&amp;loop=false&amp;delayms=3000" webkitallowfullscreen="true" width="480"></iframe>
+</div>
+</div>
+<h2 id="activity-0-preparation">Activity 0: Preparation<a class="headerlink" href="#activity-0-preparation" title="Permanent link">&para;</a></h2>
+<p>Before starting this homework assignment, you should first perform a <code>git
+pull</code> to retrieve any changes in your remote <a href="https://github.com">GitHub</a> repository:</p>
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%;"><span></span><code>$<span style="color: #bbbbbb"> </span><span style="color: #008000">cd</span><span style="color: #bbbbbb"> </span>path/to/repository<span style="color: #bbbbbb">                   </span><span style="color: #3D7B7B; font-style: italic"># Go to assignments repository</span>
+
+$<span style="color: #bbbbbb"> </span>git<span style="color: #bbbbbb"> </span>switch<span style="color: #bbbbbb"> </span>master<span style="color: #bbbbbb">                       </span><span style="color: #3D7B7B; font-style: italic"># Make sure we are in master branch</span>
+
+$<span style="color: #bbbbbb"> </span>git<span style="color: #bbbbbb"> </span>pull<span style="color: #bbbbbb"> </span>--rebase<span style="color: #bbbbbb">                       </span><span style="color: #3D7B7B; font-style: italic"># Get any remote changes not present locally</span>
+</code></pre></div>
+
+<p>Next, create a new branch for this assignment:</p>
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%;"><span></span><code>$<span style="color: #bbbbbb"> </span>git<span style="color: #bbbbbb"> </span>checkout<span style="color: #bbbbbb"> </span>-b<span style="color: #bbbbbb"> </span>homework08<span style="color: #bbbbbb">              </span><span style="color: #3D7B7B; font-style: italic"># Create homework08 branch and check it out</span>
+</code></pre></div>
+
+<h3 id="task-1-skeleton-code">Task 1: Skeleton Code<a class="headerlink" href="#task-1-skeleton-code" title="Permanent link">&para;</a></h3>
+<p>To help you get started, the instructor has provided you with the following
+<strong>skeleton code</strong>:</p>
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%;"><span></span><code><span style="color: #3D7B7B; font-style: italic"># Go to homework08 folder</span>
+$<span style="color: #bbbbbb"> </span><span style="color: #008000">cd</span><span style="color: #bbbbbb"> </span>homework08
+
+<span style="color: #3D7B7B; font-style: italic"># Download Makefile</span>
+$<span style="color: #bbbbbb"> </span>curl<span style="color: #bbbbbb"> </span>-LO<span style="color: #bbbbbb"> </span>https://www3.nd.edu/~pbui/teaching/cse.20289.sp25/static/txt/homework08/Makefile
+
+<span style="color: #3D7B7B; font-style: italic"># Download C skeleton code</span>
+$<span style="color: #bbbbbb"> </span>curl<span style="color: #bbbbbb"> </span>-LO<span style="color: #bbbbbb"> </span>https://www3.nd.edu/~pbui/teaching/cse.20289.sp25/static/txt/homework08/filter.c
+$<span style="color: #bbbbbb"> </span>curl<span style="color: #bbbbbb"> </span>-LO<span style="color: #bbbbbb"> </span>https://www3.nd.edu/~pbui/teaching/cse.20289.sp25/static/txt/homework08/filter.unit.c
+$<span style="color: #bbbbbb"> </span>curl<span style="color: #bbbbbb"> </span>-LO<span style="color: #bbbbbb"> </span>https://www3.nd.edu/~pbui/teaching/cse.20289.sp25/static/txt/homework08/findit.c
+$<span style="color: #bbbbbb"> </span>curl<span style="color: #bbbbbb"> </span>-LO<span style="color: #bbbbbb"> </span>https://www3.nd.edu/~pbui/teaching/cse.20289.sp25/static/txt/homework08/findit.h
+$<span style="color: #bbbbbb"> </span>curl<span style="color: #bbbbbb"> </span>-LO<span style="color: #bbbbbb"> </span>https://www3.nd.edu/~pbui/teaching/cse.20289.sp25/static/txt/homework08/list.c
+$<span style="color: #bbbbbb"> </span>curl<span style="color: #bbbbbb"> </span>-LO<span style="color: #bbbbbb"> </span>https://www3.nd.edu/~pbui/teaching/cse.20289.sp25/static/txt/homework08/list.unit.c
+</code></pre></div>
+
+<p>Once downloaded, you should see the following files in your <code>homework08</code> directory:</p>
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%;"><span></span><code>homework08
+<span style="color: #bbbbbb">    </span><span style="color: #AA5D1F; font-weight: bold">\_</span><span style="color: #bbbbbb"> </span>Makefile<span style="color: #bbbbbb">       </span><span style="color: #3D7B7B; font-style: italic"># This is the Makefile for building all the assignment artifacts</span>
+<span style="color: #bbbbbb">    </span><span style="color: #AA5D1F; font-weight: bold">\_</span><span style="color: #bbbbbb"> </span>filter.c<span style="color: #bbbbbb">       </span><span style="color: #3D7B7B; font-style: italic"># This is the filter functions C source file</span>
+<span style="color: #bbbbbb">    </span><span style="color: #AA5D1F; font-weight: bold">\_</span><span style="color: #bbbbbb"> </span>filter.unit.c<span style="color: #bbbbbb">  </span><span style="color: #3D7B7B; font-style: italic"># This is the filter functions C unit test source file</span>
+<span style="color: #bbbbbb">    </span><span style="color: #AA5D1F; font-weight: bold">\_</span><span style="color: #bbbbbb"> </span>findit.c<span style="color: #bbbbbb">       </span><span style="color: #3D7B7B; font-style: italic"># This is the findit utility C source file</span>
+<span style="color: #bbbbbb">    </span><span style="color: #AA5D1F; font-weight: bold">\_</span><span style="color: #bbbbbb"> </span>findit.h<span style="color: #bbbbbb">       </span><span style="color: #3D7B7B; font-style: italic"># This is the findit utility C header file</span>
+<span style="color: #bbbbbb">    </span><span style="color: #AA5D1F; font-weight: bold">\_</span><span style="color: #bbbbbb"> </span>list.c<span style="color: #bbbbbb">         </span><span style="color: #3D7B7B; font-style: italic"># This is the linked list C source file</span>
+<span style="color: #bbbbbb">    </span><span style="color: #AA5D1F; font-weight: bold">\_</span><span style="color: #bbbbbb"> </span>list.unit.c<span style="color: #bbbbbb">    </span><span style="color: #3D7B7B; font-style: italic"># This is the linked list C unit test source file</span>
+</code></pre></div>
+
+<h3 id="task-2-initial-import">Task 2: Initial Import<a class="headerlink" href="#task-2-initial-import" title="Permanent link">&para;</a></h3>
+<p>Now that the files are downloaded into the <code>homework08</code> folder, you can
+<strong>commit</strong> them to your <a href="https://git-scm.com/">git</a> repository:</p>
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%;"><span></span><code>$<span style="color: #bbbbbb"> </span>git<span style="color: #bbbbbb"> </span>add<span style="color: #bbbbbb"> </span>Makefile<span style="color: #bbbbbb">                            </span><span style="color: #3D7B7B; font-style: italic"># Mark changes for commit</span>
+$<span style="color: #bbbbbb"> </span>git<span style="color: #bbbbbb"> </span>add<span style="color: #bbbbbb"> </span>*.c<span style="color: #bbbbbb"> </span>*.h
+$<span style="color: #bbbbbb"> </span>git<span style="color: #bbbbbb"> </span>commit<span style="color: #bbbbbb"> </span>-m<span style="color: #bbbbbb"> </span><span style="color: #BA2121">&quot;Homework 08: Initial Import&quot;</span><span style="color: #bbbbbb"> </span><span style="color: #3D7B7B; font-style: italic"># Record changes</span>
+</code></pre></div>
+
+<h3 id="task-3-unit-tests">Task 3: Unit Tests<a class="headerlink" href="#task-3-unit-tests" title="Permanent link">&para;</a></h3>
+<p>After downloading these files, you can run <code>make test</code> to run the tests.</p>
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%;"><span></span><code><span style="color: #3D7B7B; font-style: italic"># Run all tests (will trigger automatic download)</span>
+$<span style="color: #bbbbbb"> </span>make<span style="color: #bbbbbb"> </span><span style="color: #008000">test</span>
+</code></pre></div>
+
+<p>You will notice that the Makefile downloads these additional test data and scripts:</p>
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%;"><span></span><code>homework08
+<span style="color: #bbbbbb">    </span><span style="color: #AA5D1F; font-weight: bold">\_</span><span style="color: #bbbbbb"> </span>filter.unit.sh<span style="color: #bbbbbb">   </span><span style="color: #3D7B7B; font-style: italic"># This is the filter functions unit test shell script</span>
+<span style="color: #bbbbbb">    </span><span style="color: #AA5D1F; font-weight: bold">\_</span><span style="color: #bbbbbb"> </span>find.test.sh<span style="color: #bbbbbb">     </span><span style="color: #3D7B7B; font-style: italic"># This is the findit utility test shell script</span>
+<span style="color: #bbbbbb">    </span><span style="color: #AA5D1F; font-weight: bold">\_</span><span style="color: #bbbbbb"> </span>list.unit.sh<span style="color: #bbbbbb">     </span><span style="color: #3D7B7B; font-style: italic"># This is the linked list unit test shell script</span>
+</code></pre></div>
+
+<p>You will be using these <a href="https://en.wikipedia.org/wiki/Unit_testing">unit tests</a> to verify the correctness and behavior
+of your code.</p>
+<div class="alert alert-info">
+<h4 id="automatic-downloads"><i class="fa fa-download"></i> Automatic Downloads<a class="headerlink" href="#automatic-downloads" title="Permanent link">&para;</a></h4>
+<p>The <code>test</code> scripts are automatically downloaded by the <code>Makefile</code>, so any
+modifications you do to them will be lost when you run <code>make</code> again. Likewise,
+because they are automatically downloaded, you do not need to <code>add</code> or <code>commit</code>
+them to your <a href="https://git-scm.com/">git</a> repository.</p>
+</div>
+<h3 id="task-4-makefile">Task 4: Makefile<a class="headerlink" href="#task-4-makefile" title="Permanent link">&para;</a></h3>
+<p>The <code>Makefile</code> contains all the <strong>rules</strong> or <strong>recipes</strong> for building the
+project artifacts (e.g. <code>findit</code>):</p>
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%;"><span></span><code><span style="color: #19177C">CC</span><span style="color: #666666">=</span><span style="color: #bbbbbb">       </span>gcc
+<span style="color: #19177C">CFLAGS</span><span style="color: #666666">=</span><span style="color: #bbbbbb">   </span>-Wall<span style="color: #bbbbbb"> </span>-g<span style="color: #bbbbbb"> </span>-std<span style="color: #666666">=</span>gnu99
+<span style="color: #19177C">LD</span><span style="color: #666666">=</span><span style="color: #bbbbbb">       </span>gcc
+<span style="color: #19177C">LDFLAGS</span><span style="color: #666666">=</span><span style="color: #bbbbbb">  </span>-L.
+<span style="color: #19177C">TARGETS</span><span style="color: #666666">=</span><span style="color: #bbbbbb">  </span>findit
+
+<span style="color: #0000FF">all</span><span style="color: #666666">:</span><span style="color: #bbbbbb">    </span><span style="color: #008000; font-weight: bold">$(</span><span style="color: #19177C">TARGETS</span><span style="color: #008000; font-weight: bold">)</span>
+
+<span style="color: #3D7B7B; font-style: italic">#-------------------------------------------------------------------------------</span>
+<span style="color: #3D7B7B; font-style: italic"># TODO: Add rules for object files</span>
+<span style="color: #3D7B7B; font-style: italic">#-------------------------------------------------------------------------------</span>
+
+<span style="color: #0000FF">list.o</span><span style="color: #666666">:</span>
+
+<span style="color: #0000FF">filter.o</span><span style="color: #666666">:</span>
+
+<span style="color: #0000FF">findit.o</span><span style="color: #666666">:</span>
+
+<span style="color: #3D7B7B; font-style: italic">#-------------------------------------------------------------------------------</span>
+<span style="color: #3D7B7B; font-style: italic"># TODO: Add rules for executables</span>
+<span style="color: #3D7B7B; font-style: italic">#-------------------------------------------------------------------------------</span>
+
+<span style="color: #0000FF">findit</span><span style="color: #666666">:</span>
+
+<span style="color: #3D7B7B; font-style: italic">#-------------------------------------------------------------------------------</span>
+<span style="color: #3D7B7B; font-style: italic"># DO NOT MODIFY BELOW</span>
+<span style="color: #3D7B7B; font-style: italic">#-------------------------------------------------------------------------------</span>
+
+<span style="border: 1px solid #FF0000">...</span>
+</code></pre></div>
+
+<p>For this task, you will need to add <a href="https://www.gnu.org/software/make/manual/html_node/Rule-Example.html#Rule-Example">rules</a> for building the <em>intermediate</em>
+<a href="https://en.wikipedia.org/wiki/Object_file">object</a> files (ie. <code>list.o</code>, <code>filter.o</code>, <code>findit.o</code>) and the <code>findit</code>
+<em>executable</em> with the appropriate dependencies as shown the <a href="https://en.wikipedia.org/wiki/Directed_acyclic_graph">DAG</a> below:</p>
+<div class="thumbnail">
+  <img src="static/img/homework08-makefile.png" class="img-responsive">
+</div>
+
+<div class="alert alert-info">
+<h4 id="makefile-variables"><i class="fa fa-cogs"></i> Makefile Variables<a class="headerlink" href="#makefile-variables" title="Permanent link">&para;</a></h4>
+<p>You <strong>must</strong> use the <code>CC</code>, <code>CFLAGS</code>, <code>LD</code>, <code>LDFLAGS</code>, <code>AR</code>, and <code>ARFLAGS</code>
+variables when appropriate in your <a href="https://www.gnu.org/software/make/manual/html_node/Rule-Example.html#Rule-Example">rules</a>.  You <strong>should</strong> also consider
+using <a href="https://www.gnu.org/software/make/manual/html_node/Automatic-Variables.html">automatic variables</a> such as <code>$@</code> and <code>$&lt;</code> as well.</p>
+</div>
+<p>Once you have a working <code>Makefile</code>, you should be able to run the following commands:</p>
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%;"><span></span><code><span style="color: #3D7B7B; font-style: italic"># Build all TARGETS</span>
+$<span style="color: #bbbbbb"> </span>make
+gcc<span style="color: #bbbbbb"> </span>-Wall<span style="color: #bbbbbb"> </span>-g<span style="color: #bbbbbb"> </span>-std<span style="color: #666666">=</span>gnu99<span style="color: #bbbbbb"> </span>-c<span style="color: #bbbbbb"> </span>-o<span style="color: #bbbbbb"> </span>findit.o<span style="color: #bbbbbb"> </span>findit.c
+gcc<span style="color: #bbbbbb"> </span>-Wall<span style="color: #bbbbbb"> </span>-g<span style="color: #bbbbbb"> </span>-std<span style="color: #666666">=</span>gnu99<span style="color: #bbbbbb"> </span>-c<span style="color: #bbbbbb"> </span>-o<span style="color: #bbbbbb"> </span>list.o<span style="color: #bbbbbb"> </span>list.c
+gcc<span style="color: #bbbbbb"> </span>-Wall<span style="color: #bbbbbb"> </span>-g<span style="color: #bbbbbb"> </span>-std<span style="color: #666666">=</span>gnu99<span style="color: #bbbbbb"> </span>-c<span style="color: #bbbbbb"> </span>-o<span style="color: #bbbbbb"> </span>filter.o<span style="color: #bbbbbb"> </span>filter.c
+gcc<span style="color: #bbbbbb"> </span>-L.<span style="color: #bbbbbb"> </span>-o<span style="color: #bbbbbb"> </span>findit<span style="color: #bbbbbb"> </span>findit.o<span style="color: #bbbbbb"> </span>list.o<span style="color: #bbbbbb"> </span>filter.o
+
+<span style="color: #3D7B7B; font-style: italic"># Run all tests</span>
+$<span style="color: #bbbbbb"> </span>make<span style="color: #bbbbbb"> </span><span style="color: #008000">test</span>
+Testing<span style="color: #bbbbbb"> </span>list<span style="color: #bbbbbb"> </span>...
+<span style="color: #bbbbbb"> </span>node_create<span style="color: #bbbbbb">                                                  </span>...<span style="color: #bbbbbb"> </span>Success
+<span style="color: #bbbbbb"> </span>node_delete<span style="color: #bbbbbb">                                                  </span>...<span style="color: #bbbbbb"> </span>Success
+<span style="color: #bbbbbb"> </span>list_append<span style="color: #bbbbbb">                                                  </span>...<span style="color: #bbbbbb"> </span>Success
+<span style="color: #bbbbbb"> </span>list_filter<span style="color: #bbbbbb">                                                  </span>...<span style="color: #bbbbbb"> </span>Success
+<span style="color: #bbbbbb"> </span>list_output<span style="color: #bbbbbb">                                                  </span>...<span style="color: #bbbbbb"> </span>Success
+
+<span style="color: #bbbbbb">   </span>Score<span style="color: #bbbbbb"> </span><span style="color: #666666">2</span>.50<span style="color: #bbbbbb"> </span>/<span style="color: #bbbbbb"> </span><span style="color: #666666">2</span>.50
+<span style="color: #bbbbbb">  </span>Status<span style="color: #bbbbbb"> </span>Success
+
+Testing<span style="color: #bbbbbb"> </span>filter<span style="color: #bbbbbb"> </span>...
+<span style="color: #bbbbbb"> </span>filter_by_type<span style="color: #bbbbbb">                                               </span>...<span style="color: #bbbbbb"> </span>Success
+<span style="color: #bbbbbb"> </span>filter_by_name<span style="color: #bbbbbb">                                               </span>...<span style="color: #bbbbbb"> </span>Success
+<span style="color: #bbbbbb"> </span>filter_by_mode<span style="color: #bbbbbb">                                               </span>...<span style="color: #bbbbbb"> </span>Success
+
+<span style="color: #bbbbbb">   </span>Score<span style="color: #bbbbbb"> </span><span style="color: #666666">1</span>.50<span style="color: #bbbbbb"> </span>/<span style="color: #bbbbbb"> </span><span style="color: #666666">1</span>.50
+<span style="color: #bbbbbb">  </span>Status<span style="color: #bbbbbb"> </span>Success
+
+Testing<span style="color: #bbbbbb"> </span>findit<span style="color: #bbbbbb"> </span>...
+<span style="color: #bbbbbb"> </span>findit<span style="color: #bbbbbb">                                                       </span>...<span style="color: #bbbbbb"> </span>Success
+<span style="color: #bbbbbb"> </span>findit<span style="color: #bbbbbb"> </span>/etc<span style="color: #bbbbbb">                                                  </span>...<span style="color: #bbbbbb"> </span>Success
+<span style="color: #bbbbbb"> </span>findit<span style="color: #bbbbbb"> </span>/etc<span style="color: #bbbbbb"> </span>-type<span style="color: #bbbbbb"> </span>f<span style="color: #bbbbbb">                                          </span>...<span style="color: #bbbbbb"> </span>Success
+<span style="color: #bbbbbb"> </span>findit<span style="color: #bbbbbb"> </span>/etc<span style="color: #bbbbbb"> </span>-type<span style="color: #bbbbbb"> </span>d<span style="color: #bbbbbb">                                          </span>...<span style="color: #bbbbbb"> </span>Success
+<span style="color: #bbbbbb"> </span>findit<span style="color: #bbbbbb"> </span>/etc<span style="color: #bbbbbb"> </span>-name<span style="color: #bbbbbb"> </span><span style="color: #BA2121">&#39;*.conf&#39;</span><span style="color: #bbbbbb">                                   </span>...<span style="color: #bbbbbb"> </span>Success
+<span style="color: #bbbbbb"> </span>findit<span style="color: #bbbbbb"> </span>/etc<span style="color: #bbbbbb"> </span>-readable<span style="color: #bbbbbb">                                        </span>...<span style="color: #bbbbbb"> </span>Success
+<span style="color: #bbbbbb"> </span>findit<span style="color: #bbbbbb"> </span>/etc<span style="color: #bbbbbb"> </span>-writable<span style="color: #bbbbbb">                                        </span>...<span style="color: #bbbbbb"> </span>Success
+<span style="color: #bbbbbb"> </span>findit<span style="color: #bbbbbb"> </span>/etc<span style="color: #bbbbbb"> </span>-executable<span style="color: #bbbbbb">                                      </span>...<span style="color: #bbbbbb"> </span>Success
+<span style="color: #bbbbbb"> </span>findit<span style="color: #bbbbbb"> </span>/etc<span style="color: #bbbbbb"> </span>-type<span style="color: #bbbbbb"> </span>d<span style="color: #bbbbbb"> </span>-name<span style="color: #bbbbbb"> </span><span style="color: #BA2121">&#39;*.d&#39;</span><span style="color: #bbbbbb">                              </span>...<span style="color: #bbbbbb"> </span>Success
+<span style="color: #bbbbbb"> </span>findit<span style="color: #bbbbbb"> </span>/etc<span style="color: #bbbbbb"> </span>-type<span style="color: #bbbbbb"> </span>d<span style="color: #bbbbbb"> </span>-name<span style="color: #bbbbbb"> </span><span style="color: #BA2121">&#39;*.d&#39;</span><span style="color: #bbbbbb"> </span>-executable<span style="color: #bbbbbb">                  </span>...<span style="color: #bbbbbb"> </span>Success
+<span style="color: #bbbbbb"> </span>findit<span style="color: #bbbbbb"> </span>.<span style="color: #bbbbbb"> </span>-name<span style="color: #bbbbbb"> </span><span style="color: #BA2121">&#39;*.c&#39;</span><span style="color: #bbbbbb">                                         </span>...<span style="color: #bbbbbb"> </span>Success
+<span style="color: #bbbbbb"> </span>findit<span style="color: #bbbbbb"> </span>.<span style="color: #bbbbbb"> </span>-writable<span style="color: #bbbbbb">                                           </span>...<span style="color: #bbbbbb"> </span>Success
+<span style="color: #bbbbbb"> </span>findit<span style="color: #bbbbbb"> </span>.<span style="color: #bbbbbb"> </span>-type<span style="color: #bbbbbb"> </span>f<span style="color: #bbbbbb"> </span>-name<span style="color: #bbbbbb"> </span><span style="color: #BA2121">&#39;*.unit&#39;</span><span style="color: #bbbbbb"> </span>-executable<span style="color: #bbbbbb">                  </span>...<span style="color: #bbbbbb"> </span>Success
+
+<span style="color: #bbbbbb">   </span>Score<span style="color: #bbbbbb"> </span><span style="color: #666666">4</span>.00<span style="color: #bbbbbb"> </span>/<span style="color: #bbbbbb"> </span><span style="color: #666666">4</span>.00
+<span style="color: #bbbbbb">  </span>Status<span style="color: #bbbbbb"> </span>Success
+
+<span style="color: #3D7B7B; font-style: italic"># Remove generated artifacts</span>
+$<span style="color: #bbbbbb"> </span>make<span style="color: #bbbbbb"> </span>clean
+</code></pre></div>
+
+<div class="alert alert-danger">
+<p><strong>Note</strong>: The tests will <strong>fail</strong> if you haven't implemented all the
+  necessary functions appropriately.</p>
+</div>
+<div class="alert alert-warning">
+<h4 id="warnings"><i class="fa fa-warning"></i> Warnings<a class="headerlink" href="#warnings" title="Permanent link">&para;</a></h4>
+<p>You must include the <code>-Wall</code> flag in your <code>CFLAGS</code> when you compile.  This
+also means that your code must <strong>compile without any warnings</strong>, otherwise
+points will be deducted.</p>
+</div>
+<h3 id="task-5-findith">Task 5: <code>findit.h</code><a class="headerlink" href="#task-5-findith" title="Permanent link">&para;</a></h3>
+<p>The <code>findit.h</code> file is the <a href="https://en.wikipedia.org/wiki/Include_directive#C.2FC.2B.2B">header</a> file for the <code>findit</code> utility, which
+means it contains the <a href="https://en.wikipedia.org/wiki/Typedef">type definitions</a> and function <a href="https://en.wikipedia.org/wiki/Function_prototype">prototypes</a>:</p>
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%;"><span></span><code><span style="color: #3D7B7B; font-style: italic">/* findit.h: Search for files in a directory hierarchy */</span>
+
+<span style="color: #9C6500">#pragma once</span>
+
+<span style="color: #9C6500">#include</span><span style="color: #bbbbbb"> </span><span style="color: #3D7B7B; font-style: italic">&lt;stdbool.h&gt;</span>
+<span style="color: #9C6500">#include</span><span style="color: #bbbbbb"> </span><span style="color: #3D7B7B; font-style: italic">&lt;stdio.h&gt;</span>
+
+<span style="color: #3D7B7B; font-style: italic">/* Options Structure */</span>
+
+<span style="color: #008000; font-weight: bold">typedef</span><span style="color: #bbbbbb"> </span><span style="color: #008000; font-weight: bold">struct</span><span style="color: #bbbbbb"> </span>{
+<span style="color: #bbbbbb">    </span><span style="color: #B00040">int</span><span style="color: #bbbbbb">   </span>type;<span style="color: #bbbbbb">         </span><span style="color: #3D7B7B; font-style: italic">// File type (-type)</span>
+<span style="color: #bbbbbb">    </span><span style="color: #B00040">char</span><span style="color: #bbbbbb"> </span><span style="color: #666666">*</span>name;<span style="color: #bbbbbb">         </span><span style="color: #3D7B7B; font-style: italic">// File name pattern (-name)</span>
+<span style="color: #bbbbbb">    </span><span style="color: #B00040">int</span><span style="color: #bbbbbb">   </span>mode;<span style="color: #bbbbbb">         </span><span style="color: #3D7B7B; font-style: italic">// Access modes (-executable, -readable, -writable)</span>
+}<span style="color: #bbbbbb"> </span>Options;
+
+<span style="color: #3D7B7B; font-style: italic">/* Filter Functions */</span>
+
+<span style="color: #008000; font-weight: bold">typedef</span><span style="color: #bbbbbb"> </span><span style="color: #B00040">bool</span><span style="color: #bbbbbb"> </span>(<span style="color: #666666">*</span>Filter)(<span style="color: #008000; font-weight: bold">const</span><span style="color: #bbbbbb"> </span><span style="color: #B00040">char</span><span style="color: #bbbbbb"> </span><span style="color: #666666">*</span>path,<span style="color: #bbbbbb"> </span>Options<span style="color: #bbbbbb"> </span><span style="color: #666666">*</span>options);
+
+<span style="color: #B00040">bool</span><span style="color: #bbbbbb">  </span><span style="color: #0000FF">filter_by_type</span>(<span style="color: #008000; font-weight: bold">const</span><span style="color: #bbbbbb"> </span><span style="color: #B00040">char</span><span style="color: #bbbbbb"> </span><span style="color: #666666">*</span>path,<span style="color: #bbbbbb"> </span>Options<span style="color: #bbbbbb"> </span><span style="color: #666666">*</span>options);
+<span style="color: #B00040">bool</span><span style="color: #bbbbbb">  </span><span style="color: #0000FF">filter_by_name</span>(<span style="color: #008000; font-weight: bold">const</span><span style="color: #bbbbbb"> </span><span style="color: #B00040">char</span><span style="color: #bbbbbb"> </span><span style="color: #666666">*</span>path,<span style="color: #bbbbbb"> </span>Options<span style="color: #bbbbbb"> </span><span style="color: #666666">*</span>options);
+<span style="color: #B00040">bool</span><span style="color: #bbbbbb">  </span><span style="color: #0000FF">filter_by_mode</span>(<span style="color: #008000; font-weight: bold">const</span><span style="color: #bbbbbb"> </span><span style="color: #B00040">char</span><span style="color: #bbbbbb"> </span><span style="color: #666666">*</span>path,<span style="color: #bbbbbb"> </span>Options<span style="color: #bbbbbb"> </span><span style="color: #666666">*</span>options);
+
+<span style="color: #3D7B7B; font-style: italic">/* Data Union */</span>
+
+<span style="color: #008000; font-weight: bold">typedef</span><span style="color: #bbbbbb"> </span><span style="color: #008000; font-weight: bold">union</span><span style="color: #bbbbbb"> </span>{
+<span style="color: #bbbbbb">    </span><span style="color: #B00040">char</span><span style="color: #bbbbbb"> </span><span style="color: #666666">*</span><span style="color: #bbbbbb">  </span>string;<span style="color: #bbbbbb">     </span><span style="color: #3D7B7B; font-style: italic">// String data</span>
+<span style="color: #bbbbbb">    </span>Filter<span style="color: #bbbbbb">  </span>function;<span style="color: #bbbbbb">   </span><span style="color: #3D7B7B; font-style: italic">// Filter function</span>
+}<span style="color: #bbbbbb"> </span>Data;
+
+<span style="color: #3D7B7B; font-style: italic">/* Node Structure */</span>
+
+<span style="color: #008000; font-weight: bold">typedef</span><span style="color: #bbbbbb"> </span><span style="color: #008000; font-weight: bold">struct</span><span style="color: #bbbbbb"> </span><span style="color: #0000FF; font-weight: bold">Node</span><span style="color: #bbbbbb"> </span>Node;
+<span style="color: #008000; font-weight: bold">struct</span><span style="color: #bbbbbb"> </span><span style="color: #0000FF; font-weight: bold">Node</span><span style="color: #bbbbbb"> </span>{
+<span style="color: #bbbbbb">    </span>Data<span style="color: #bbbbbb">    </span>data;<span style="color: #bbbbbb">       </span><span style="color: #3D7B7B; font-style: italic">// Data value</span>
+<span style="color: #bbbbbb">    </span>Node<span style="color: #bbbbbb">   </span><span style="color: #666666">*</span>next;<span style="color: #bbbbbb">       </span><span style="color: #3D7B7B; font-style: italic">// Pointer to next Node</span>
+};
+
+Node<span style="color: #bbbbbb"> </span><span style="color: #666666">*</span><span style="color: #bbbbbb">  </span><span style="color: #0000FF">node_create</span>(Data<span style="color: #bbbbbb"> </span>data,<span style="color: #bbbbbb"> </span>Node<span style="color: #bbbbbb"> </span><span style="color: #666666">*</span>next);
+<span style="color: #B00040">void</span><span style="color: #bbbbbb">    </span><span style="color: #0000FF">node_delete</span>(Node<span style="color: #bbbbbb"> </span><span style="color: #666666">*</span>n,<span style="color: #bbbbbb"> </span><span style="color: #B00040">bool</span><span style="color: #bbbbbb"> </span>release,<span style="color: #bbbbbb"> </span><span style="color: #B00040">bool</span><span style="color: #bbbbbb"> </span>recursive);
+
+<span style="color: #3D7B7B; font-style: italic">/* List Structure */</span>
+
+<span style="color: #008000; font-weight: bold">typedef</span><span style="color: #bbbbbb"> </span><span style="color: #008000; font-weight: bold">struct</span><span style="color: #bbbbbb"> </span>{
+<span style="color: #bbbbbb">    </span>Node<span style="color: #bbbbbb">   </span><span style="color: #666666">*</span>head;<span style="color: #bbbbbb">       </span><span style="color: #3D7B7B; font-style: italic">// Pointer to first Node</span>
+<span style="color: #bbbbbb">    </span>Node<span style="color: #bbbbbb">   </span><span style="color: #666666">*</span>tail;<span style="color: #bbbbbb">       </span><span style="color: #3D7B7B; font-style: italic">// Pointer to last Node</span>
+}<span style="color: #bbbbbb"> </span>List;
+
+<span style="color: #B00040">void</span><span style="color: #bbbbbb">    </span><span style="color: #0000FF">list_append</span>(List<span style="color: #bbbbbb"> </span><span style="color: #666666">*</span>l,<span style="color: #bbbbbb"> </span>Data<span style="color: #bbbbbb"> </span>data);
+<span style="color: #B00040">void</span><span style="color: #bbbbbb">    </span><span style="color: #0000FF">list_filter</span>(List<span style="color: #bbbbbb"> </span><span style="color: #666666">*</span>l,<span style="color: #bbbbbb"> </span>Filter<span style="color: #bbbbbb"> </span>filter,<span style="color: #bbbbbb"> </span>Options<span style="color: #bbbbbb"> </span><span style="color: #666666">*</span>options,<span style="color: #bbbbbb"> </span><span style="color: #B00040">bool</span><span style="color: #bbbbbb"> </span>release);
+<span style="color: #B00040">void</span><span style="color: #bbbbbb">    </span><span style="color: #0000FF">list_output</span>(List<span style="color: #bbbbbb"> </span><span style="color: #666666">*</span>l,<span style="color: #bbbbbb"> </span><span style="color: #B00040">FILE</span><span style="color: #bbbbbb"> </span><span style="color: #666666">*</span>stream);
+</code></pre></div>
+
+<p>Other <a href="https://en.wikipedia.org/wiki/C_(programming_language)">C</a> source files will <code>#include</code> this file in order to use the
+functions we will be implementing in this assignment.</p>
+<h4 id="options-structure">Options Structure<a class="headerlink" href="#options-structure" title="Permanent link">&para;</a></h4>
+<p>The <code>Options</code> structure is used by the <code>Filter</code> functions to check the
+attribute of various files and directories encountered in the <code>findit</code>
+program.  It has the following fields:</p>
+<ol>
+<li>
+<p><code>type</code>: This is used to store the file type (ie. <a href="https://man7.org/linux/man-pages/man7/inode.7.html">S_IFREG</a>, <a href="https://man7.org/linux/man-pages/man7/inode.7.html">S_IFDIR</a>) to
+  match against.</p>
+</li>
+<li>
+<p><code>name</code>: This is used to store the <a href="https://man7.org/linux/man-pages/man7/glob.7.html">glob pattern</a> to match against the
+  <a href="https://man7.org/linux/man-pages/man3/basename.3.html">basename</a> of a <code>path</code> string.</p>
+</li>
+<li>
+<p><code>mode</code>: This is used to store the <a href="https://man7.org/linux/man-pages/man2/access.2.html">access mode</a> to match against.</p>
+</li>
+</ol>
+<h4 id="data-union">Data Union<a class="headerlink" href="#data-union" title="Permanent link">&para;</a></h4>
+<p>The <code>Data</code> union is used by the <code>List</code> structure to store either a <a href="https://en.wikipedia.org/wiki/String_(computer_science)">string</a>
+or a <code>Filter</code> function pointer:</p>
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%;"><span></span><code><span style="color: #3D7B7B; font-style: italic">// Declare a Data union with a string</span>
+Data<span style="color: #bbbbbb"> </span>dp<span style="color: #bbbbbb"> </span><span style="color: #666666">=</span><span style="color: #bbbbbb"> </span>(Data)<span style="color: #BA2121">&quot;file path&quot;</span>;
+
+<span style="color: #3D7B7B; font-style: italic">// Access string</span>
+puts(dp.string)
+
+<span style="color: #3D7B7B; font-style: italic">// Declare a Data union with a Filter function pointer</span>
+Data<span style="color: #bbbbbb"> </span>df<span style="color: #bbbbbb"> </span><span style="color: #666666">=</span><span style="color: #bbbbbb"> </span>(Data)filter_by_type;
+
+<span style="color: #3D7B7B; font-style: italic">// Access Filter function</span>
+df.function(path,<span style="color: #bbbbbb"> </span>options);
+</code></pre></div>
+
+<p>The details of the <code>Node</code> structure, <code>List</code> structure, and <code>Filter</code> functions
+and what you need to implement are provided in the following sections.</p>
+<div class="alert alert-info">
+<p><strong>Note</strong>: For this task, you <strong>do not</strong> need to modify this file.  Instead,
+you should review it and ensure you understand the provided code.</p>
+</div>
+<h2 id="activity-1-linked-list-25-points">Activity 1: Linked List (<em>2.5 Points</em>)<a class="headerlink" href="#activity-1-linked-list-25-points" title="Permanent link">&para;</a></h2>
+<p>The <code>findit</code> utility works by first walking a directory <em>recursively</em> and
+adding any <em>entries</em> it encounters to a <a href="https://en.wikipedia.org/wiki/Linked_list#Singly_linked_list">singly linked list</a> of <em>file paths</em>.
+For the first activity, you are to implement a <a href="https://en.wikipedia.org/wiki/Linked_list#Singly_linked_list">singly linked list</a> with both
+a <code>head</code> and <code>tail</code> pointer as show below:</p>
+<div class="thumbnail">
+  <img src="static/img/homework08-linkedlist.png" class="img-responsive">
+</div>
+
+<p>The <code>List</code> structure consists of two pointers to <code>Node</code> structures:</p>
+<ol>
+<li><code>head</code>: This points to the first <code>Node</code> in the <a href="https://en.wikipedia.org/wiki/Linked_list#Singly_linked_list">singly linked list</a>.</li>
+<li><code>tail</code>: This points to the last <code>Node</code> in the <a href="https://en.wikipedia.org/wiki/Linked_list#Singly_linked_list">singly linked list</a>.</li>
+</ol>
+<p>If the <code>List</code> is empty, then both <code>head</code> and <code>tail</code> should be <code>NULL</code>.</p>
+<p>Each <code>Node</code> structure contains a <code>Data</code> union to store either a <a href="https://en.wikipedia.org/wiki/String_(computer_science)">string</a> or a
+<code>Filter</code> function pointer, and a pointer to the next <code>Node</code> in the <a href="https://en.wikipedia.org/wiki/Linked_list#Singly_linked_list">singly
+linked list</a>.</p>
+<h3 id="task-1-listc">Task 1: <code>list.c</code><a class="headerlink" href="#task-1-listc" title="Permanent link">&para;</a></h3>
+<p>The <code>list.c</code> file contains the <a href="https://en.wikipedia.org/wiki/C_(programming_language)">C</a> implementation for the <a href="https://en.wikipedia.org/wiki/Linked_list">linked list</a>
+structure.  For this task, you will need to implement the following
+functions:</p>
+<ol>
+<li>
+<p><code>Node * node_create(Data data, Node *next)</code></p>
+<blockquote>
+<p>This function allocates a new <code>Node</code> structure on the <a href="https://en.wikipedia.org/wiki/Heap_(programming)">heap</a>,
+initializes its <code>data</code> and <code>next</code> attributes, and returns a pointer to
+this new <code>Node</code> structure.</p>
+</blockquote>
+<p><div class="alert alert-success" markdown="1">
+<strong>Hint</strong>: Consider using <a href="https://man7.org/linux/man-pages/man3/malloc.3.html">malloc</a> or <a href="https://man7.org/linux/man-pages/man3/malloc.3.html">calloc</a>.
+</div></p>
+</li>
+<li>
+<p><code>void node_delete(Node *n, bool release, bool recursive)</code></p>
+<blockquote>
+<p>This function deallocates the given <code>Node</code> structure.  If <code>recursive</code>
+is <code>true</code>, then the function will call <code>node_delete</code> on the <code>next</code> item
+in the <a href="https://en.wikipedia.org/wiki/Linked_list#Singly_linked_list">singly linked list</a>.  Likewise, if <code>release</code> is <code>true</code> then the
+<code>data</code> <a href="https://en.wikipedia.org/wiki/String_(computer_science)">string</a> will also be deallocated (before deallocating the <code>Node</code>
+itself).</p>
+</blockquote>
+<p><div class="alert alert-success" markdown="1">
+<strong>Hint</strong>: Consider using <a href="https://man7.org/linux/man-pages/man3/malloc.3.html">free</a>.
+</div></p>
+</li>
+<li>
+<p><code>void list_append(List *l, Data data)</code></p>
+<blockquote>
+<p>This function adds a new <code>Node</code> structure with the given <code>data</code> to the
+<code>tail</code> of the given <code>List</code> structure.</p>
+</blockquote>
+<div class="alert alert-success" markdown="1">
+<p><strong>Hint</strong>: Consider using <code>node_create</code> and make sure you update the
+  <code>head</code> and <code>tail</code> of the <code>List</code> appropriately.</p>
+</div>
+</li>
+<li>
+<p><code>void list_filter(List *l, Filter filter, Options *options, bool release)</code></p>
+<blockquote>
+<p>This function filters the given <code>List</code> by applying the <code>Filter</code>
+function to each <code>Node</code>'s <code>Data</code> string and the given <code>Options</code>
+structure.  If the <code>Filter</code> function returns <code>true</code>, then the <code>Node</code> is
+kept.  Otherwise, it is removed from the <code>List</code>.  If <code>release</code> is <code>true</code>,
+then the <code>Data</code> <a href="https://en.wikipedia.org/wiki/String_(computer_science)">string</a> should also be deallocated when removing a <code>Node</code>.</p>
+</blockquote>
+<div class="alert alert-success" markdown="1">
+<p><strong>Hint</strong>: Consider using <code>node_delete</code> when removing a <code>Node</code>.  Draw a
+  picture and consider how many pointers you need to effectively traverse
+  the <code>List</code> and to remove a <code>Node</code> in the middle of the <code>List</code>.
+  Moreover, make sure you update the <code>head</code> and <code>tail</code> of the <code>List</code>
+  appropriately.</p>
+</div>
+</li>
+<li>
+<p><code>void list_output(List *l, FILE *stream)</code></p>
+<blockquote>
+<p>This function prints the <code>Data</code> <a href="https://en.wikipedia.org/wiki/String_(computer_science)">string</a> of each <code>Node</code> in the given
+<code>List</code> to the specified <code>stream</code>.</p>
+</blockquote>
+<div class="alert alert-success" markdown="1">
+<p><strong>Hint</strong>: Consider using <a href="https://man7.org/linux/man-pages/man3/printf.3.html">fprintf</a>.</p>
+</div>
+</li>
+</ol>
+<h3 id="task-2-testing">Task 2: Testing<a class="headerlink" href="#task-2-testing" title="Permanent link">&para;</a></h3>
+<p>As you implement the functions in <code>list.c</code>, you should use the <code>list.unit</code>
+executable with the <code>list.unit.sh</code> script to test each of your functions:</p>
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%;"><span></span><code><span style="color: #3D7B7B; font-style: italic"># Build test artifacts and run test scripts</span>
+$<span style="color: #bbbbbb"> </span>make<span style="color: #bbbbbb"> </span>test-list
+Testing<span style="color: #bbbbbb"> </span>list<span style="color: #bbbbbb"> </span>...
+<span style="color: #bbbbbb"> </span>node_create<span style="color: #bbbbbb">                                                  </span>...<span style="color: #bbbbbb"> </span>Success
+<span style="color: #bbbbbb"> </span>node_delete<span style="color: #bbbbbb">                                                  </span>...<span style="color: #bbbbbb"> </span>Success
+<span style="color: #bbbbbb"> </span>list_append<span style="color: #bbbbbb">                                                  </span>...<span style="color: #bbbbbb"> </span>Success
+<span style="color: #bbbbbb"> </span>list_filter<span style="color: #bbbbbb">                                                  </span>...<span style="color: #bbbbbb"> </span>Success
+<span style="color: #bbbbbb"> </span>list_output<span style="color: #bbbbbb">                                                  </span>...<span style="color: #bbbbbb"> </span>Success
+
+<span style="color: #bbbbbb">   </span>Score<span style="color: #bbbbbb"> </span><span style="color: #666666">2</span>.50<span style="color: #bbbbbb"> </span>/<span style="color: #bbbbbb"> </span><span style="color: #666666">2</span>.50
+<span style="color: #bbbbbb">  </span>Status<span style="color: #bbbbbb"> </span>Success
+</code></pre></div>
+
+<p>You can also run the testing script manually:</p>
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%;"><span></span><code><span style="color: #3D7B7B; font-style: italic"># Run Shell unit test script manually</span>
+$<span style="color: #bbbbbb"> </span>./list.unit.sh
+...
+</code></pre></div>
+
+<p>To <strong>debug</strong> your <a href="https://en.wikipedia.org/wiki/Linked_list">linked list</a> functions, you can use [gdb] on the
+<code>list.unit</code> executable:</p>
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%;"><span></span><code><span style="color: #3D7B7B; font-style: italic"># Start gdb on list.unit</span>
+$<span style="color: #bbbbbb"> </span>gdb<span style="color: #bbbbbb"> </span>./list.unit
+<span style="color: #666666">(</span>gdb<span style="color: #666666">)</span><span style="color: #bbbbbb"> </span>run<span style="color: #bbbbbb"> </span><span style="color: #666666">0</span><span style="color: #bbbbbb">     </span><span style="color: #3D7B7B; font-style: italic"># Run list.unit with the &quot;0&quot; command line argument (ie. node_create)</span>
+...
+</code></pre></div>
+
+<p>You can also use <a href="https://valgrind.org/">valgrind</a> to check for memory errors:</p>
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%;"><span></span><code><span style="color: #3D7B7B; font-style: italic"># Check for memory errors on list_lower test case</span>
+$<span style="color: #bbbbbb"> </span>valgrind<span style="color: #bbbbbb"> </span>--leak-check<span style="color: #666666">=</span>full<span style="color: #bbbbbb"> </span>./list.unit<span style="color: #bbbbbb"> </span><span style="color: #666666">0</span>
+</code></pre></div>
+
+<div class="alert alert-success">
+<h4 id="iterative-development"><i class="fa fa-repeat"></i> Iterative Development<a class="headerlink" href="#iterative-development" title="Permanent link">&para;</a></h4>
+<p>You should practice <a href="https://en.wikipedia.org/wiki/Iterative_and_incremental_development">iterative development</a>.  That is, rather than writing a
+bunch of code and then debugging it all at once, you should concentrate on
+one function at a time and then test that <strong>one thing at a time</strong>.  The
+provided <a href="https://en.wikipedia.org/wiki/Unit_testing">unit tests</a> allow you to check on the correctness of the individual
+functions without implementing everything at once.  Take advantage of this
+and build one thing at a time.</p>
+</div>
+<h2 id="activity-2-filters-15-points">Activity 2: Filters (<em>1.5 Points</em>)<a class="headerlink" href="#activity-2-filters-15-points" title="Permanent link">&para;</a></h2>
+<p>As with the conventional <a href="https://man7.org/linux/man-pages/man1/find.1.html">find</a> command, the <code>findit</code> utility will allow for
+<em>filtering</em> the list of <em>file paths</em> by their individual attributes.  For
+instance, to only display the regular files in a directory, you can do the
+following with <a href="https://man7.org/linux/man-pages/man1/find.1.html">find</a>:</p>
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%;"><span></span><code><span style="color: #3D7B7B; font-style: italic"># Only display regular files in the current directory</span>
+$<span style="color: #bbbbbb"> </span>find<span style="color: #bbbbbb"> </span>.<span style="color: #bbbbbb"> </span>-type<span style="color: #bbbbbb"> </span>f
+</code></pre></div>
+
+<p>Internally, <code>findit</code> will support this feature by calling a <code>Filter</code> function
+on each entry in its <a href="https://en.wikipedia.org/wiki/Linked_list#Singly_linked_list">singly linked list</a> of <em>file paths</em> to check whether or
+not to keep it.  In this specific example, <code>findit</code> would call
+<code>filter_by_type</code> with an <code>Options</code> structure that has its <code>type</code> attribute
+set to <a href="https://man7.org/linux/man-pages/man7/inode.7.html">S_IFREG</a> on each <code>Data</code> <a href="https://en.wikipedia.org/wiki/String_(computer_science)">string</a> in its <code>List</code>.</p>
+<p>To support filtering the list of <em>file paths</em> in <code>findit</code>, you are to
+implement three <code>Filter</code> functions that return <code>true</code> if the file <code>path</code>
+should be kept in the list.</p>
+<h3 id="task-1-filterc">Task 1: <code>filter.c</code><a class="headerlink" href="#task-1-filterc" title="Permanent link">&para;</a></h3>
+<p>The <code>filter.c</code> file contains the <a href="https://en.wikipedia.org/wiki/C_(programming_language)">C</a> implementation for the <code>Filter</code>
+functions.  For this task, you will need to implement the following
+functions:</p>
+<ol>
+<li>
+<p><code>bool filter_by_type(const char *path, Options *options)</code></p>
+<blockquote>
+<p>This function returns <code>true</code> if the file at the specified <code>path</code> has
+the corresponding <strong>type</strong> specified in the <code>Options</code> structure.</p>
+</blockquote>
+<div class="alert alert-success" markdown="1">
+<p><strong>Hint</strong>: Consider using <a href="https://man7.org/linux/man-pages/man2/stat.2.html">lstat</a> and <a href="https://man7.org/linux/man-pages/man2/stat.2.html">S_IFMT</a>.</p>
+</div>
+</li>
+<li>
+<p><code>bool filter_by_name(const char *path, Options *options)</code></p>
+<blockquote>
+<p>This function returns <code>true</code> if the <a href="https://man7.org/linux/man-pages/man3/basename.3.html">basename</a> of the specified <code>path</code>
+has matches the <a href="https://man7.org/linux/man-pages/man7/glob.7.html">glob pattern</a> specified in the <code>Options</code> structure.</p>
+</blockquote>
+<div class="alert alert-success" markdown="1">
+<p><strong>Hint</strong>: Consider using <a href="https://man7.org/linux/man-pages/man3/basename.3.html">basename</a> and <a href="https://man7.org/linux/man-pages/man3/fnmatch.3.html">fnmatch</a>.</p>
+</div>
+</li>
+<li>
+<p><code>bool filter_by_mode(const char *path, Options *options</code></p>
+<blockquote>
+<p>This function returns <code>true</code> if the file at the specified <code>path</code> has
+the <a href="https://man7.org/linux/man-pages/man2/access.2.html">access mode</a> specified in the <code>Options</code> structure.</p>
+</blockquote>
+<div class="alert alert-success" markdown="1">
+<p><strong>Hint</strong>: Consider using <a href="https://man7.org/linux/man-pages/man2/access.2.html">access</a>.</p>
+</div>
+</li>
+</ol>
+<h3 id="task-2-testing_1">Task 2: Testing<a class="headerlink" href="#task-2-testing_1" title="Permanent link">&para;</a></h3>
+<p>As you implement the functions in <code>filter.c</code>, you should use the
+<code>filter.unit</code> executable with the <code>filter.unit.sh</code> script to test each of
+your functions:</p>
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%;"><span></span><code><span style="color: #3D7B7B; font-style: italic"># Build test artifacts and run test scripts</span>
+$<span style="color: #bbbbbb"> </span>make<span style="color: #bbbbbb"> </span>test-filter
+Testing<span style="color: #bbbbbb"> </span>filter<span style="color: #bbbbbb"> </span>...
+<span style="color: #bbbbbb"> </span>filter_by_type<span style="color: #bbbbbb">                                               </span>...<span style="color: #bbbbbb"> </span>Success
+<span style="color: #bbbbbb"> </span>filter_by_name<span style="color: #bbbbbb">                                               </span>...<span style="color: #bbbbbb"> </span>Success
+<span style="color: #bbbbbb"> </span>filter_by_mode<span style="color: #bbbbbb">                                               </span>...<span style="color: #bbbbbb"> </span>Success
+
+<span style="color: #bbbbbb">   </span>Score<span style="color: #bbbbbb"> </span><span style="color: #666666">1</span>.50<span style="color: #bbbbbb"> </span>/<span style="color: #bbbbbb"> </span><span style="color: #666666">1</span>.50
+<span style="color: #bbbbbb">  </span>Status<span style="color: #bbbbbb"> </span>Success
+</code></pre></div>
+
+<p>You can also run the testing script manually:</p>
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%;"><span></span><code><span style="color: #3D7B7B; font-style: italic"># Run Shell unit test script manually</span>
+$<span style="color: #bbbbbb"> </span>./filter.unit.sh
+...
+</code></pre></div>
+
+<p>To <strong>debug</strong> your <code>Filter</code> functions, you can use [gdb] on the <code>filter.unit</code>
+executable:</p>
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%;"><span></span><code><span style="color: #3D7B7B; font-style: italic"># Start gdb on list.unit</span>
+$<span style="color: #bbbbbb"> </span>gdb<span style="color: #bbbbbb"> </span>./filter.unit
+<span style="color: #666666">(</span>gdb<span style="color: #666666">)</span><span style="color: #bbbbbb"> </span>run<span style="color: #bbbbbb"> </span><span style="color: #666666">0</span><span style="color: #bbbbbb">     </span><span style="color: #3D7B7B; font-style: italic"># Run list.unit with the &quot;0&quot; command line argument (ie. filter_by_type)</span>
+...
+</code></pre></div>
+
+<p>You can also use <a href="https://valgrind.org/">valgrind</a> to check for memory errors:</p>
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%;"><span></span><code><span style="color: #3D7B7B; font-style: italic"># Check for memory errors on list_lower test case</span>
+$<span style="color: #bbbbbb"> </span>valgrind<span style="color: #bbbbbb"> </span>--leak-check<span style="color: #666666">=</span>full<span style="color: #bbbbbb"> </span>./filter.unit<span style="color: #bbbbbb"> </span><span style="color: #666666">0</span>
+</code></pre></div>
+
+<h2 id="activity-3-findit-4-points">Activity 3: Findit (<em>4 Points</em>)<a class="headerlink" href="#activity-3-findit-4-points" title="Permanent link">&para;</a></h2>
+<p>Once you have implemented the <a href="https://en.wikipedia.org/wiki/Linked_list#Singly_linked_list">singly linked list</a> and the <code>Filter</code>
+functions, you can complete the <code>findit</code> utility:</p>
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%;"><span></span><code><span style="color: #3D7B7B; font-style: italic"># Display usage message</span>
+$<span style="color: #bbbbbb"> </span>./findit
+Usage:<span style="color: #bbbbbb"> </span>findit<span style="color: #bbbbbb"> </span>PATH<span style="color: #bbbbbb"> </span><span style="color: #666666">[</span>OPTIONS<span style="color: #666666">]</span>
+
+Options:
+
+<span style="color: #bbbbbb">   </span>-type<span style="color: #bbbbbb"> </span><span style="color: #666666">[</span>f|d<span style="color: #666666">]</span><span style="color: #bbbbbb">    </span>File<span style="color: #bbbbbb"> </span>is<span style="color: #bbbbbb"> </span>of<span style="color: #bbbbbb"> </span><span style="color: #008000">type</span><span style="color: #bbbbbb"> </span>f<span style="color: #bbbbbb"> </span><span style="color: #008000; font-weight: bold">for</span><span style="color: #bbbbbb"> </span>regular<span style="color: #bbbbbb"> </span>file<span style="color: #bbbbbb"> </span>or<span style="color: #bbbbbb"> </span>d<span style="color: #bbbbbb"> </span><span style="color: #008000; font-weight: bold">for</span><span style="color: #bbbbbb"> </span>directory
+<span style="color: #bbbbbb">   </span>-name<span style="color: #bbbbbb"> </span>pattern<span style="color: #bbbbbb">  </span>Name<span style="color: #bbbbbb"> </span>of<span style="color: #bbbbbb"> </span>file<span style="color: #bbbbbb"> </span>matches<span style="color: #bbbbbb"> </span>shell<span style="color: #bbbbbb"> </span>pattern
+<span style="color: #bbbbbb">   </span>-executable<span style="color: #bbbbbb">    </span>File<span style="color: #bbbbbb"> </span>is<span style="color: #bbbbbb"> </span>executable<span style="color: #bbbbbb"> </span>or<span style="color: #bbbbbb"> </span>directory<span style="color: #bbbbbb"> </span>is<span style="color: #bbbbbb"> </span>searchable<span style="color: #bbbbbb"> </span>by<span style="color: #bbbbbb"> </span>user
+<span style="color: #bbbbbb">   </span>-readable<span style="color: #bbbbbb">      </span>File<span style="color: #bbbbbb"> </span>is<span style="color: #bbbbbb"> </span>readable<span style="color: #bbbbbb"> </span>by<span style="color: #bbbbbb"> </span>user
+<span style="color: #bbbbbb">   </span>-writable<span style="color: #bbbbbb">      </span>File<span style="color: #bbbbbb"> </span>is<span style="color: #bbbbbb"> </span>writable<span style="color: #bbbbbb"> </span>by<span style="color: #bbbbbb"> </span>user
+
+<span style="color: #3D7B7B; font-style: italic"># Display only files</span>
+$<span style="color: #bbbbbb"> </span>./findit<span style="color: #bbbbbb"> </span>.
+./list.c
+./list.unit
+./Makefile.template
+./filter.c.template
+...
+
+<span style="color: #3D7B7B; font-style: italic"># Display only .c files</span>
+$<span style="color: #bbbbbb"> </span>./findit<span style="color: #bbbbbb"> </span>.<span style="color: #bbbbbb"> </span>-name<span style="color: #bbbbbb"> </span><span style="color: #BA2121">&#39;*.c&#39;</span>
+./list.c
+./filter.unit.c
+./findit.c
+./filter.c
+./list.unit.c
+
+<span style="color: #3D7B7B; font-style: italic"># Display only executable files</span>
+$<span style="color: #bbbbbb"> </span>./findit<span style="color: #bbbbbb"> </span>.<span style="color: #bbbbbb"> </span>-type<span style="color: #bbbbbb"> </span>f<span style="color: #bbbbbb"> </span>-executable
+./list.unit
+./findit
+./list.unit.sh
+./findit.test.sh
+./filter.unit.sh
+./filter.unit
+</code></pre></div>
+
+<p>As with the <a href="https://man7.org/linux/man-pages/man1/find.1.html">find</a> program, <code>findit</code> takes the <code>PATH</code> of the directory to
+<em>recursively</em> search as its first argument and then any <em>options</em> the user
+wishes to specify to filter the found entries.  For <code>findit</code>, you only need
+to support the options shown above, which should correspond to a <code>Filter</code>
+function you implemented in <strong>Activity 2</strong>.</p>
+<h3 id="task-1-finditc">Task 1: <code>findit.c</code><a class="headerlink" href="#task-1-finditc" title="Permanent link">&para;</a></h3>
+<p>The <code>findit.c</code> file contains the <a href="https://en.wikipedia.org/wiki/C_(programming_language)">C</a> implementation for the <code>findit</code> program.
+For this task, you will need to implement the following functions:</p>
+<ol>
+<li>
+<p><code>void find_files(const char *root, List *files)</code></p>
+<blockquote>
+<p>This function recursively walks the given <code>root</code> directory and adds any
+entries it finds to the given <code>List</code> of <code>files</code>.</p>
+</blockquote>
+<div class="alert alert-success" markdown="1">
+<p><strong>Hint</strong>: Consider using <a href="https://man7.org/linux/man-pages/man3/opendir.3.html">opendir</a>, <a href="https://man7.org/linux/man-pages/man3/readdir.3.html">readdir</a>, and <a href="https://man7.org/linux/man-pages/man3/closedir.3.html">closedir</a> as you did
+  for <code>walk</code> in <a href="reading11.html">Reading 11</a>.  When recursing on a <strong>directory</strong>, make
+  sure to use the <strong>full path</strong>.</p>
+<p>When adding the <strong>full path</strong> to the <code>List</code> of <code>files</code>, consider using
+  <a href="https://man7.org/linux/man-pages/man3/strdup.3.html">strdup</a>.</p>
+<p>Moreover, consider when to add the <code>root</code> itself to <code>files</code>.</p>
+</div>
+</li>
+<li>
+<p><code>void filter_files(List *files, List *filters, Options *options)</code></p>
+<blockquote>
+<p>This function applies each <code>Filter</code> function in <code>filters</code> with the
+given <code>Options</code> to the <code>List</code> of <code>files</code>.</p>
+</blockquote>
+<div class="alert alert-success" markdown="1">
+<p><strong>Hint</strong>: Consider using <code>list_filter</code>.</p>
+</div>
+</li>
+<li>
+<p><code>int main(int argc, char *argv[])</code></p>
+<blockquote>
+<p>This function parses the command line options, finds the files
+recursively, applies any filters, and then prints out the found files.</p>
+</blockquote>
+<div class="alert alert-success" markdown="1">
+<p><strong>Hint</strong>: Consider creating a <code>List</code> of <code>files</code>, a <code>List</code> of <code>filters</code>,
+  and an <code>Options</code> structure.  As you parse the command line options, set
+  the appropriate attributes in the <code>Options</code> structure and add the
+  corresponding <code>Filter</code> function to your <code>List</code> of <code>filters</code>.</p>
+<p>After parsing the command line options, you should then use
+  <code>find_files</code>, <code>filter_files</code>, and then <code>list_output</code>.</p>
+<p>Be sure to deallocate any resources you allocated on the <a href="https://en.wikipedia.org/wiki/Heap_(programming)">heap</a>.</p>
+</div>
+</li>
+</ol>
+<h3 id="task-2-testing_2">Task 2: Testing<a class="headerlink" href="#task-2-testing_2" title="Permanent link">&para;</a></h3>
+<p>To test your <code>findit</code> utility, you can use the provided <code>findit.test.sh</code> script:</p>
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%;"><span></span><code><span style="color: #3D7B7B; font-style: italic"># Build test artifacts and run test scripts</span>
+$<span style="color: #bbbbbb"> </span>make<span style="color: #bbbbbb"> </span>test-findit
+Testing<span style="color: #bbbbbb"> </span>findit<span style="color: #bbbbbb"> </span>...
+<span style="color: #bbbbbb"> </span>findit<span style="color: #bbbbbb">                                                       </span>...<span style="color: #bbbbbb"> </span>Success
+<span style="color: #bbbbbb"> </span>findit<span style="color: #bbbbbb"> </span>/etc<span style="color: #bbbbbb">                                                  </span>...<span style="color: #bbbbbb"> </span>Success
+<span style="color: #bbbbbb"> </span>findit<span style="color: #bbbbbb"> </span>/etc<span style="color: #bbbbbb"> </span>-type<span style="color: #bbbbbb"> </span>f<span style="color: #bbbbbb">                                          </span>...<span style="color: #bbbbbb"> </span>Success
+<span style="color: #bbbbbb"> </span>findit<span style="color: #bbbbbb"> </span>/etc<span style="color: #bbbbbb"> </span>-type<span style="color: #bbbbbb"> </span>d<span style="color: #bbbbbb">                                          </span>...<span style="color: #bbbbbb"> </span>Success
+<span style="color: #bbbbbb"> </span>findit<span style="color: #bbbbbb"> </span>/etc<span style="color: #bbbbbb"> </span>-name<span style="color: #bbbbbb"> </span><span style="color: #BA2121">&#39;*.conf&#39;</span><span style="color: #bbbbbb">                                   </span>...<span style="color: #bbbbbb"> </span>Success
+<span style="color: #bbbbbb"> </span>findit<span style="color: #bbbbbb"> </span>/etc<span style="color: #bbbbbb"> </span>-readable<span style="color: #bbbbbb">                                        </span>...<span style="color: #bbbbbb"> </span>Success
+<span style="color: #bbbbbb"> </span>findit<span style="color: #bbbbbb"> </span>/etc<span style="color: #bbbbbb"> </span>-writable<span style="color: #bbbbbb">                                        </span>...<span style="color: #bbbbbb"> </span>Success
+<span style="color: #bbbbbb"> </span>findit<span style="color: #bbbbbb"> </span>/etc<span style="color: #bbbbbb"> </span>-executable<span style="color: #bbbbbb">                                      </span>...<span style="color: #bbbbbb"> </span>Success
+<span style="color: #bbbbbb"> </span>findit<span style="color: #bbbbbb"> </span>/etc<span style="color: #bbbbbb"> </span>-type<span style="color: #bbbbbb"> </span>d<span style="color: #bbbbbb"> </span>-name<span style="color: #bbbbbb"> </span><span style="color: #BA2121">&#39;*.d&#39;</span><span style="color: #bbbbbb">                              </span>...<span style="color: #bbbbbb"> </span>Success
+<span style="color: #bbbbbb"> </span>findit<span style="color: #bbbbbb"> </span>/etc<span style="color: #bbbbbb"> </span>-type<span style="color: #bbbbbb"> </span>d<span style="color: #bbbbbb"> </span>-name<span style="color: #bbbbbb"> </span><span style="color: #BA2121">&#39;*.d&#39;</span><span style="color: #bbbbbb"> </span>-executable<span style="color: #bbbbbb">                  </span>...<span style="color: #bbbbbb"> </span>Success
+<span style="color: #bbbbbb"> </span>findit<span style="color: #bbbbbb"> </span>.<span style="color: #bbbbbb"> </span>-name<span style="color: #bbbbbb"> </span><span style="color: #BA2121">&#39;*.c&#39;</span><span style="color: #bbbbbb">                                         </span>...<span style="color: #bbbbbb"> </span>Success
+<span style="color: #bbbbbb"> </span>findit<span style="color: #bbbbbb"> </span>.<span style="color: #bbbbbb"> </span>-writable<span style="color: #bbbbbb">                                           </span>...<span style="color: #bbbbbb"> </span>Success
+<span style="color: #bbbbbb"> </span>findit<span style="color: #bbbbbb"> </span>.<span style="color: #bbbbbb"> </span>-type<span style="color: #bbbbbb"> </span>f<span style="color: #bbbbbb"> </span>-name<span style="color: #bbbbbb"> </span><span style="color: #BA2121">&#39;*.unit&#39;</span><span style="color: #bbbbbb"> </span>-executable<span style="color: #bbbbbb">                  </span>...<span style="color: #bbbbbb"> </span>Success
+
+<span style="color: #bbbbbb">   </span>Score<span style="color: #bbbbbb"> </span><span style="color: #666666">4</span>.00<span style="color: #bbbbbb"> </span>/<span style="color: #bbbbbb"> </span><span style="color: #666666">4</span>.00
+<span style="color: #bbbbbb">  </span>Status<span style="color: #bbbbbb"> </span>Success
+</code></pre></div>
+
+<p># Run test script manually
+  $ ./findit.test.sh</p>
+<h2 id="activity-4-quiz-2-points">Activity 4: Quiz (<em>2 Points</em>)<a class="headerlink" href="#activity-4-quiz-2-points" title="Permanent link">&para;</a></h2>
+<p>Once you have completed all the activities above, you are to complete the
+following <strong>reflection quiz</strong>:</p>
+<div id="quiz-questions"></div>
+
+<div id="quiz-responses"></div>
+
+<script src="static/js/dredd-quiz.js"></script>
+<script>
+loadQuiz('static/json/homework08.json');
+</script>
+
+<pre style="display: none;" id="dr-container" class="codehilite"><code id="dredd-response"></code></pre>
+
+<p>As with <a href="reading01.html">Reading 01</a>, you will need to store your answers in a
+<code>homework08/answers.json</code> file.  You can use the form above to generate the
+contents of this file, or you can write the <a href="https://json.org">JSON</a> by hand.</p>
+<p>To test your quiz, you can use the <code>check.py</code> script:</p>
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%;"><span></span><code>$<span style="color: #bbbbbb"> </span>../.scripts/check.py
+Checking<span style="color: #bbbbbb"> </span>homework08<span style="color: #bbbbbb"> </span>quiz<span style="color: #bbbbbb"> </span>...
+<span style="color: #bbbbbb">    </span>Q01<span style="color: #bbbbbb"> </span><span style="color: #666666">1</span>.20
+<span style="color: #bbbbbb">    </span>Q02<span style="color: #bbbbbb"> </span><span style="color: #666666">0</span>.20
+<span style="color: #bbbbbb">    </span>Q03<span style="color: #bbbbbb"> </span><span style="color: #666666">0</span>.20
+<span style="color: #bbbbbb">    </span>Q04<span style="color: #bbbbbb"> </span><span style="color: #666666">0</span>.40
+<span style="color: #bbbbbb">  </span>Score<span style="color: #bbbbbb"> </span><span style="color: #666666">2</span>.00<span style="color: #bbbbbb"> </span>/<span style="color: #bbbbbb"> </span><span style="color: #666666">2</span>.00
+<span style="color: #bbbbbb"> </span>Status<span style="color: #bbbbbb"> </span>Success
+</code></pre></div>
+
+<h2 id="code-review-optional-1-point">Code Review (<em>Optional, 1 Point</em>)<a class="headerlink" href="#code-review-optional-1-point" title="Permanent link">&para;</a></h2>
+<p>For <strong>one point</strong> of extra credit, you may perform a <a href="https://en.wikipedia.org/wiki/Code_review">code review</a> with
+either an <strong>AI</strong> agent (of your choice) or with a <strong>TA</strong> by <strong>Wednesday,
+April 16</strong>:</p>
+<ol>
+<li>
+<p><strong>AI Code Review</strong>: Once the <strong>whole assignment is completed</strong>, pick one
+  or two of the most challenging functions and ask the <strong>AI</strong> agent to review
+  your original code by suggesting improvements, optimizations, or
+  alternative implementations.</p>
+<p>Test and verify these suggestions and then decide whether or not you wish
+to keep them.  Discuss in the <code>README.md</code> what you think of the <strong>AI</strong>
+code review and explain your decision.</p>
+<div class="alert alert-info" markdown="1">
+<h4 id="ai-code-review-verification"><i class="fa fa-check"></i> AI Code Review: Verification<a class="headerlink" href="#ai-code-review-verification" title="Permanent link">&para;</a></h4>
+<p>To receive credit for the <strong>AI Code Review</strong>, you must:</p>
+<ol>
+<li>
+<p>Link a <strong>transcript</strong> or include sufficient <strong>screenshots</strong> of the
+  <a href="https://en.wikipedia.org/wiki/Code_review">code review</a> in the <strong>Pull Request</strong> of your conversation with the <strong>AI</strong>
+  agent.</p>
+</li>
+<li>
+<p>This conversation must show your <strong>original code</strong> and the <strong>suggested
+  improvements</strong> by the <strong>AI</strong> agent.</p>
+</li>
+<li>
+<p>Discuss the <a href="https://en.wikipedia.org/wiki/Code_review">code review</a> and explain your decision in the
+  <code>README.md</code>.</p>
+</li>
+<li>
+<p>Update your <strong>Pull Request</strong> based on the feedback.</p>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p><strong>TA Code Review</strong>: Once the <strong>whole assignment is completed</strong>, meet with
+  one of the <strong>teaching assistants</strong> from the course <strong>in-person</strong> and have
+  them review your whole assignment.</p>
+<p>To document this process, make the <strong>teaching assistant</strong> who is
+reviewing your code a <strong>reviewer</strong> on your <strong>Pull Request</strong> and have them
+record their suggestions as they discuss them with you <strong>in-person</strong>.</p>
+<p>After the <a href="https://en.wikipedia.org/wiki/Code_review">code review</a>, you can decide whether or not you wish to
+incorporate this feedback into your implementation and update your <strong>Pull
+Request</strong>.</p>
+<div class="alert alert-success" markdown="1">
+<p><strong>Note</strong>: The <strong>TA</strong> performing the <a href="https://en.wikipedia.org/wiki/Code_review">code review</a> does not need to be the
+  same <strong>TA</strong> responsible for grading your assignment.</p>
+</div>
+<div class="alert alert-info" markdown="1">
+<h4 id="ta-code-review-verification"><i class="fa fa-check"></i> TA Code Review: Verification<a class="headerlink" href="#ta-code-review-verification" title="Permanent link">&para;</a></h4>
+<p>To receive credit for the <strong>TA Code Review</strong>, you must:</p>
+<ol>
+<li>
+<p>Meet with a <strong>teaching assistant</strong> <strong>in-person</strong>.</p>
+</li>
+<li>
+<p>Make this <strong>teaching assistant</strong> a <strong>reviewer</strong> in your <strong>Pull
+  Request</strong>.</p>
+</li>
+<li>
+<p>Have the <strong>teaching assistant</strong> record their suggestions on the
+  <strong>Pull Request</strong>.</p>
+</li>
+<li>
+<p>Update your <strong>Pull Request</strong> based on the feedback.</p>
+</li>
+</ol>
+</div>
+</li>
+</ol>
+<h2 id="guru-point-easter-egg-optional-1-point">Guru Point: Easter Egg (<em>Optional, 1 Point</em>)<a class="headerlink" href="#guru-point-easter-egg-optional-1-point" title="Permanent link">&para;</a></h2>
+<p>It is always fun to find <a href="https://en.wikipedia.org/wiki/Easter_egg_(media)">Easter Eggs</a> in programs and services.  For
+instance, here is the first video game <a href="https://en.wikipedia.org/wiki/Easter_egg_(media)">easter egg</a> (as discussed in <a href="https://www3.nd.edu/~pbui/teaching/cse.40850.sp18/">History
+of Computing</a>):</p>
+<div class="embed-responsive embed-responsive-16by9 thumbnail">
+  <iframe class="embed-responsive-item" width="854" height="480" src="https://www.youtube.com/embed/Xk7Mg3aqpzM" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+</div>
+
+<p>For extra credit, you are to add an <a href="https://en.wikipedia.org/wiki/Easter_egg_(media)">easter egg</a> to your <code>findit</code> program
+that does any of the following by <strong>Wednesday, April 16</strong>:</p>
+<ol>
+<li>
+<p>Display or scroll your favorite song, quote, or poem.</p>
+</li>
+<li>
+<p>Run a mini-game (ie. <a href="https://en.wikipedia.org/wiki/Rogue_(video_game)">rogue</a>, <a href="https://en.wikipedia.org/wiki/NetHack">nethack</a>, or any of the <a href="https://github.com/vattam/BSDGames">BSD games</a>).</p>
+</li>
+<li>
+<p>Display some sort of animation (ala <a href="https://github.com/abishekvashok/cmatrix">cmatrix</a> or <a href="https://github.com/sambattalio/chad_stride">chad_stride</a>).</p>
+</li>
+</ol>
+<div class="alert alert-info">
+<h4 id="easter-egg-verification"><i class="fa fa-check"></i> Easter Egg: Verification<a class="headerlink" href="#easter-egg-verification" title="Permanent link">&para;</a></h4>
+<p>To receive credit for the <strong>Easter Egg</strong>, you must:</p>
+<ol>
+<li>
+<p>Place your <code>findit</code> <strong>executable</strong> in the <code>Public</code> folder of your <code>$HOME</code>
+directory on the <strong>student</strong> machines.</p>
+</li>
+<li>
+<p>Post the location of your <code>findit</code> in the class <strong>Slack</strong> channel and
+invite the class to discover the <a href="https://en.wikipedia.org/wiki/Easter_egg_(media)">easter egg</a>.</p>
+</li>
+<li>
+<p>Update your <code>README.md</code> to include instructions on how to activate the
+<a href="https://en.wikipedia.org/wiki/Easter_egg_(media)">easter egg</a>.</p>
+</li>
+<li>
+<p>Post a <strong>screenshot</strong> of your <a href="https://en.wikipedia.org/wiki/Easter_egg_(media)">easter egg</a> in your <strong>Pull Request</strong>.</p>
+</li>
+</ol>
+</div>
+<h2 id="submission">Submission<a class="headerlink" href="#submission" title="Permanent link">&para;</a></h2>
+<p>To submit your assignment, please commit your work to the <code>homework08</code> folder
+of your <code>homework08</code> branch in your <strong>assignments</strong> <a href="https://github.com">GitHub</a> repository.
+Your <code>homework08</code> folder should <strong>only</strong> contain the following files:</p>
+<ul>
+<li><code>Makefile</code></li>
+<li><code>answers.json</code></li>
+<li><code>filter.c</code></li>
+<li><code>filter.unit.c</code></li>
+<li><code>findit.c</code></li>
+<li><code>findit.h</code></li>
+<li><code>list.c</code></li>
+<li><code>list.unit.c</code></li>
+</ul>
+<div class="alert alert-warning">
+<p><strong>Note</strong>: You do not need to commit the test scripts because the <code>Makefile</code>
+automatically downloads them.</p>
+</div>
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%;"><span></span><code><span style="color: #3D7B7B; font-style: italic">#-----------------------------------------------------------------------</span>
+<span style="color: #3D7B7B; font-style: italic"># Make sure you have already completed Activity 0: Preparation</span>
+<span style="color: #3D7B7B; font-style: italic">#-----------------------------------------------------------------------</span>
+...
+$<span style="color: #bbbbbb"> </span>git<span style="color: #bbbbbb"> </span>add<span style="color: #bbbbbb"> </span>Makefile<span style="color: #bbbbbb">                        </span><span style="color: #3D7B7B; font-style: italic"># Mark changes for commit</span>
+$<span style="color: #bbbbbb"> </span>git<span style="color: #bbbbbb"> </span>add<span style="color: #bbbbbb"> </span>list.c<span style="color: #bbbbbb">                          </span><span style="color: #3D7B7B; font-style: italic"># Mark changes for commit</span>
+$<span style="color: #bbbbbb"> </span>git<span style="color: #bbbbbb"> </span>commit<span style="color: #bbbbbb"> </span>-m<span style="color: #bbbbbb"> </span><span style="color: #BA2121">&quot;homework08: list.c&quot;</span><span style="color: #bbbbbb">      </span><span style="color: #3D7B7B; font-style: italic"># Record changes</span>
+...
+$<span style="color: #bbbbbb"> </span>git<span style="color: #bbbbbb"> </span>add<span style="color: #bbbbbb"> </span>Makefile<span style="color: #bbbbbb">                        </span><span style="color: #3D7B7B; font-style: italic"># Mark changes for commit</span>
+$<span style="color: #bbbbbb"> </span>git<span style="color: #bbbbbb"> </span>add<span style="color: #bbbbbb"> </span>filter.c<span style="color: #bbbbbb">                        </span><span style="color: #3D7B7B; font-style: italic"># Mark changes for commit</span>
+$<span style="color: #bbbbbb"> </span>git<span style="color: #bbbbbb"> </span>commit<span style="color: #bbbbbb"> </span>-m<span style="color: #bbbbbb"> </span><span style="color: #BA2121">&quot;homework08: filter.c&quot;</span><span style="color: #bbbbbb">    </span><span style="color: #3D7B7B; font-style: italic"># Record changes</span>
+...
+$<span style="color: #bbbbbb"> </span>git<span style="color: #bbbbbb"> </span>add<span style="color: #bbbbbb"> </span>Makefile<span style="color: #bbbbbb">                        </span><span style="color: #3D7B7B; font-style: italic"># Mark changes for commit</span>
+$<span style="color: #bbbbbb"> </span>git<span style="color: #bbbbbb"> </span>add<span style="color: #bbbbbb"> </span>findit.c<span style="color: #bbbbbb">                        </span><span style="color: #3D7B7B; font-style: italic"># Mark changes for commit</span>
+$<span style="color: #bbbbbb"> </span>git<span style="color: #bbbbbb"> </span>commit<span style="color: #bbbbbb"> </span>-m<span style="color: #bbbbbb"> </span><span style="color: #BA2121">&quot;homework08: findit.c&quot;</span><span style="color: #bbbbbb">    </span><span style="color: #3D7B7B; font-style: italic"># Record changes</span>
+...
+$<span style="color: #bbbbbb"> </span>git<span style="color: #bbbbbb"> </span>add<span style="color: #bbbbbb"> </span>answers.json<span style="color: #bbbbbb">                    </span><span style="color: #3D7B7B; font-style: italic"># Mark changes for commit</span>
+$<span style="color: #bbbbbb"> </span>git<span style="color: #bbbbbb"> </span>commit<span style="color: #bbbbbb"> </span>-m<span style="color: #bbbbbb"> </span><span style="color: #BA2121">&quot;homework08: quiz&quot;</span><span style="color: #bbbbbb">        </span><span style="color: #3D7B7B; font-style: italic"># Record changes</span>
+...
+$<span style="color: #bbbbbb"> </span>git<span style="color: #bbbbbb"> </span>push<span style="color: #bbbbbb"> </span>-u<span style="color: #bbbbbb"> </span>origin<span style="color: #bbbbbb"> </span>homework08<span style="color: #bbbbbb">           </span><span style="color: #3D7B7B; font-style: italic"># Push branch to GitHub</span>
+</code></pre></div>
+
+<div class="alert alert-warning">
+<h4 id="acknowledgments"><i class="fa fa-life-ring"></i> Acknowledgments<a class="headerlink" href="#acknowledgments" title="Permanent link">&para;</a></h4>
+<p>If you collaborated with any other students, or received help from TAs or AI
+tools on this assignment, please record this support in the <code>README.md</code> in
+the <code>homework08</code> folder and include it with your <strong>Pull Request</strong>.</p>
+</div>
+<div class="alert alert-danger">
+<h4 id="pull-request"><i class="fa fa-github"></i> Pull Request<a class="headerlink" href="#pull-request" title="Permanent link">&para;</a></h4>
+<p>Remember to create a <strong>Pull Request</strong> and assign the appropriate TA from the
+<a href="reading11_tas.html">Reading 11 TA List</a>.</p>
+<p><strong>DO NOT MERGE</strong> your own <strong>Pull Request</strong>.  The TAs use open <strong>Pull Requests</strong>
+to keep track of which assignments to grade.  Closing them yourself will
+cause a delay in grading and confuse the TAs.</p>
+</div>
+
+
+	    <div class="row">
+		<hr/>
+
+		<footer class="text-center">
+		    <p class="text-muted">
+		    <small>
+		    Built using
+		    <a href="https://getbootstrap.com/">Bootstrap</a>,
+		    <a href="https://fontawesome.com/">Font Awesome</a>, and
+		    <a href="http://www.python.org/">Python</a>.
+		    <br/>
+		    &copy; 2025 <a href="http://www.nd.edu">University of Notre Dame</a>
+		    </small>
+		    </p>
+		</footer>
+	    </div>
+
+	</div> <!-- /container -->
+
+	<!-- Bootstrap core JavaScript
+	================================================== -->
+	<!-- Placed at the end of the document so the pages load faster -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	
+	
+    </body>
+</html>
+
