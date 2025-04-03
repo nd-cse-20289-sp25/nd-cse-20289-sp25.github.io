@@ -881,6 +881,15 @@ body:       |
 
   3. Display some sort of animation (ala [cmatrix] or [chad_stride]).
 
+  For example, you can find the instructor's implementation of `findit` here:
+
+      :::bash
+      # Easter Egg Hint: Indiana Jones and the Last Crusade
+      $ ~pbui/pub/bin/findit
+
+  Pass `findit` the right argument and it will display something...
+  **precious**.
+
   <div class="alert alert-info" markdown="1">
   #### <i class="fa fa-check"></i> Easter Egg: Verification
 
