@@ -1,0 +1,29 @@
+{
+    "q01": {
+        "type": "blank",
+        "question": "\n<p>Given the following statements (inside a <tt>main</tt> function), fill\nin the table below to identify how much memory (in bytes) is allocated in\neach memory segment (ie. <b>stack</b>, <b>heap</b>, <b>data</b>) for the\ncorresponding variable declaration:</p>\n\n<table class=\"table table-striped\">\n  <thead>\n    <th>Code</th>\n    <th>Data</th>\n    <th>Heap</th>\n    <th>Stack</th>\n  </thead>\n  <tbody>\n    <tr>\n      <td><tt>char *s = \"Solar Eclipse\";</tt></td>\n      <td><tt>____ (01)</tt></td>\n      <td><tt>____ (02)</tt></td>\n      <td><tt>____ (03)</tt></td>\n    </tr>\n    <tr>\n      <td><tt>Data d = {.string=s};</tt></td>\n      <td><tt>____ (04)</tt></td>\n      <td><tt>____ (05)</tt></td>\n      <td><tt>____ (06)</tt></td>\n    </tr>\n    <tr>\n      <td><tt>char *c = strdup(d.string);</tt></td>\n      <td><tt>____ (07)</tt></td>\n      <td><tt>____ (08)</tt></td>\n      <td><tt>____ (09)</tt></td>\n    </tr>\n    <tr>\n      <td><tt>Node *n = node_create((Data)strdup(d.string), NULL);</tt></td>\n      <td><tt>____ (10)</tt></td>\n      <td><tt>____ (11)</tt></td>\n      <td><tt>____ (12)</tt></td>\n    </tr>\n  </tbody>\n</table>\n\n<p>Assume this program is compiled on a 64-bit Linux machine (ie. the\n<b>student</b> machines).</p>\n"
+    },
+    "q02": {
+        "type": "multiple",
+        "question": "\n<p>In each of the <tt>Filters</tt>, the function receives an <tt>options</tt>\nargument.  Which of the following are valid ways to check the\n<tt>type</tt> attribute of the <tt>options</tt> (select all that\napply)?</p>\n",
+        "responses": {
+            "a": "<tt>options.type</tt>",
+            "b": "<tt>options->type</tt>",
+            "c": "<tt>(*options).type</tt>",
+            "d": "<tt>(*options)->type</tt>"
+        }
+    },
+    "q03": {
+        "type": "multiple",
+        "question": "\n<p>For some of the <tt>Filters</tt>, you had to use <b>system calls</b> to\nimplement the function.  Which of the following statements are true (select\nall that apply)?</p>\n",
+        "responses": {
+            "type": "<tt>filter_by_type</tt> does not use any <b>system calls</b>.",
+            "name": "<tt>filter_by_name</tt> does not use any <b>system calls</b>.",
+            "mode": "<tt>filter_by_mode</tt> does not use any <b>system calls</b>."
+        }
+    },
+    "q04": {
+        "type": "blank",
+        "question": "\n<p>On the <b>student machines</b>, run <tt>strace -e access,lstat,write -c\n./findit /etc -type f -name '*.conf' -readable</tt> a few times and answer\nthe following questions:</p>\n\n<ol>\n    <li>Which of the three system calls was called the most often? ____</li>\n    <li>Which of the three system calls was called the least often? ____</li>\n    <li>Which of the three system calls had the most errors? ____</li>\n    <li>Which of the three system calls used the most time? ____</li>\n</ol>\n"
+    }
+}
