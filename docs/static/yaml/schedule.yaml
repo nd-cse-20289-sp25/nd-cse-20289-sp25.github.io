@@ -319,7 +319,7 @@
       - date:           Fri 04/04
         topics:         System Calls
         items:
-          - name:       Panopto
+          - name:       Slides 23
             link:       https://docs.google.com/presentation/d/1TLbjwiWLu1yjSOcnz9FfyHFLMBEaRO0erhJd0YIgskA/edit?usp=sharing
 
 - name:     "Unit 04: System Calls"
@@ -330,13 +330,13 @@
         topics:         File System
         assignment:     Reading 11
         items:
-          - name:       Panopto
+          - name:       Slides 23
             link:       https://docs.google.com/presentation/d/1TLbjwiWLu1yjSOcnz9FfyHFLMBEaRO0erhJd0YIgskA/edit?usp=sharing
 
       - date:           Wed 04/09
         topics:         I/O
         items:
-          - name:       Panopto
+          - name:       Slides 23
             link:       https://docs.google.com/presentation/d/1TLbjwiWLu1yjSOcnz9FfyHFLMBEaRO0erhJd0YIgskA/edit?usp=sharing
 
       - date:           Fri 04/11
