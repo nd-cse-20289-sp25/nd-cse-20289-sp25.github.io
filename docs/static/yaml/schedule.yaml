@@ -341,6 +341,9 @@
 
       - date:           Fri 04/11
         topics:         Processes
+        items:
+          - name:       Slides 24
+            link:       https://docs.google.com/presentation/d/1OwTmASXiyjHUbAyRqH-tNkWM-BUGCax5M-Yv9WVL6yI/edit?usp=sharing
 
       - date:           Sat 04/12
         topics:         Findit
@@ -351,9 +354,15 @@
       - date:           Mon 04/14
         assignment:     Reading 12
         topics:         Signals
+        items:
+          - name:       Slides 24
+            link:       https://docs.google.com/presentation/d/1OwTmASXiyjHUbAyRqH-tNkWM-BUGCax5M-Yv9WVL6yI/edit?usp=sharing
 
       - date:           Wed 04/16
         topics:         Client/Server, URLs, Sockets
+        items:
+          - name:       Slides 25
+            link:       https://docs.google.com/presentation/d/1c1e4Ye7CSYph0qGX5u5cCf38048kg78aEQ_2ohC3d_g/edit?usp=sharing
 
       - date:           Fri 04/18
         topics:         Easter
@@ -366,9 +375,15 @@
       - date:           Wed 04/23
         topics:         HTTP Client
         assignment:     Reading 13
+        items:
+          - name:       Slides 25
+            link:       https://docs.google.com/presentation/d/1c1e4Ye7CSYph0qGX5u5cCf38048kg78aEQ_2ohC3d_g/edit?usp=sharing
 
       - date:           Fri 04/25
         topics:         HTTP Server
+        items:
+          - name:       Slides 25
+            link:       https://docs.google.com/presentation/d/1c1e4Ye7CSYph0qGX5u5cCf38048kg78aEQ_2ohC3d_g/edit?usp=sharing
 
       - date:           Sat 04/26
         topics:         Timeit, Curlit
@@ -378,6 +393,9 @@
   days:
       - date:           Mon 04/28
         topics:         VPS
+        items:
+          - name:       Slides 26
+            link:       https://docs.google.com/presentation/d/1Rf_ev05gZoA6gQw5RL7Zjyk0EwU4Msv0_dv_PzppHVg/edit?usp=sharing
 
       - date:           Wed 04/30
         topics:         Review
