@@ -801,8 +801,23 @@ $<span style="color: #bbbbbb"> </span>~pbui/pub/bin/findit
 <p>To receive credit for the <strong>Easter Egg</strong>, you must:</p>
 <ol>
 <li>
-<p>Place your <code>findit</code> <strong>executable</strong> in the <code>Public</code> folder of your <code>$HOME</code>
+<p>Place your <code>findit</code> <strong>executable</strong> in the <code>public</code> folder of your <code>$HOME</code>
 directory on the <strong>student</strong> machines.</p>
+<p>If you do not have a <code>public</code> folder already, then you will need to
+create it:</p>
+<div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%;"><span></span><code><span style="color: #3D7B7B; font-style: italic"># Create public folder in your `$HOME` directory</span>
+$<span style="color: #bbbbbb"> </span>mkdir<span style="color: #bbbbbb"> </span>~/public
+
+<span style="color: #3D7B7B; font-style: italic"># Set permissions on public folder</span>
+$<span style="color: #bbbbbb"> </span>chmod<span style="color: #bbbbbb"> </span><span style="color: #666666">755</span><span style="color: #bbbbbb"> </span>~/public
+
+<span style="color: #3D7B7B; font-style: italic"># Copy findit to public folder</span>
+$<span style="color: #bbbbbb"> </span>cp<span style="color: #bbbbbb"> </span>findit<span style="color: #bbbbbb"> </span>~/public
+
+<span style="color: #3D7B7B; font-style: italic"># Set permissions on findit</span>
+$<span style="color: #bbbbbb"> </span>chmod<span style="color: #bbbbbb"> </span><span style="color: #666666">755</span><span style="color: #bbbbbb"> </span>~/public/findit
+</code></pre></div>
+
 </li>
 <li>
 <p>Post the location of your <code>findit</code> in the class <strong>Slack</strong> channel and
