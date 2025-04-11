@@ -1,0 +1,81 @@
+{
+    "q01": {
+        "type": "single",
+        "question": "\n<p>An eager student proposes changing <tt>timeit</tt> such that the\n<b>child process</b> sets an <tt>alarm</tt> before calling <tt>execvp</tt>\nso that it can <tt>kill</tt> itself if the <b>signal handler</b> is\ninvoked.  Would this work?</p>\n",
+        "responses": {
+            "yeah": "Yeah, totally.",
+            "nope_1": "Nope, only a parent process can set an <tt>alarm</tt>.",
+            "nope_2": "Nope, a process cannot <tt>kill</tt> itself.",
+            "nope_3": "Nope, <tt>execvp</tt> loads new code so the <tt>alarm</tt> handler is removed."
+        }
+    },
+    "q02": {
+        "type": "single",
+        "question": "\n<p>A malicious student proposes changing <tt>timeit</tt> such that the\n<b>child process</b> changes the <tt>ChildPid</tt> global variable before\ncalling <tt>execvp</tt> in order to prevent the parent from killing the\nchild process.  Would this work?</p>\n",
+        "responses": {
+            "yeah": "Yeah, totally.",
+            "nope_1": "Nope, only a parent process can change <b>global variables</b>.",
+            "nope_2": "Nope, a process cannot modify <b>global variables</b>.",
+            "nope_3": "Nope, the parent and child have separate <b>address spaces</b>."
+        }
+    },
+    "q03": {
+        "type": "single",
+        "question": "\n<p>A concerned student proposes changing <tt>timeit</tt> such that the\n<b>parent process</b> sends <tt>SIGSTOP</tt> to the <b>child process</b>\nwhen <tt>alarm</tt> handler is invoked.  Would this work?</p>\n",
+        "responses": {
+            "yeah": "Yeah, totally.",
+            "nope_1": "Nope, because the <b>child process</b> can ignore <tt>SIGSTOP</tt>.",
+            "nope_2": "Nope, because only the kernel can use this signal.",
+            "nope_3": "Nope, because this only suspends the process and does not terminate it."
+        }
+    },
+    "q04": {
+        "type": "single",
+        "question": "\n<p>A clever student proposes changing <tt>timeit</tt> such that\n<tt>parse_options</tt> simply returns a pointer to the first command line\noption in <tt>argv</tt> that is not a flag:</p>\n\n<pre>\nint argind = 1;\n\nwhile (argind < argc && strlen(argv[argind]) > 1 && argv[argind][0] == '-') {\n    char *arg = argv[argind++];\n    ...\n}\n\n...\n\nreturn &argv[argind];\n</pre>\n\n<p>Would this work?</p>\n",
+        "responses": {
+            "yeah": "Yeah, totally.",
+            "nope_0": "Nope, you cannot use <tt>&amp;</tt> on an element in an array.",
+            "nope_1": "Nope, <tt>execvp</tt> requires the vector to be on the <b>heap</b>.",
+            "nope_2": "Nope, <tt>argv</tt> is not <tt>NULL</tt> terminated."
+        }
+    },
+    "q05": {
+        "type": "order",
+        "question": "\n<p>Because <tt>curlit</tt> is a <b>client</b> application, it makes a\n<b>HTTP</b> request by performing the following <b>system calls</b>:\n<tt>getaddrinfo</tt>, <tt>socket</tt>, <tt>connect</tt>, <tt>write</tt>,\n<tt>read</tt>, <tt>close</tt>.</p>\n\n<p>Now consider something like <b>apache</b> or <b>nginx</b>which are\npopular <b>HTTP</b> servers.  What is order of the <b>system calls</b>\nthese programs must perform to handle a <b>HTTP</b> request and send back\nresponse?</p>\n",
+        "responses": {
+            "socket": "socket",
+            "close": "close",
+            "write": "write",
+            "bind": "bind",
+            "read": "read",
+            "getaddrinfo": "getaddrinfo",
+            "accept": "accept",
+            "listen": "listen"
+        }
+    },
+    "q06": {
+        "type": "multiple",
+        "question": "\n<p>Because <tt>connect</tt> is a <b>system call</b>, it can fail.  Which of\nthe following are reasons why it can fail (select all that apply)?</p>\n",
+        "responses": {
+            "listening": "The remote machine is not listening at specified address.",
+            "interrupt": "The system call was interrupted by a signal.",
+            "encryption": "The connection is insecure due to lack of encryption.",
+            "unreachable": "The network is unreachable.",
+            "busy": "The connection timed out because the server was too busy."
+        }
+    },
+    "q07": {
+        "type": "multiple",
+        "question": "\n<p>On the <b>student machines</b>, use <tt>strace</tt> to monitor the\n<b>system calls</b> used by <tt>curlit</tt> to fetch\n<tt>h4x0r.space:9898/tar/curl.tar.gz</tt>:</p>\n\n<pre>\n$ strace -c ./curlit h4x0r.space:9898/tar/curl.tar.gz > /dev/null\n</pre>\n\n<p>Run this multiple times, examine the output of <tt>strace</tt>, and\ndetermine which of the following statements are true (select all that\napply)?</p>\n",
+        "responses": {
+            "read_frequent": "<tt>read</tt> is the most frequent <b>system call</b>.",
+            "write_frequent": "<tt>write</tt> is the most frequent <b>system call</b>.",
+            "read_slowest": "<tt>read</tt> is the slowest <b>system call</b>.",
+            "write_slowest": "<tt>write</tt> is the slowest <b>system call</b>.",
+            "connect_once": "<tt>connect</tt> is called exactly once.",
+            "connect_multiple": "<tt>connect</tt> is called multiple times.",
+            "bandwidth_1mbps": "The <b>bandwidth</b> was around <tt>1 MB/s</tt>.",
+            "bandwidth_10mbps": "The <b>bandwidth</b> was around <tt>10 MB/s</tt>."
+        }
+    }
+}
