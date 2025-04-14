@@ -171,8 +171,9 @@ body:       |
   [object] files, and the `timeit` and `curlit` executables with the appropriate
   dependencies as shown in the [DAG] below:
 
-
-
+  <div class="thumbnail">
+    <img src="static/img/homework09-makefile.png" class="img-responsive">
+  </div>
 
   <div class="alert alert-info" markdown="1">
   #### <i class="fa fa-cogs"></i> Makefile Variables
@@ -992,6 +993,7 @@ body:       |
   - [Daniel Blittschau](https://dblitt.com/)
   - [Mayleen Liu](https://mayleenliu.com/)
   - [Carlos Basurto](https://cbasurtom.github.io/)
+  - [Luke Cao](https://lukewarm3.github.io/)
   - [Steven Conaway](https://stevenconaway.me/)
 
   The idea behind this website is to publish a portfolio or profile that you
