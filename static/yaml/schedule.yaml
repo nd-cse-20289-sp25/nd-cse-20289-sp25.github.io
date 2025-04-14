@@ -365,6 +365,8 @@
         items:
           - name:       Slides 24
             link:       https://docs.google.com/presentation/d/1OwTmASXiyjHUbAyRqH-tNkWM-BUGCax5M-Yv9WVL6yI/edit?usp=sharing
+          - name:       Panopto
+            link:       https://notredame.hosted.panopto.com/Panopto/Pages/Viewer.aspx?id=aef07b18-df3e-4432-8f94-b2bf012a00ba
 
       - date:           Wed 04/16
         topics:         Client/Server, URLs, Sockets
