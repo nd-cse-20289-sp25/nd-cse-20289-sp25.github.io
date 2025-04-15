@@ -409,6 +409,9 @@
 
       - date:           Wed 04/30
         topics:         Review
+        items:
+          - name:       Checklist 04
+            link:       checklist04.html
 
       - date:           Mon 05/05
         items:
