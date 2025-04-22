@@ -120,7 +120,7 @@ directory:</p>
 <p>Now that the files are downloaded into the <code>homework09</code> folder, you can
 <strong>commit</strong> them to your <a href="https://git-scm.com/">git</a> repository:</p>
 <div class="codehilite" style="background: #f8f8f8"><pre style="line-height: 125%;"><span></span><code>$<span style="color: #bbbbbb"> </span>git<span style="color: #bbbbbb"> </span>add<span style="color: #bbbbbb"> </span>Makefile<span style="color: #bbbbbb">                            </span><span style="color: #3D7B7B; font-style: italic"># Mark changes for commit</span>
-$<span style="color: #bbbbbb"> </span>git<span style="color: #bbbbbb"> </span>add<span style="color: #bbbbbb"> </span>*.c
+$<span style="color: #bbbbbb"> </span>git<span style="color: #bbbbbb"> </span>add<span style="color: #bbbbbb"> </span>*.c<span style="color: #bbbbbb"> </span>*.h
 $<span style="color: #bbbbbb"> </span>git<span style="color: #bbbbbb"> </span>commit<span style="color: #bbbbbb"> </span>-m<span style="color: #bbbbbb"> </span><span style="color: #BA2121">&quot;Homework 09: Initial Import&quot;</span><span style="color: #bbbbbb"> </span><span style="color: #3D7B7B; font-style: italic"># Record changes</span>
 </code></pre></div>
 
@@ -623,7 +623,7 @@ experienced during the <a href="https://en.wikipedia.org/wiki/Hypertext_Transfer
 </li>
 <li>
 <p>If the server does not return a <a href="https://en.wikipedia.org/wiki/Hypertext_Transfer_Protocol">HTTP</a> status of <code>200 OK</code>  or it provides a
-  <code>Content-Length</code> and the number of bytes written to <code>steam</code> does not match,
+  <code>Content-Length</code> and the number of bytes written to <code>stream</code> does not match,
   then the function should return <code>false</code> to indicate an error.  Otherwise,
   if the <a href="https://en.wikipedia.org/wiki/Hypertext_Transfer_Protocol">HTTP</a> status is <code>200 OK</code> and there is no <code>Content-Length</code> or the
   number of bytes written matches, then it should return <code>true</code>.</p>
@@ -979,7 +979,7 @@ $<span style="color: #bbbbbb"> </span>git<span style="color: #bbbbbb"> </span>co
 $<span style="color: #bbbbbb"> </span>git<span style="color: #bbbbbb"> </span>add<span style="color: #bbbbbb"> </span>socket.c<span style="color: #bbbbbb">                        </span><span style="color: #3D7B7B; font-style: italic"># Mark changes for commit</span>
 $<span style="color: #bbbbbb"> </span>git<span style="color: #bbbbbb"> </span>commit<span style="color: #bbbbbb"> </span>-m<span style="color: #bbbbbb"> </span><span style="color: #BA2121">&quot;Homework 09: socket&quot;</span><span style="color: #bbbbbb">     </span><span style="color: #3D7B7B; font-style: italic"># Record changes</span>
 ...
-$<span style="color: #bbbbbb"> </span>git<span style="color: #bbbbbb"> </span>add<span style="color: #bbbbbb"> </span>socket.c<span style="color: #bbbbbb">                        </span><span style="color: #3D7B7B; font-style: italic"># Mark changes for commit</span>
+$<span style="color: #bbbbbb"> </span>git<span style="color: #bbbbbb"> </span>add<span style="color: #bbbbbb"> </span>curlit.c<span style="color: #bbbbbb">                        </span><span style="color: #3D7B7B; font-style: italic"># Mark changes for commit</span>
 $<span style="color: #bbbbbb"> </span>git<span style="color: #bbbbbb"> </span>commit<span style="color: #bbbbbb"> </span>-m<span style="color: #bbbbbb"> </span><span style="color: #BA2121">&quot;Homework 09: curlit&quot;</span><span style="color: #bbbbbb">     </span><span style="color: #3D7B7B; font-style: italic"># Record changes</span>
 ...
 $<span style="color: #bbbbbb"> </span>git<span style="color: #bbbbbb"> </span>add<span style="color: #bbbbbb"> </span>answers.json<span style="color: #bbbbbb">                    </span><span style="color: #3D7B7B; font-style: italic"># Mark changes for commit</span>
