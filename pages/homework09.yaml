@@ -101,7 +101,7 @@ body:       |
 
       :::bash
       $ git add Makefile                            # Mark changes for commit
-      $ git add *.c
+      $ git add *.c *.h
       $ git commit -m "Homework 09: Initial Import" # Record changes
 
   ### Task 3: Unit and Functional Tests
@@ -660,7 +660,7 @@ body:       |
     binary data.
 
   - If the server does not return a [HTTP] status of `200 OK`  or it provides a
-    `Content-Length` and the number of bytes written to `steam` does not match,
+    `Content-Length` and the number of bytes written to `stream` does not match,
     then the function should return `false` to indicate an error.  Otherwise,
     if the [HTTP] status is `200 OK` and there is no `Content-Length` or the
     number of bytes written matches, then it should return `true`.
@@ -1055,7 +1055,7 @@ body:       |
       $ git add socket.c                        # Mark changes for commit
       $ git commit -m "Homework 09: socket"     # Record changes
       ...
-      $ git add socket.c                        # Mark changes for commit
+      $ git add curlit.c                        # Mark changes for commit
       $ git commit -m "Homework 09: curlit"     # Record changes
       ...
       $ git add answers.json                    # Mark changes for commit
