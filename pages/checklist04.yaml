@@ -14,13 +14,9 @@ body:       |
 
     A. **Scripting**
 
-      1. **Commands** (*multiple choice*, *fill-in-the-blank*).
+      1. [Shell] (*multiple choice*, *fill-in-the-blank*).
 
-      2. [Shell] Scripting (*multiple choice*, *fill-in-the-blank*).
-
-      3. [Python] Scripting (*multiple choice*).
-
-      4. [Unix Philosophy] (*multiple choice*).
+      2. [Python] (*multiple choice*, *fill-in-the-blank*).
 
     B. **C**
 
@@ -30,13 +26,11 @@ body:       |
 
     C. **System Calls**
 
-      1. **File System** (*multiple choice*, *fill-in-the-blank*).
+      1. **Files** (*multiple choice*, *fill-in-the-blank*).
 
-      2. **I/O** (*multiple choice*, *fill-in-the-blank*).
+      2. **Processes** (*multiple choice*, *fill-in-the-blank*).
 
-      3. **Processes** (*multiple choice*, *fill-in-the-blank*).
-
-      4. **Networking** (*multiple choice*, *fill-in-the-blank*).
+      3. **Networking** (*multiple choice*, *fill-in-the-blank*).
 
     D. **Programming**
 
@@ -247,7 +241,7 @@ body:       |
 
     [C]:    https://en.wikipedia.org/wiki/C_(programming_language)
     [C++]:  https://isocpp.org/
-    
+
     <hr>
 
     ### Pointers, Arrays, Strings
@@ -313,7 +307,7 @@ body:       |
     See [Checklist 03] and **Exam 03**.
 
     </div>
-    
+
     <div class="alert alert-warning" markdown="1">
     #### <i class="fa fa-light-bulb-o"></i> Exam 03
 
