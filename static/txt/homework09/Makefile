@@ -31,7 +31,7 @@ test-all:	test-gitignore test-timeit test-socket test-curlit
 
 test-gitignore:
 	@echo "timeit" > .gitignore
-	@echo "curlit" > .gitignore
+	@echo "curlit" >> .gitignore
 	@echo "*.o" >> .gitignore
 	@echo "*.sh" >> .gitignore
 	@echo "*.unit" >> .gitignore

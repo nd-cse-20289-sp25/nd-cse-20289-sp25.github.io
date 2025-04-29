@@ -32,7 +32,7 @@ test:
 test-all:	test-gitignore test-node test-list test-seqit test-tailit
 
 test-gitignore:
-	@echo "*.o" >> .gitignore
+	@echo "*.o" > .gitignore
 	@echo "*.sh" >> .gitignore
 	@echo "*.unit" >> .gitignore
 
